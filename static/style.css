@@ -39,3 +39,174 @@ d-figure > figure {
   top: 26px;
   left: -48px;
 }
+
+d-title h1, d-title p, d-title d-figure {
+  grid-column: page;
+}
+
+b {
+  style: font-weight: bold;
+}
+
+label, button {
+  cursor: pointer;
+}
+
+button {
+  border-radius: 0.25em;
+}
+
+#coinrun-objects {
+  grid-column: page;
+}
+
+#coinrun-objects .coinrun-objects-row-images td {
+  white-space: nowrap;
+}
+
+#coinrun-objects img {
+  width: auto;
+  image-rendering: pixelated;
+  border: 1px solid gray;
+}
+
+#coinrun-objects .coinrun-object-single {
+  width: 100%;
+}
+
+#coinrun-objects .coinrun-object-double {
+  width: 48%;
+}
+
+#coinrun-objects .coinrun-objects-row-text td {
+  position: relative;
+  height: 9em;
+}
+
+#coinrun-objects .coinrun-objects-row-text figcaption {
+  position: absolute;
+  top: 1em;
+}
+
+#coinrun-actions .coinrun-action {
+  font-weight: bold;
+  padding: 0.2em;
+  border: 1px solid gray;
+  border-radius: 0.25em;
+}
+
+#interface-failure-play-pause {
+  font-size: 3em;
+}
+
+.interface-failure-step-button {
+  font-size: 1em;
+  margin: 0em 0.1em;
+}
+
+#interface-failure-position {
+  margin: 0em 1em;
+}
+
+#model-editing-levels label {
+  white-space: nowrap;
+}
+
+#model-editing-levels video {
+  width: 100%;
+}
+
+#feature-vis-traditional td {
+  padding: 8px;
+}
+
+#feature-vis-traditional img {
+  display: inline-block;
+  width: 128px;
+  image-rendering: pixelated;
+  border: 1px solid gray;
+}
+
+#feature-vis-dataset {
+  margin: 0 auto;
+  text-align: center;
+  max-width: 640px;
+}
+
+#feature-vis-dataset img {
+  display: inline-block;
+  width: 128px;
+  image-rendering: pixelated;
+  border: 1px solid gray;
+}
+
+#attribution .attribution-outer {
+  position: relative;
+  height: 16em;
+  width: 16em;
+  border: 1px solid gray;
+}
+
+#attribution .attribution-inner {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+#attribution .attribution-image {
+  height: 100%;
+  width: 100%;
+  background-size: 100% 100%;
+  image-rendering: pixelated;
+}
+
+#attribution .attribution-legend-item {
+  display: inline-block;
+  padding: 0.5em;
+  background: white;
+  border: 1px solid white;
+  border-radius: 0.25em;
+  cursor: pointer;
+}
+
+#attribution .attribution-legend-item:hover {
+  background: whitesmoke;
+  border: 1px solid gray;
+}
+
+#attribution .attribution-legend-outer {
+  position: relative;
+  height: 192px;
+  width: 128px;
+}
+
+#attribution .attribution-legend-dot {
+  position: absolute;
+  top: 140.8px;
+  left: 0px;
+  height: 32px;
+  width: 32px;
+  border-radius: 20%;
+}
+
+#attribution .attribution-legend-inner {
+  position: absolute;
+  height: 128px;
+  width: 128px;
+  top: 0px;
+  left: 0px;
+  border: 1px solid gray;
+}
+
+#attribution .attribution-legend-label {
+  position: absolute;
+  height: 64px;
+  width: 96px;
+  top: 140.8px;
+  left: 42.67px;
+  font-size: 0.9em;
+  line-height: 1.2em;
+  font-style: italic;
+  z-index: 1;
+  text-align: left;
+}

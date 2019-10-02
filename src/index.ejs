@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://distill.pub/template.v2.js"></script>
   <style>
-    <%=require("raw-loader!../static/style.css") %>
+    <%=require("raw-loader!../static/style.css").default %>
   </style>
 </head>
 
@@ -13,13 +13,25 @@
 
   <d-front-matter>
     <script type="text/json">{
-      "title": "Distill Example",
-      "description": "An example project using Webpack, Babel, and Svelte.",
-      "password": "svgs",
+      "title": "Understanding RL vision models",
+      "description": "We can analyze, debug and edit deep reinforcement learning models using attribution and dimensionality reduction.",
+      "password": false,
       "authors": [
         {
-          "author": "Ludwig Schubert",
-          "authorURL": "https://schubert.io/",
+          "author": "Jacob Hilton",
+          "authorURL": "https://www.jacobh.co.uk/",
+          "affiliation": "OpenAI",
+          "affiliationURL": "https://openai.com"
+        },
+        {
+          "author": "Chris Olah",
+          "authorURL": "https://colah.github.io/",
+          "affiliation": "OpenAI",
+          "affiliationURL": "https://openai.com"
+        },
+        {
+          "author": "Author list not yet finalized.",
+          "authorURL": "https://openai.com",
           "affiliation": "OpenAI",
           "affiliationURL": "https://openai.com"
         }
@@ -42,296 +54,684 @@
   </d-front-matter>
 
   <d-title>
-    <h1>Distill Example</h1>
-    <p>An example project using Webpack, Babel, and Svelte. </p>
+    <h1>Understanding RL vision</h1>
+    <p>We can analyze, debug and edit deep reinforcement learning models using attribution and dimensionality reduction.</p>
+    <d-figure id="header">
+      <figure>
+        <div id="interface-header-target"></div>
+      </figure>
+    </d-figure>
   </d-title>
 
   <d-article>
 
     <p>
-      Welcome to a Distill example article: meant to get you writing up your research quickly. Let's demo some
-      features:
+      In this article, we apply interpretability techniques to a reinforcement learning (RL) model trained to play the video game CoinRun <d-cite key="coinrun"></d-cite>. Using attribution <d-cite key="attribution1,attribution2,attribution3,attribution4,attribution5,attribution6,attribution7,integratedgradients"></d-cite> and dimensionality reduction, we build an interface <d-cite key="buildingblocks"></d-cite> for exploring the objects detected by the model, and how they influence its value function and policy. We leverage this interface in several ways.
     </p>
-
-    <h4>Hot reloading</h4>
-    <p>Your browser can automatically refresh when your editor saves. This should work by default, and you can disable
-      it in <code>index.js</code>. Sometimes hot reloading isn't fully compatible with all types of code, so you may
-      need to try manually reloading if you're seeing inconsistent behavior.</p>
-
-    <h4>Inlined SVGs</h4>
-    <p>SVGs are so small that it can be nice to save an extra request and simply inline them intop your HTML:</p>
-
-    <figure>
-      <%= require("../static/diagrams/diffparam.svg") %>
-    </figure>
-
-    <style>
-      #arrow-2 #arrow-head {
-        fill: steelblue;
-      }
-
-      #arrow-2 #arrow-line {
-        stroke: steelblue;
-      }
-    </style>
-
-    <p>Let's use some CSS to style an inlined SVG. Here's an arrow
-      <svg width="27px" height="9px" viewBox="0 0 27 9" version="1.1" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink">
-        <g id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-          <g id="Group" transform="translate(-0.195652, 0.0)">
-            <path d="M10.5,4.5 L26.8913043,4.5" id="arrow-line" stroke="#FF6600" stroke-width="2"
-              stroke-linecap="square" stroke-dasharray="6,4"></path>
-            <g id="arrow-head" transform="translate(5.0, 4.5) scale(-1, 1) translate(-5.0, -4.5) translate(0.5, 0.0)"
-              fill="#FF6600" fill-rule="nonzero">
-              <path
-                d="M4.5,0 C5.67007294,3.25202425 6.85281213,6.29180565 9,9 L4.5,7.3125 L0,9 C2.13530145,6.28972675 3.34126793,3.24998975 4.5,0 Z"
-                id="Shape" transform="translate(4.5, 4.5) rotate(-270.0) translate(-4.5, -4.5) "></path>
-            </g>
-          </g>
-        </g>
-      </svg> that we
-      can make
-      inline. If you'd like to change the color in CSS, we can do so. Let's put the second arrow (<span
-        id="arrow-2"><svg width="27px" height="9px" viewBox="0 0 27 9" version="1.1" xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink">
-          <g id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-            <g id="Group" transform="translate(-0.195652, 0.0)">
-              <path d="M10.5,4.5 L26.8913043,4.5" id="arrow-line" stroke="#FF6600" stroke-width="2"
-                stroke-linecap="square" stroke-dasharray="6,4"></path>
-              <g id="arrow-head" transform="translate(5.0, 4.5) scale(-1, 1) translate(-5.0, -4.5) translate(0.5, 0.0)"
-                fill="#FF6600" fill-rule="nonzero">
-                <path
-                  d="M4.5,0 C5.67007294,3.25202425 6.85281213,6.29180565 9,9 L4.5,7.3125 L0,9 C2.13530145,6.28972675 3.34126793,3.24998975 4.5,0 Z"
-                  id="Shape" transform="translate(4.5, 4.5) rotate(-270.0) translate(-4.5, -4.5) "></path>
-              </g>
-            </g>
-          </g>
-        </svg></span>) in a tag with an ID, so we can
-      target it in CSS.
-
-      <d-code block="" language="css">
-        #arrow-2 #arrow-head {
-        fill: steelblue;
-        }
-
-        #arrow-2 #arrow-line {
-        stroke: steelblue;
-        }
-      </d-code>
-
-    </p>
-
-    <h4>Formulas</h4>
-
-    <p>Here's a test of an inline equation <d-math>c = a^2 + b^2</d-math>. Can also be used with configurable katex
-      settings, for example by
-      using inline <code>$</code> signs: <d-math>x^2</d-math>. There are also block equations:</p>
-    <d-math block="">
-      c = \pm \sqrt{ \sum_{i=0}^{n}{a^{222} + b^2}}
-    </d-math>
-    <p>Math can also be quite involved:</p>
-    <d-math block="">
-      \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} = 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}}
-      {1+\frac{e^{-6\pi}} {1+\frac{e^{-8\pi}} {1+\cdots} } } }
-    </d-math>
-
-    <p>We've also been experimenting with <a
-        href="https://github.com/distillpub/template/wiki/Annotated-Formulas">annotated formulas</a>:</p>
-
-    <style>
-      .eq-grid {
-        display: grid;
-        justify-content: start;
-        grid-row-gap: 10px;
-      }
-
-      .eq-grid figcaption d-math {
-        font-size: 100%;
-      }
-
-      .eq-grid .expansion-marker {
-        border: 1px solid #CCC;
-        border-bottom: none;
-        height: .5em;
-        width: 100%;
-      }
-    </style>
-
-    <figure class="eq-grid">
-
-      <div style="grid-row: 1; grid-column: 1;">
-        <d-math> C ~~~=~~~~ </d-math>
-      </div>
-      <div style="grid-row: 1; grid-column: 2;">
-        <d-math> H^E_D(X, Z) </d-math>
-      </div>
-      <div style="grid-row: 1; grid-column: 3;">
-        <d-math> ~~~-~~~ </d-math>
-      </div>
-      <div style="grid-row: 1; grid-column: 4;">
-        <d-math> H^E_E(X, Z) </d-math>
-      </div>
-
-
-      <div class="expansion-marker" style="grid-row: 2; grid-column: 4 / 7; "></div>
-
-      <div style="grid-row: 3; grid-column: 1;">
-        <d-math> ~~~~~~~=~~~~ </d-math>
-      </div>
-      <div style="grid-row: 3; grid-column: 2;">
-        <d-math> H^E_D(X, Z) </d-math>
-      </div>
-      <div style="grid-row: 3; grid-column: 3;">
-        <d-math> ~~~-~~~ </d-math>
-      </div>
-      <div style="grid-row: 3; grid-column: 4;">
-        <d-math> H^E_E(Z | X) </d-math>
-      </div>
-      <div style="grid-row: 3; grid-column: 5;">
-        <d-math> ~~~-~~~ </d-math>
-      </div>
-      <div style="grid-row: 3; grid-column: 6;">
-        <d-math> H^E_E(X) </d-math>
-      </div>
-
-      <figcaption style="grid-row: 4; grid-column: 4; max-width:135px;">
-        Bits to represent <d-math>z</d-math><br> if you already know <d-math>x</d-math>.
-      </figcaption>
-      <figcaption style="grid-row: 4; grid-column: 6; max-width:120px;">
-        Bits to represent<br>
-        <d-math>x</d-math> by itself.
-      </figcaption>
-
-    </figure>
-
-    <h4>Citations</h4>
-
-    <p>We can<d-cite key="mercier2011humans"></d-cite> also cite <d-cite
-        key="gregor2015draw,mercier2011humans,openai2018charter"></d-cite> external publications. <d-cite
-        key="dong2014image,dumoulin2016guide,mordvintsev2015inceptionism"></d-cite>. We should also be testing
-      footnotes
-      <d-footnote id="d-footnote-1">This will become a hoverable footnote. This will become a hoverable footnote. This
-        will become a
-        hoverable footnote. This will become a hoverable footnote. This will become a hoverable footnote. This will
-        become a hoverable footnote. This will become a hoverable footnote. This will become a hoverable footnote.
-      </d-footnote>. There are multiple footnotes, and they appear in the appendix<d-footnote id="d-footnote-2">Given I
-        have coded them
-        right. Also, here's math in a footnote: <d-math>c = \sum_0^i{x}</d-math>. Also, a citation. Box-ception<d-cite
-          key="gregor2015draw"></d-cite>!</d-footnote> as well.</p>
-
-
-    <h4>Displaying code</h4>
-    <p>Some inline javascript:<d-code language="javascript">var x = 25;</d-code>. And here's a javascript code block.
-    </p>
-
-    <d-code block="" language="javascript">
-      var x = 25;
-      function(x){
-      return x * x;
-      }
-    </d-code>
-    <p>We also support some highlighting.</p>
-    <d-code block="" language="python">
-      # Python 3: Fibonacci series up to n
-      def fib(n):
-      a, b = 0, 1
-      while a &lt; n: print(a, end=' ' ) a, b=b, a+b </d-code>
-
-    <h4>Tables</h4>
-    <p>We have simple tables that try to stay readable at most screen sizes:
-    </p>
-
-    <style>
-      #example-table {
-        overflow-x: scroll;
-      }
-
-      #example-table th {
-        white-space: nowrap;
-      }
-
-      #example-table tbody th {
-        font-weight: initial;
-        border-bottom: 1px solid rgb(242, 242, 242);
-      }
-
-      #example-table tbody tr:last-of-type th {
-        border-bottom: inherit;
-      }
-
-      #example-table td,
-      #example-table thead th {
-        text-align: center;
-      }
-
-      #example-table td {
-        border-color: rgb(242, 242, 242);
-      }
-
-      #example-table td.no {
-        background-color: #f6f6f6;
-      }
-    </style>
-    <table id="example-table">
-      <thead>
-        <tr>
-          <th></th>
-          <th scope="col">Parallel</th>
-          <th scope="col">Efficient</th>
-          <th scope="col">Reversible</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">GANs</th>
-          <td>Yes</td>
-          <td>Yes</td>
-          <td class="no">No</td>
-        </tr>
-        <tr>
-          <th scope="row">Flow Models</th>
-          <td>Yes</td>
-          <td class="no">No</td>
-          <td>Yes</td>
-        </tr>
-        <tr>
-          <th scope="row">Autoregressive Models</th>
-          <td class="no">No</td>
-          <td>Yes</td>
-          <td>Yes</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h4>Interactive Figures</h4>
-
+    <ul>
+      <li><b>Dissecting failure.</b> We perform a step-by-step analysis of the agent's behaviour in cases where it failed to achieve the maximum reward, allowing us to understand what went wrong.</li>
+      <li><b>Debugging.</b> We find bugs in which the model "hallucinated" a feature not present in the observation, thereby explaining inaccuracies in the model's value function.</li>
+      <li><b>Model editing.</b> We hand-edit the weights of the model to blind the agent to certain objects, without otherwise changing the agent's behavior. We verify this by looking at causes of failure, quantitatively validating our analysis.</li>
+    </ul>
     <p>
-      Here's a dynamically instantiated "figure". We use Intersection Observers to allow loading resource-heavy
-      figures only when readers scroll close to them. The code for this is in <code>src/index.js</code>.
+      We also explore the relationship between interpretability and generalization by varying the number of levels seen during training. Our findings suggest that RL models will become more interpretable as the environments they are trained on become richer and more diverse.
     </p>
-
-    <d-figure id="svelte-example-dfigure">
+    <p>
+      Finally, we provide a thorough investigation of several interpretability techniques in the context of RL vision, and pose a number of questions for further research.
+    </p>
+    <h2>Our CoinRun model</h2>
+    <p>
+      CoinRun is a side-scrolling platformer in which the agent must dodge enemies and other traps and collect the coin at the end of the level.
+    </p>
+    <figure>
+      <video width="100%" controls autoplay loop>
+        <source src="videos/coinrun.mp4" type="video/mp4">
+      </video>
+      <figcaption style="text-align: center;">Our trained model playing CoinRun. <b>Left</b>: full resolution. <b>Right</b>: 64x64 RGB observations given to the model.</figcaption>
+    </figure>
+    <p>
+      Coinrun is procedurally-generated, meaning that each new level encountered by the agent is randomly generated from scratch. This incentivizes the model to learn how to spot the different kinds of objects in the game, since it is not enough to simply memorize a small number of specific trajectories <d-cite key="procgen"></d-cite>.<d-footnote>We use the original version of CoinRun <d-cite key="coinrun"></d-cite>, not the version from Procgen Benchmark <d-cite key="procgen"></d-cite>, which is slightly different.</d-footnote>
+    </p>
+    <p>
+      Here are some examples of the objects used, along with walls and floors, to generate CoinRun levels.
+    </p>
+    <figure id="coinrun-objects">
+      <table>
+        <tr class="coinrun-objects-row-images">
+          <td style="font-weight: bold; white-space: normal;">Full resolution</td>
+          <td>
+            <img src="images/coinrun/agent_0_human.png" class="coinrun-object-double">
+            <img src="images/coinrun/agent_1_human.png" class="coinrun-object-double">
+          </td>
+          <td>
+            <img src="images/coinrun/coin_1_human.png" class="coinrun-object-single">
+          </td>
+          <td>
+            <img src="images/coinrun/saw_1_human.png" class="coinrun-object-single">
+          </td>
+          <td>
+            <img src="images/coinrun/enemy_0_human.png" class="coinrun-object-double">
+            <img src="images/coinrun/enemy_1_human.png" class="coinrun-object-double">
+          </td>
+          <td>
+            <img src="images/coinrun/box_0_human.png" class="coinrun-object-double">
+            <img src="images/coinrun/box_1_human.png" class="coinrun-object-double">
+          </td>
+          <td>
+            <img src="images/coinrun/lava_human.png" class="coinrun-object-single">
+          </td>
+          <td>
+            <img src="images/coinrun/velocity_info_human.png" class="coinrun-object-single">
+          </td>
+        </tr>
+        <tr class="coinrun-objects-row-images">
+          <td style="font-weight: bold; white-space: normal;">Model resolution</td>
+          <td>
+            <img src="images/coinrun/agent_0_model.png" class="coinrun-object-double">
+            <img src="images/coinrun/agent_1_model.png" class="coinrun-object-double">
+          </td>
+          <td>
+            <img src="images/coinrun/coin_1_model.png" class="coinrun-object-single">
+          </td>
+          <td>
+            <img src="images/coinrun/saw_1_model.png" class="coinrun-object-single">
+          </td>
+          <td>
+            <img src="images/coinrun/enemy_0_model.png" class="coinrun-object-double">
+            <img src="images/coinrun/enemy_1_model.png" class="coinrun-object-double">
+          </td>
+          <td>
+            <img src="images/coinrun/box_0_model.png" class="coinrun-object-double">
+            <img src="images/coinrun/box_1_model.png" class="coinrun-object-double">
+          </td>
+          <td>
+            <img src="images/coinrun/lava_model.png" class="coinrun-object-single">
+          </td>
+          <td>
+            <img src="images/coinrun/velocity_info_model.png" class="coinrun-object-single">
+          </td>
+        </tr>
+        <tr class="coinrun-objects-row-text">
+          <td></td>
+          <td><figcaption>The agent, in mid air (left) and about to jump (right).</figcaption></td>
+          <td><figcaption>Coins, which have to be collected.</figcaption></td>
+          <td><figcaption>Stationary saw obstacles, which must be dodged.</figcaption></td>
+          <td><figcaption>Enemies, which must be dodged, moving left (left) and right (right).</figcaption></td>
+          <td><figcaption>Boxes, which the agent can both move past and land on top of.</figcaption></td>
+          <td><figcaption>Lava at the bottom of a chasm.</figcaption></td>
+          <td><figcaption>The velocity info painted into the top left of each observation, indicating the agent's horizontal and vertical velocities.<d-footnote>The left square indicates the agent's horizontal velocity (black for left, white for right), and the right square indicates the agent's vertical velocity (black for down, white for up). In this example, the agent is moving foward and about to land.</d-footnote></figcaption></td>
+        </tr>
+      </table>
+    </figure>
+    <p>
+      There are 9 actions available to the agent in CoinRun:
+    </p>
+    <figure id="coinrun-actions">
+      <table>
+        <tr>
+          <td><span class="coinrun-action">&#8592;</span></td>
+          <td><span class="coinrun-action">&#8594;</span></td>
+          <td></td>
+          <td><figcaption>Left and right change the agent's horizontal velocity. They still work while the agent is in mid-air, but have less of an effect.</figcaption></td>
+        </tr>
+        <tr>
+          <td><span class="coinrun-action">&#8595;</span></td>
+          <td></td>
+          <td></td>
+          <td><figcaption>Down cancels a jump if used immediately after up, and steps the agent down from boxes.</figcaption></td>
+        </tr>
+        <tr>
+          <td><span class="coinrun-action">&#8593;</span></td>
+          <td><span class="coinrun-action">&#8598;</span></td>
+          <td><span class="coinrun-action">&#8599;</span></td>
+          <td><figcaption>Up causes the agent to jump after the next non-up action. Diagonal directions have the same effect as both component directions combined.</figcaption></td>
+        </tr>
+        <tr>
+          <td><span class="coinrun-action">A</span></td>
+          <td><span class="coinrun-action">B</span></td>
+          <td><span class="coinrun-action">C</span></td>
+          <td><figcaption>A, B and C do nothing.<d-footnote>The original version of CoinRun only has 1 "do nothing" action, but our version ended up with 3 when "A" and "B" actions were added to be used in other games. For consistency, we have relabelled the original "do nothing" action as "C".</d-footnote></figcaption></td>
+        </tr>
+      </table>
+    </figure>
+    <p>
+      We trained a convolutional neural network<d-footnote>Our architecture consists of the following layers in the order given, together with ReLU activations for all except the final layer.<br>- 7x7 convolutional layer with 16 channels (layer 1a)<br>- 2x2 L2 pooling layer<br>- 5x5 convolutional layer with 32 channels (layer 2a)<br>- 5x5 convolutional layer with 32 channels (layer 2b)<br>- 2x2 L2 pooling layer<br>- 5x5 convolutional layer with 32 channels (layer 3a)<br>- 2x2 L2 pooling layer<br>- 5x5 convolutional layer with 32 channels (layer 4a)<br>- 2x2 L2 pooling layer<br>- 256-unit dense layer<br>- 512-unit dense layer<br>- 10-unit dense layer (1 unit for the value function, 9 units for the policy logits)</d-footnote> on CoinRun for around 2 billion timesteps, using PPO <d-cite key="ppo"></d-cite>, an actor-critic algorithm.<d-footnote>We used the standard PPO hyperparameters for CoinRun <d-cite key="coinrun"></d-cite>, except that we used twice as many environments per worker and twice and many workers. The effect of these changes was to increase the effective batch size, which seemed to be necessary to reach the same performace with our smaller architecture.</d-footnote> We used a non-recurrent network, so that we could focus on interpreting the visual processing performed by the model. Thus the model takes in a single RGB observation, which has been downsampled to 64x64, and outputs a value function (an estimate of the total future time-discounted reward) and a policy (a probability distribution over the actions, from which the next action is sampled).
+    </p>
+    <figure style="text-align: center;">
+      <svg height="160px" width="448px">
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#000000" />
+          </marker>
+        </defs>
+        <image xlink:href="images/coinrun/observation.png" x="8" y="16" height="96" width="96" style="image-rendering: pixelated;"></image>
+        <rect x="8" y="16" height="96" width="96" fill="none" stroke="#808080" stroke-width="1"></rect>
+        <text x="56" y="135" text-anchor="middle">observation</text>
+        <line x1="104" y1="64" x2="152" y2="64" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
+        <text x="180" y="69" text-anchor="middle">CNN</text>
+        <rect x="152" y="36" height="56" width="56" fill="none" stroke="#000000" stroke-width="1"></rect>
+        <path d="M 208 64 h 24 q 8 0, 8 -8 v -40 q 0 -8, 8 -8 h 24" fill="none" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></path>
+        <path d="M 232 64 q 8 0, 8 8 q 0 8, 8 8 h 24" fill="none" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></path>
+        <rect x="278" y="0" height="16" width="16" fill="none" stroke="#000000" stroke-width="1"></rect>
+        <rect x="282" y="4" height="8" width="8" fill="none" stroke="#000000" stroke-width="1"></rect>
+        <text x="300" y="13" text-anchor="start">value function</text>
+        <rect x="278" y="24" height="112" width="16" fill="none" stroke="#000000" stroke-width="1"></rect>
+        <rect x="282" y="28" height="8" width="8" fill="none" stroke="#000000" stroke-width="1"></rect>
+        <rect x="282" y="40" height="8" width="8" fill="none" stroke="#000000" stroke-width="1"></rect>
+        <rect x="282" y="52" height="8" width="8" fill="none" stroke="#000000" stroke-width="1"></rect>
+        <rect x="282" y="64" height="8" width="8" fill="none" stroke="#000000" stroke-width="1"></rect>
+        <rect x="282" y="76" height="8" width="8" fill="none" stroke="#000000" stroke-width="1"></rect>
+        <rect x="282" y="88" height="8" width="8" fill="none" stroke="#000000" stroke-width="1"></rect>
+        <rect x="282" y="100" height="8" width="8" fill="none" stroke="#000000" stroke-width="1"></rect>
+        <rect x="282" y="112" height="8" width="8" fill="none" stroke="#000000" stroke-width="1"></rect>
+        <rect x="282" y="124" height="8" width="8" fill="none" stroke="#000000" stroke-width="1"></rect>
+        <text x="286" y="152" text-anchor="middle">logits</text>
+        <line x1="300" y1="80" x2="380" y2="80" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
+        <text x="340" y="102" text-anchor="middle">softmax</text>
+        <text x="388" y="84" text-anchor="start">policy</text>
+      </svg>
+      <figcaption>Schematic of a typical non-recurrent convolutional actor-critic model, such as ours.</figcaption>
+    </figure>
+    <p>
+      Since the only available reward is a fixed bonus for collecting the coin, the value function estimates the time-discounted<d-footnote>We use a discount rate of 0.999 per timestep.</d-footnote> probability that the agent will successfully complete the level.
+    </p>
+    <h2>Model analysis</h2>
+    <p>
+      We developed an interface for examining trajectories of the agent playing the game. This incorporates attribution, which highlights objects that positively or negatively influence a particular network output (either the value function, or a policy logit). Using dimensionality reduction, attribution is broken down according to the type of object detected, which we indicate using different colors. (We will explain the precise calculation involved later.)
+    </p>
+    <p>
+      Our interface for a typical trajectory is displayed in the <a href="#header">header</a> of this page, with the value function as the network output. It reveals the model using coins, enemies, walls and more to compute the value function. (Note that the text labels in our interface are hand-composed, while everything else is automatically generated.)
+    </p>
+    <h3>Dissecting failure</h3>
+    <p>
+      Our fully-trained model fails to complete around 1 in every 200 levels. We explored some of these failures using our interface, and found that we were usually able to understand why the failure occurred.
+    </p>
+    <p>
+      Often, the failure boils down to the fact that the model (being non-recurrent) has no memory, and must choose its action based only on the current observation. It is also common for some unluckly sampling of actions from the agent's policy to be partly responsible.
+    </p>
+    <p>
+      Here are some cherry-picked examples of failures, carefully analyzed step-by-step.
+    </p>
+    <table style="margin-top: 1em; margin-bottom: 1em;">
+      <tr>
+        <td style="width: 45%; vertical-align: top;">
+          <label id="interface-failure-obscured-label" style="color: black;">
+            <b><input type="radio" name="interface-failure-options" checked id="interface-failure-obscured-option"> Saw obstacle obscured by enemy</b>
+          </label><br>
+          <label id="interface-failure-down-label" style="color: lightgray;">
+            <b><input type="radio" name="interface-failure-options" id="interface-failure-down-option"> Stepping down to avoid jumping</b>
+          </label><br>
+          <label id="interface-failure-offscreen-label" style="color: lightgray;">
+            <b><input type="radio" name="interface-failure-options" id="interface-failure-offscreen-option"> Landing platform moving off-screen</b>
+          </label>
+        </td>
+        <td>
+          <div style="min-height: 7.5em;">
+            <div style="display: block;" id="interface-failure-obscured-text">
+              The agent moves too far to the right while in mid-air as a result of a saw obstacle being temporarily hidden from view by a moving enemy. The saw comes back into view, but too late to avoid a collision.
+            </div>
+            <div style="display: none;" id="interface-failure-down-text">
+              The agent presses down in a bid to delay a jump. This causes the agent to inadvertently step down from a box and onto an enemy.
+            </div>
+            <div style="display: none;" id="interface-failure-offscreen-text">
+              The agent fails to move far enough to the right while in mid-air, as a result of the platform where it was intending to land moving below the field of view.
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <table style="grid-column: page; margin: 0em 2em;">
+      <tr>
+        <td style="width: 11.5em; white-space: nowrap; vertical-align: top; text-align: center;">
+          <div style="display: inline-block;">
+            <button id="interface-failure-previous" class="interface-failure-step-button">Prev</button><br>
+            <button id="interface-failure-start" class="interface-failure-step-button">Start</button>
+          </div>
+          <button id="interface-failure-play-pause">&#9658;</button>
+          <div style="display: inline-block;">
+            <button id="interface-failure-next" class="interface-failure-step-button">Next</button><br>
+            <button id="interface-failure-end" class="interface-failure-step-button">End</button>
+          </div>
+          <br>
+          <span id="interface-failure-position"></span>
+        </td>
+        <td style="vertical-align: top;">
+          <b id="interface-failure-description-positions"></b>: <span id="interface-failure-description-text"></span>
+        </td>
+      </tr>
+    </table>
+    <d-figure style="grid-column: page; margin-top: 1em;">
       <figure>
-        <div id="svelte-example-target"></div>
-        <figcaption>And a static figcaption. You can use citations<d-cite key="mercier2011humans"></d-cite> in this
-          figcaption, but not in text added by javascript.</figcaption>
+        <div id="interface-failure-obscured-target" style="display: block;"></div>
+        <div id="interface-failure-down-target" style="display: none;"></div>
+        <div id="interface-failure-offscreen-target" style="display: none;"></div>
       </figure>
     </d-figure>
-
-    <p>You can't use citation tags (<code>d-cite</code>) in figures that are dynamically loaded using Javascript.
-      Distill statically
-      analyzes your submission for its citations, because they need to be uploaded to indexers and organizations like <a
-        href="https://www.crossref.org/">CrossRef</a> and <a href="https://scholar.google.com">Google Scholar</a>.</p>
-
-    <p>That's it for the example article! Feel free to look at <a
-        href="https://github.com/distillpub?utf8=%E2%9C%93&q=post--&type=public">implementations
-        of existing Distill articles</a>, or ask for help in
-      the <a href="http://slack.distill.pub">Distill Slack Community</a>.</p>
+    <h3>Debugging</h3>
+    <p>
+      Occasionally, the model's value function spikes unexpectedly. In a couple of cases, we were able to debug this behavior with the help of our interface. The spiking was caused by bugs in which the model "hallucinated" a feature not present in the observation.
+    </p>
+    <table style="margin-top: 1em; margin-bottom: 0em;">
+      <tr>
+        <td style="width: 35%; vertical-align: top;">
+          <label id="interface-bug-coin-label" style="color: black;">
+            <b><input type="radio" name="interface-bug-options" id="interface-bug-coin-option" checked> Coin hallucination</b>
+          </label><br>
+          <label id="interface-bug-saw-label" style="color: lightgray;">
+            <b><input type="radio" name="interface-bug-options" id="interface-bug-saw-option"> Saw obstacle hallucination</b>
+          </label>
+        </td>
+        <td>
+          <div>
+            <div style="display: block;" id="interface-bug-coin-text">
+              At one point the value function spiked upwards from 95% to 98% for a single timestep. This was due to a curved yellow-brown shape in the background, which happened to appear next to a wall, being mistaken for a coin.
+            </div>
+            <div style="display: none;" id="interface-bug-saw-text">
+              At another point the value function spiked downwards from 94% to 85% for a single timestep. This was due to the agent, colored in gray-blue and crouching against a mottled background, being mistaken for a saw obstacle. An actual saw obstacle was also present in the observation, but the main effect was from the misjudged agent, as shown by the larger red circle around the agent (hover over the first legend item to isolate).
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <d-figure style="grid-column: page; margin-top: 1em;">
+      <figure>
+        <div id="interface-bug-coin-target" style="display: block;"></div>
+        <div id="interface-bug-saw-target" style="display: none;"></div>
+      </figure>
+    </d-figure>
+    <h3>Model editing</h3>
+    <p>
+      Our analysis so far has been mostly qualitative. To quantitatively validate our analysis, we hand-edited the model to make the agent blind to certain features: saw obstacles in one case, and left-moving enemies in another. (We will explain the precise calculation involved later.) We evaluated each edit by measuring the percentage of levels that the new agent failed to complete, broken down by the direct cause of failure.
+    </p>
+    <p>
+      Our results show that our edits were successful and targeted, with no statistically measurable effects on the agent's other abilities.<d-footnote>The data for this plot are as follows.<br>Percentage of levels failed due to: saw obstacle / enemy moving left / enemy moving right / multiple or other:<br>- Original model: 0.37% / 0.16% / 0.12% / 0.08%<br>- Saw obstacle edit: 12.76% / 0.16% / 0.08% / 0.05%<br>- Enemy moving left edit: 0.36% / 4.69% / 0.97% / 0.07%<br>Each model was tested on 10,000 levels.</d-footnote>
+    </p>
+    <figure style="text-align: center;">
+      <object type="image/svg+xml" data="images/model_editing_results.svg" style="width: 100%; font-family: inherit;"></object>
+      <figcaption>Results of testing each model on 10,000 levels. Note that moving enemies can change direction.</figcaption>
+    </figure>
+    <p>
+      Here are the original and edited models playing some cherry-picked levels.
+    </p>
+    <figure id="model-editing-levels" style="grid-column: page;">
+      <table>
+        <tr>
+          <td style="vertical-align: top;">
+            <label id="model-editing-level-1-label" style="color: black;">
+              <b><input type="radio" name="model-editing-level-options" checked id="model-editing-level-1-option"> Level 1</b>
+            </label><br>
+            <label id="model-editing-level-2-label" style="color: lightgray;">
+              <b><input type="radio" name="model-editing-level-options" id="model-editing-level-2-option"> Level 2</b>
+            </label><br>
+            <label id="model-editing-level-3-label" style="color: lightgray;">
+              <b><input type="radio" name="model-editing-level-options" id="model-editing-level-3-option"> Level 3</b>
+            </label>
+          </td>
+          <td>
+            <div style="display: block;" id="model-editing-level-1-target-1">
+              <video controls autoplay>
+                <source src="videos/model_editing/original_episode_0.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div style="display: none;" id="model-editing-level-2-target-1">
+              <video controls autoplay>
+                <source src="videos/model_editing/original_episode_1.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div style="display: none;" id="model-editing-level-3-target-1">
+              <video controls autoplay>
+                <source src="videos/model_editing/original_episode_2.mp4" type="video/mp4">
+              </video>
+            </div>
+          </td>
+          <td>
+            <div style="display: block;" id="model-editing-level-1-target-2">
+              <video controls autoplay>
+                <source src="videos/model_editing/saw_episode_0.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div style="display: none;" id="model-editing-level-2-target-2">
+              <video controls autoplay>
+                <source src="videos/model_editing/saw_episode_1.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div style="display: none;" id="model-editing-level-3-target-2">
+              <video controls autoplay>
+                <source src="videos/model_editing/saw_episode_2.mp4" type="video/mp4">
+              </video>
+            </div>
+          </td>
+          <td>
+            <div style="display: block;" id="model-editing-level-1-target-3">
+              <video controls autoplay>
+                <source src="videos/model_editing/enemy_episode_0.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div style="display: none;" id="model-editing-level-2-target-3">
+              <video controls autoplay>
+                <source src="videos/model_editing/enemy_episode_1.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div style="display: none;" id="model-editing-level-3-target-3">
+              <video controls autoplay>
+                <source src="videos/model_editing/enemy_episode_2.mp4" type="video/mp4">
+              </video>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><figcaption>Original model.</figcaption></td>
+          <td><figcaption>Saw obstacle edit.</figcaption></td>
+          <td><figcaption>Enemy moving left edit.</figcaption></td>
+        </tr>
+      </table>
+    </figure>
+    <h2>Interpretability and generalization</h2>
+    <p>
+      Our results depend critically on the fact that CoinRun is procedurally-generated (each new level encountered by the agent is randomly generated from scratch). When models are trained to play video games with a limited number of levels, they tend to heavily overfit, "memorizing" the levels using irrelevant background objects <d-cite key="sonicsaliency"></d-cite>. Using procedural generation incentivizes the model to learn to recognise relevant objects, so that the agent's skills generalize to unseen layouts <d-cite key="procgen,gvgai,obstacletower"></d-cite>.
+    </p>
+    <p>
+      Procedural generation also provides us with a way to measure the relationship between interpretability and generalization. We measured generalization by training the agent on a limited number of levels, testing on unseen levels <d-cite key="coinrun"></d-cite>. We tried to measure interpretability using our interface, though this is much more subjective. We asked an interpretability researcher to score the 8 features identified by our interface on how meaningful they seemed, taking into account &hellip;.<d-footnote>The interfaces we showed to the researcher are listed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/finite_levels/index.html" target="_blank">here</a>.</d-footnote> By varying the number of levels in the training set, we could then see how interpretability varied with generalization.<d-footnote>The data for this plot are as follows.<br>- Number of training levels: 100 / 300 / 1000 / 3,000 / 10,000 / 30,000 / 100,000<br>- Percentage of levels completed (train): 99.96% / 99.82% / 99.67% / 99.65% / 99.47% / 99.55% / 99.57%<br>- Percentage of levels completed (test): 61.81% / 66.95% / 74.93% / 89.87% / 97.53% / 98.66% / 99.25%<br>- Number of meaningful features: ? / ? / ? / ? / ? / ? / ?<br>Percentages of levels completed are estimated by sampling 10,000 levels with replacement.</d-footnote>
+    </p>
+    <figure style="text-align: center;">
+      <object type="image/svg+xml" data="images/generalization_results.svg" style="width: 100%; font-family: inherit;"></object>
+      <figcaption>Results of interpreting models trained on different numbers of levels.</figcaption>
+    </figure>
+    <p>
+      Our results are limited in scope, but suggest that &hellip;. The generalization gap starts to plateau at around 10,000 training levels, which is also where training performance starts to increase. <d-footnote>The effect of increasing training performance is small enough here to be attributable to noise, but it is a phenomenon that occurs for a number of other procedurally-generated games <d-cite key="procgen"></d-cite>.</d-footnote>
+    </p>
+    <h3>Impact of architecture on interpretability</h3>
+    <p>
+      We tried to chose a convolutional architecture (described <a href="#d-footnote-4-listing">below</a>) that would be conducive to interpretability, without sacrificing performance.<d-footnote>Starting with the architecture from IMPALA <d-cite key="impala"></d-cite>, we made the following modifications.<br>- We used fewer convolutional layers and more dense layers, to allow for more non-visual processing.<br>- We removed the residual connections, so that the flow of information passes through every layer.<br>- We made the pool size equal to the pool stride, to avoid gradient gridding.<br>- We used L2 pooling instead of max pooling, for more continuous gradients.</d-footnote> The choice that seemed to make the most difference was using only 5 convolutional layers, and applying our techniques to the 3rd of these layers. When applied to earlier layers, the features identify simple visual elements such as shape and color, which are not that semantically interesting. When applied to later layers, the features involve confusing aggregations of objects.<d-footnote>An interface for these layers can be viewed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/demo/interface.html" target="_blank">here</a>.</d-footnote> Architectures with more layers tend to have their object-identifying features spread over multiple layers, mixed in with less interpretable features.<d-footnote>An interface for 6 of the the 12 layers of the architecture from IMPALA <d-cite key="impala"></d-cite> can be viewed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/impala/ablation_0/interface.html" target="_blank">here</a>.</d-footnote>
+    </p>
+    <p>
+      Our takeaway is that models trained on CoinRun develop crisp features for relevant objects, but rely on less interpretable features at other levels of abstraction. We believe that this is directly related to generalization, via the nature of the game's diversity: using procedural generation encourages the model to generalize over layouts, but there is nothing to stop the model memorizing the small number of visual patterns and dynamics rules that appear in the game. In the following section we find further evidence that the model's low-level features are hard to interpret.
+    </p>
+    <h2>Feature visualization</h2>
+    <p>
+      <a href="https://distill.pub/2017/feature-visualization/">Feature visualization</a> <d-cite key="attribution1,featurevis,featurevis1,featurevis2,featurevis3,featurevis4"></d-cite> answers questions about what certain parts of a network are looking for by generating examples. This can be done by applying gradient descent to the input image, starting from random noise, with the objective of activating a particular neuron, or group of neurons. While this method works well for an image classifier trained on ImagetNet <d-cite key="imagenet"></d-cite>, for our CoinRun model it yields only featureless clouds of saturated colors. Only for the first layer, which computes simple convolutions of the input, does the method produce comparable visualizations for the two models.
+    </p>
+    <figure style="grid-column: page;">
+      <div style="display: table; margin: 0 auto;">
+        <table id="feature-vis-traditional">
+          <tr><th></th><th>ImageNet</th><th>CoinRun</th></tr>
+          <tr>
+            <td>
+              First layer
+            </td>
+            <td>
+              <img src="images/feature_vis_traditional/imagenet_first_0.png">
+              <img src="images/feature_vis_traditional/imagenet_first_1.png">
+              <img src="images/feature_vis_traditional/imagenet_first_2.png">
+            </td>
+            <td>
+              <img src="images/feature_vis_traditional/coinrun_first_0.png">
+              <img src="images/feature_vis_traditional/coinrun_first_1.png">
+              <img src="images/feature_vis_traditional/coinrun_first_2.png">
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 1%;">
+              Intermediate layer
+            </td>
+            <td>
+              <img src="images/feature_vis_traditional/imagenet_intermediate_0.png">
+              <img src="images/feature_vis_traditional/imagenet_intermediate_1.png">
+              <img src="images/feature_vis_traditional/imagenet_intermediate_2.png">
+            </td>
+            <td>
+              <img src="images/feature_vis_traditional/coinrun_intermediate_0.png">
+              <img src="images/feature_vis_traditional/coinrun_intermediate_1.png">
+              <img src="images/feature_vis_traditional/coinrun_intermediate_2.png">
+            </td>
+          </tr>
+        </table>
+        <figcaption style="display: table-caption; caption-side: bottom;">Comparison of gradient-based feature visualization for CNNs trained on ImageNet (GoogLeNet <d-cite key="googlenet"></d-cite>) and on CoinRun (architecture described <a href="#d-footnote-4-listing">below</a>). Each image was chosen to activate a neuron in the center, with the 3 images corresponding to the first 3 channels. Jittering was applied between optimization steps of up to 2 pixels for the first layer, and up to 8 pixels for the intermediate layer (mixed4a for ImageNet, 2b for CoinRun).</figcaption>
+      </div>
+    </figure>
+    <p>
+      To rule out some simple reasons for the failure of this method, we tried varying it in a number of ways, none of which had any noticeable effect on the quality of the visualizations.
+    </p>
+    <ul>
+      <li><b>Transformation robustness.</b> This is the method of stochastically jittering, rotating and scaling the image between optimization steps, to search for examples that are robust to these transformations <d-cite key="featurevis"></d-cite>. We tried both increasing and decreasing the size of the jittering. Rotating and scaling are less appropriate for CoinRun, since the observations themselves are not invariant to these transformations.</li>
+      <li><b>Penalizing saturation.</b> Noticing that our visualizations tend to use fully saturated<d-footnote>We are slightly abusing "fully saturated" here to mean being one of the 8 colors with maximal or minimal RGB values.</d-footnote> colors towards the middle, we tried including in the visualization objective an L2 penalty of various strengths on the activations of the first layer, which successfully reduced the size of the saturated region.</li>
+      <li><b>Low-level visual diversity.</b> In an attempt to broaden the distribution of images seen by the model, we retrained it on a version of the game with procedurally-generated sprites. We additionally tried adding noise to the images, both independent per-pixel noise and spatially-correlated noise. Finally, we experimented briefly with adversarial training, though we did not pursue this line of inquiry very far.</li>
+    </ul>
+    <p>
+      We consider this failure of gradient-based feature visualization to be an important negative result, because it shows that this technique can fail to illuminate features that are critical to a model's performance. This is despite the fact that the model seems to understand a number of human-interpretable concepts, judging by our other techniques. This suggests that the exhaustiveness of our interpretability methods is an important area for future research.
+    </p>
+    <p>
+      Our best guess is that this failure is due to the narrowness of the distribution of images on which the model is trained (which are made up of the same blocks pieced together in a small number of different ways), together with the fact that the model only needs to extract a small amount of information from each image to perform well. This means that model can use simple shortcuts, such as picking out certain small configurations of pixels, that behave unpredictably when appled to arbitrary images.
+    </p>
+    <h3>Dataset example-based visualization</h3>
+    <p>
+      As an alternative to gradient-based feature visualization, we construct images out of dataset examples, which can be thought of as a heavily-regularized form of visualization. To do this, we sample a few thousand independent observations from the agent interacting with the environment, and pass them through the model. We then apply a dimensionality reduction method known as non-negative matrix factorization (NMF) to the activation channels.<d-footnote>More precisely, we find a non-negative approximate low-rank factorization of the matrix obtained by flattening the spatial dimensions of the activations into the batch dimension. This matrix has one row per observation <i>per spatial position</i> and one column per channel: thus the dimensionality reduction does not use spatial information. More information about NMF can be found in Olah et al.<d-cite key="buildingblocks"></d-cite></d-footnote> For each of the reduced number of channels, we choose the observations and spatial positions with the strongest activation in that direction (with a limited number of examples per position, for diversity), and display a patch from the observation at that position.
+    </p>
+    <figure>
+      <div id="feature-vis-dataset">
+        <img src="images/feature_vis_dataset/layer_2b_feature_0.png">
+        <img src="images/feature_vis_dataset/layer_2b_feature_1.png">
+        <img src="images/feature_vis_dataset/layer_2b_feature_2.png">
+        <img src="images/feature_vis_dataset/layer_2b_feature_3.png">
+        <img src="images/feature_vis_dataset/layer_2b_feature_4.png">
+        <img src="images/feature_vis_dataset/layer_2b_feature_5.png">
+        <img src="images/feature_vis_dataset/layer_2b_feature_6.png">
+        <img src="images/feature_vis_dataset/layer_2b_feature_7.png">
+        <img src="images/feature_vis_dataset/layer_2b_feature_8.png">
+        <img src="images/feature_vis_dataset/layer_2b_feature_9.png">
+        <img src="images/feature_vis_dataset/layer_2b_feature_10.png">
+        <img src="images/feature_vis_dataset/layer_2b_feature_11.png">
+        <img src="images/feature_vis_dataset/layer_2b_feature_12.png">
+        <img src="images/feature_vis_dataset/layer_2b_feature_13.png">
+        <img src="images/feature_vis_dataset/layer_2b_feature_14.png">
+        <img src="images/feature_vis_dataset/layer_2b_feature_15.png">
+      </div>
+      <figcaption>Dataset example-based feature visualizations for 16 NMF directions of layer 2b of our CoinRun model. The grey-white checkerboard represents the edge of the screen.</figcaption>
+    </figure>
+    <p>
+      Unlike gradient-based feature visualization, this method finds some meaning to the different directions in activation space: there are walls, coins, platforms, saw obstacles, moving enemies, boxes, and more. It may still fail to provide  a complete picture for each direction, however, since it only shows a limited number of dataset examples, and with limited context.
+    </p>
+    <h2>Attribution</h2>
+    <p>
+      A technique we had more success with than feature visualization was <a href="https://distill.pub/2018/building-blocks/">attribution</a>, which answers questions about the relationships between neurons. Specifically, we looked at how the activations of a given layer affect the outputs of the network, using the method of integrated gradients of Sundararajan, Taly and Yan <d-cite key="integratedgradients"></d-cite>. For this exposition we consider only the value function, ignoring the logits of the policy. Recall that for CoinRun, the value function estimates the time-discounted probability that the agent will successfully complete the level.
+    </p>
+    <div>
+      <div style="float: right;">
+        <figure style="width: 300px; margin: 0em 0.5em 1em 1em;">
+          <svg height="160px" width="300px">
+            <defs>
+              <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L0,6 L9,3 z" fill="#000000" />
+              </marker>
+            </defs>
+            <line x1="100" y1="30" x2="210" y2="30" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
+            <line x1="80" y1="50" x2="110" y2="100" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
+            <line x1="190" y1="100" x2="220" y2="50" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
+            <text x="50" y="20" text-anchor="middle">observation</text>
+            <text x="50" y="40" text-anchor="middle">space</text>
+            <text x="230" y="35" text-anchor="middle" class="katex"><tspan class="mathbb">R</tspan></text>
+            <text x="150" y="120" text-anchor="middle">activation</text>
+            <text x="150" y="140" text-anchor="middle">space</text>
+            <text x="155" y="20" text-anchor="middle" class="katex"><tspan class="mathit">V</tspan></text>
+            <text x="80" y="90" text-anchor="middle" class="katex"><tspan class="mathbf">A</tspan></text>
+            <text x="220" y="90" text-anchor="middle" class="katex"><tspan class="mathit">F</tspan></text>
+          </svg>
+          <figcaption>The commutative triangle defining <d-math>F</d-math>, whose gradient we compute.</figcaption>
+        </figure>
+      </div>
+      <p>
+        Let <d-math>V:\mathbb R^{64\times 64\times 3}\to\mathbb R</d-math> be the value function computed by our network, which accepts a 64x64 RGB observation. Given any layer in the network, we may write <d-math>V</d-math> as <d-math>V\left(\mathbf x\right)=F\left(\mathbf A\left(\mathbf x\right)\right)</d-math>, where <d-math>\mathbf A</d-math> computes the layer's activations. Given an observation <d-math>\mathbf x</d-math>, a simple method of attribution is to compute <d-math>\nabla_{\mathbf a}F\left(\mathbf a\right)\odot\mathbf a</d-math>, where <d-math>\mathbf a=\mathbf A\left(\mathbf x\right)</d-math> and <d-math>\odot</d-math> denotes the pointwise product. This tells us the sensitivity of the value function to each activation, multiplied by the strength of that activation. However, it does not account for the fact that the sensitivity of the value function may change as the activation is increased from zero.
+      </p>
+    </div>
+    <div>
+      <div style="float: right;">
+        <figure style="width: 300px; margin: 0.5em 0.5em 1em 1em;">
+          <img src="images/integrated_gradient.png">
+          <figcaption>Viewing <d-math>F</d-math> as the height of a surface, the integrated gradient of <d-math>F</d-math> measures the elevation gained while travelling in each direction, and sums to the total elevation gain.<d-cite key="attributionpaths"></d-cite></figcaption>
+        </figure>
+      </div>
+      <p>
+        To account for this, we instead choose a path <d-math>\mathcal P</d-math> in activation space from some starting point <d-math>\mathbf a_0</d-math> to the ending point <d-math>\mathbf a_1:=\mathbf A\left(\mathbf x\right)</d-math>. We then compute the integrated gradient of <d-math>F</d-math> along <d-math>\mathcal P</d-math>, which is defined as the path integral <d-math block="">\int_{\mathcal P}\nabla_{\mathbf a}F\left(\mathbf a\right)\odot\mathrm d\mathbf a.</d-math> Note the use of the pointwise product rather than the usual dot product here, which makes the integral vector-valued. By the <a href="https://en.wikipedia.org/wiki/Gradient_theorem">fundamental theorem of calculus for line integrals</a>, when the components of this integral are summed, the result depends only on the endpoints <d-math>\mathbf a_0</d-math> and <d-math>\mathbf a_1</d-math>, equalling <d-math>F\left(\mathbf a_1\right)-F\left(\mathbf a_0\right)</d-math>. Thus the components of the integral provide a true decomposition of this difference, "attributing" it across the activations.
+      </p>
+    </div>
+    <p style="margin-bottom: 0;">
+      For our purposes, we take <d-math>\mathcal P</d-math> to be the straight line from <d-math>\mathbf 0</d-math> to <d-math>\mathbf A\left(\mathbf x\right)</d-math>.<d-footnote>In theory, we could choose any point in activation space as the starting point of our path, but in practice, <d-math>\mathbf 0</d-math> tends to be a good baseline against which to compare other activations, with <d-math>F\left(\mathbf 0\right)</d-math> being on the same order as the average value function. Sundararajan, Taly and Yan <d-cite key="integratedgradients"></d-cite> discuss the choice of this baseline in more depth.</d-footnote> In other words, given an observation <d-math>\mathbf x</d-math>, we define the value function attribution as<d-footnote>In practice, we numerically approximate the integral by evaluating the integrand at <d-math>\alpha=0.1,0.2,\ldots,1</d-math>.</d-footnote>
+    </p>
+    <d-math block="" style="margin: 0 auto;">
+      \int_0^1\nabla_{\mathbf a}F\left(\alpha\mathbf A\left(\mathbf x\right)\right)\mathrm d\alpha\odot\mathbf A\left(\mathbf x\right).
+    </d-math>
+    <p>
+      This has the same dimensions as <d-math>\mathbf A\left(\mathbf x\right)</d-math>, and its components sum to <d-math>V\left(\mathbf x\right)-F\left(\mathbf 0\right)</d-math>. So for a convolutional layer, this method allows us to attribute the value function (in excess of the baseline <d-math>F\left(\mathbf 0\right)</d-math>) across the horizontal, vertical and channel dimensions of activation space. Positive value function attribution can be thought of as "good news", components that cause the agent to think it is more likely to collect the coin at the end of the level. Similarly, negative value function attribution can be thought of as "bad news".
+    </p>
+    <h3>Dimensionality reduction for attribution</h3>
+    <p>
+      We showed above that a dimensionality reduction method known as non-negative matrix factorization (NMF) could be applied to the channels of activations to produce meaningful directions in activation space. We have in fact found that it is even more effective to apply NMF not to activations, but to <span style="font-style: italic;">value function attributions</span>.<d-footnote>As before, we obtain the NMF directions by sampling a few thousand independent observations from the agent interacting with the environment, computing the attributions, and flattening the spatial dimensions into the batch dimension. Because NMF can only be applied to non-negative matrices, we separate out the positive and negative parts of the attributions and concatenate them along the batch dimension.</d-footnote> With enough dimensions, both methods tend to produce similar results, but especially with a smaller number of dimensions, using attributions usually produces more salient features. This is because attribution takes into account not just <span style="font-style: italic;">what neurons respond to</span> but also <span style="font-style: italic;">whether their response matters</span>.
+    </p>
+    <p>
+      Moreover, applying NMF to attributions enables us to visualize the attributions themselves, by assigning a different color to each of the reduced number of channels. This may be combined with dataset example-based feature visualization to create a basic version of our interface, allowing us to see the effect of the main features at different spatial positions.
+    </p>
+    <figure style="grid-column: page;">
+      <div id="attribution" style="display: table; margin: 0 auto;">
+        <table style="margin-bottom: 1em;">
+          <tr><th>Observation</th><th>Positive attribution <span style="font-weight: normal;">(good news)</span></th><th>Negative attribution <span style="font-weight: normal;">(bad news)</span></th></tr>
+          <tr>
+            <td>
+              <div class="attribution-outer">
+                <div class="attribution-inner" style="z-index: 0;">
+                  <div class="attribution-image" style="background-image: url('images/attribution/observation.png');"></div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="attribution-outer">
+                <div class="attribution-inner" style="z-index: 0;">
+                  <div class="attribution-image" style="background-image: url('images/attribution/observation_grayscale.png');"></div>
+                </div>
+                <div class="attribution-inner" style="z-index: 1;">
+                  <div id="attribution-overlay-pos" class="attribution-image" style="background-image: url('images/attribution/attribution_pos.png');"></div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="attribution-outer">
+                <div class="attribution-inner" style="z-index: 0;">
+                  <div class="attribution-image" style="background-image: url('images/attribution/observation_grayscale.png');"></div>
+                </div>
+                <div class="attribution-inner" style="z-index: 1;">
+                  <div id="attribution-overlay-neg" class="attribution-image" style="background-image: url('images/attribution/attribution_neg.png');"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <div style="text-align: center; margin-bottom: 0.5em;">
+          <span style="font-weight: bold; border-bottom: 1px solid lightgray;">Legend <span style="font-weight: normal;">(hover to isolate)</span></span>
+          <br>
+          <div class="attribution-legend-item" id="attribution-legend-item-0">
+            <div class="attribution-legend-outer">
+              <div class="attribution-legend-dot" style="background-color: #ff0000;"></div>
+              <div class="attribution-legend-inner">
+                <div class="attribution-image" style="background-image: url('images/attribution/layer_2b_feature_0.png');"></div>
+              </div>
+              <div class="attribution-legend-label">Saw<br>obstacle</div>
+            </div>
+          </div>
+          <div class="attribution-legend-item" id="attribution-legend-item-1">
+            <div class="attribution-legend-outer">
+              <div class="attribution-legend-dot" style="background-color: #ffe400;"></div>
+              <div class="attribution-legend-inner">
+                <div class="attribution-image" style="background-image: url('images/attribution/layer_2b_feature_1.png');"></div>
+              </div>
+              <div class="attribution-legend-label">Coin</div>
+            </div>
+          </div>
+          <div class="attribution-legend-item" id="attribution-legend-item-2">
+            <div class="attribution-legend-outer">
+              <div class="attribution-legend-dot" style="background-color: #a1ff00;"></div>
+              <div class="attribution-legend-inner">
+                <div class="attribution-image" style="background-image: url('images/attribution/layer_2b_feature_2.png');"></div>
+              </div>
+              <div class="attribution-legend-label">Enemy<br>moving<br>left</div>
+            </div>
+          </div>
+          <div class="attribution-legend-item" id="attribution-legend-item-3">
+            <div class="attribution-legend-outer">
+              <div class="attribution-legend-dot" style="background-color: #00ffff;"></div>
+              <div class="attribution-legend-inner">
+                <div class="attribution-image" style="background-image: url('images/attribution/layer_2b_feature_3.png');"></div>
+              </div>
+              <div class="attribution-legend-label">Agent<br>or enemy<br>moving right</div>
+            </div>
+          </div>
+        </div>
+        <figcaption style="display: table-caption; caption-side: bottom;">
+          Value function attribution for a cherry-picked observation using layer 2b of our CoinRun model, reduced to 4 channels using attribution-based NMF. The dataset example-based feature visualizations of these directions reveal much more salient features than the visualizations of the first 4 activation-based NMF directions from the preceding section.
+        </figcaption>
+      </div>
+    </figure>
+    <p>
+      Attributions for our CoinRun model have some interesting properties that would be unusual for an ImageNet model.
+    </p>
+    <ul>
+      <li><b>Sparsity.</b> Most of the attribution is concentrated in a small number of spatial positions and channels. (We are using NMF-reduced channels here, though in fact the NMF directions are often close one-hot.) This supports our earlier hypothesis that the model is often picking out certain small configurations of pixels. Because of this sparsity, we smooth out attribution over nearby spatial positions for the main version of our interface, so that the amount of visual space taken up can be used to judge attribution strength. This trades off some spatial precision for more precision with magnitudes.</li>
+      <li><b>Unexpected sign.</b> Value function attribution usually has the sign one would expect: positive for coins, negative for enemies, and so on. However, this is often not the case. For example, in the figure above, the red channel (which detects saw obstacles) has both positive and negative attribution in two neighbouring spatial positions towards the left. Our best guess is that this phenomenon is a result of statistical <a href="https://en.wikipedia.org/wiki/Multicollinearity">collinearity</a>, caused by certain correlations in the procedual level generation together with the agent's behaviour. These could be visual, such as correlations between nearby pixels, or more abstract, such as the end of the level being correlated with having an enemy behind the agent in a certain configuration.</li>
+    </ul>
+    <p>
+      These considerations suggest that some care may be required when interpreting attributions.
+    </p>
+    <h3>Model editing</h3>
+    <p>
+      We can also use the features identified by attribution-based NMF to edit the model. For example, we can blind the model to a feature, by making the weights project out the corresponding NMF direction.
+    </p>
+    <div>
+      <div style="float: right;">
+        <figure style="width: 300px; margin: 0em 0.5em 1em 1em;">
+          <svg height="160px" width="300px">
+            <defs>
+              <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L0,6 L9,3 z" fill="#000000" />
+              </marker>
+            </defs>
+            <text x="150" y="80" text-anchor="middle">[diagram of orthogonal projection]</text>
+          </svg>
+          <figcaption>An orthogonal projection maps each point to the closest point in a lower-dimensional subspace.</figcaption>
+        </figure>
+      </div>
+      <p>
+        To do this, let <d-math>\mathbf v</d-math> be the NMF direction corresponding to the feature we wish to blind the model to. This is a vector of length <d-math>c</d-math>, the number of channels in activation space. Using this we construct the <a href="https://en.wikipedia.org/wiki/Projection_(linear_algebra)">orthogonal projection</a> matrix <d-math>P:=I-\frac 1{\|\mathbf v\|^2}\mathbf v\mathbf v^{\mathsf T}</d-math>,<d-footnote>Here <d-math>I</d-math> denotes the identity matrix and <d-math>\mathbf v\mathbf v^{\mathsf T}</d-math> denotes the outer product of <d-math>\mathbf v</d-math> with itself.</d-footnote> which projects out the direction of <d-math>\mathbf v</d-math> from activation vectors. We then take the convolutional kernel of the following layer, which has shape <d-math>\text{height}\times\text{width}\times c\times d</d-math>, where <d-math>d</d-math> is the number of output channels. Broadcasting across the height and width dimensions, we left-multiply each <d-math>c\times d</d-math> matrix in the kernel by <d-math>P</d-math>. The effect of the new kernel is to project out the direction of <d-math>\mathbf v</d-math> from activations before applying the original kernel.
+      </p>
+    </div>
+    <p>
+      We performed this procedure, using attribution-based NMF to reduce to 8 channels, and then using dataset-example based feature visualization to select the 2 directions corresponding to saw obstacles and to enemies moving left. After projecting out the saw obstacle direction, we found that the model was still able to avoid saw obstacles, and so we repeated the procedure, and found that a new saw obstacle direction had appeared. Projecting out the new saw obstacle direction resulted in a model that failed to respond to saws but otherwise behaved normally. For enemies moving left, we were able to achieve this effect using a single edit. We provide a quantitative evaluation of this procedure above.
+    </p>
+    <h2>Full interface</h2>
+    <figure>
+      <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/demo/interface.html" target="_blank" style="border-bottom: none;">
+        <img id="interface-screenshot" src="images/screenshots/0.png" style="border: 1px solid gray;">
+      </a>
+      <figcaption>
+        Our expanded interface. Click to open an interactive version in a new tab.
+      </figcaption>
+    </figure>
+    <p>
+      We have incorporated our methods into an expanded interface for exploring RL vision models. This includes a number of additional features.
+    </p>
+    <ul>
+      <li><b>Trajectory navigation.</b> You can step through trajectories of the agent interacting with the environment, viewing observations, actions and rewards, as well the model's value function and policy.</li>
+      <li><b>Value function and policy attribution.</b> For each observation, there are visualizations of NMF-reduced attribution for both the value function and the policy, using several different model layers (discussed below). For the policy, we use the logits output by the model, from which the action probabilities are obtained by applying a softmax.</li>
+      <li><b>Spatially-aware feature visualization.</b> The dataset example-based feature visualizations can be expanded to reveal a version in which each patch is taken from a specific spatial position. This creates a spatial correspondence between visualizations and observations, making it easier to understand NMF directions that respond to different features at different spatial positions (such as the agent's velociy, which is painted into top left of the observations).</li>
+      <li><b>Identification of interesting events.</b> We automatically identify particular moments of interest, by choosing the actions from each level with the highest and lowest advantage, computed using using generalized advantage estimation (GAE)<d-cite key="gae"></d-cite>. GAE measures how successful each action turned out relative to the agent's expectations, and is used to improve the agent's policy during training. Low advantage actions can identify mistakes made by the agent, and both high and low advantage actions can identify situations in which the value function is inaccurate.</li>
+    </ul>
+    <p>
+      The interface can be used with any non-recurrent convolutional neural network, though as we discuss below, it produces better results for certain architectures.
+    </p>
+    <h2>Discussion</h2>
+    <p>
+      To be continued...
+    </p>
 
   </d-article>
-
-
 
   <d-appendix>
     <h3>Acknowledgments</h3>
@@ -339,25 +739,15 @@
       We are deeply grateful to...
     </p>
 
-    <p>
-      Many of our diagrams are based on...
-    </p>
-
     <h3>Author Contributions</h3>
     <p>
-      <b>Research:</b> Alex developed ...
+      <b>Research:</b> ...
     </p>
-
-    <p>
-      <b>Writing & Diagrams:</b> The text was initially drafted by...
-    </p>
-
 
     <d-footnote-list></d-footnote-list>
     <d-citation-list></d-citation-list>
   </d-appendix>
 
-  <!-- bibliography will be inlined during Distill pipeline's pre-rendering -->
   <d-bibliography src="bibliography.bib"></d-bibliography>
 
 </body>
