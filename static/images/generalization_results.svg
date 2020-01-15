@@ -32,18 +32,18 @@ z
       <defs>
        <path d="M 0 0 
 L 0 3.5 
-" id="m8b22ce2d89" style="stroke:#000000;stroke-width:0.8;"/>
+" id="mb61a79b840" style="stroke:#000000;stroke-width:0.8;"/>
       </defs>
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="79.288016" xlink:href="#m8b22ce2d89" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="79.288016" xlink:href="#mb61a79b840" y="252"/>
       </g>
      </g>
      <g id="text_1">
       <!-- $\mathdefault{10^{2}}$ -->
       <g transform="translate(70.488016 266.598437)">
        <text>
-        <tspan style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:book;font-weight:book;" x="0 6.362305" y="-0.9765625">10</tspan>
-        <tspan style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:7px;font-style:book;font-weight:book;" x="12.820312" y="-4.8046875">2</tspan>
+        <tspan style="font-family:DejaVu Sans;font-size:10px;font-style:book;font-weight:book;" x="0 6.362305" y="-0.9765625">10</tspan>
+        <tspan style="font-family:DejaVu Sans;font-size:7px;font-style:book;font-weight:book;" x="12.820312" y="-4.8046875">2</tspan>
        </text>
       </g>
      </g>
@@ -51,15 +51,15 @@ L 0 3.5
     <g id="xtick_2">
      <g id="line2d_2">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="173.972345" xlink:href="#m8b22ce2d89" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="173.972345" xlink:href="#mb61a79b840" y="252"/>
       </g>
      </g>
      <g id="text_2">
       <!-- $\mathdefault{10^{3}}$ -->
       <g transform="translate(165.172345 266.598437)">
        <text>
-        <tspan style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:book;font-weight:book;" x="0 6.362305" y="-0.9765625">10</tspan>
-        <tspan style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:7px;font-style:book;font-weight:book;" x="12.820312" y="-4.8046875">3</tspan>
+        <tspan style="font-family:DejaVu Sans;font-size:10px;font-style:book;font-weight:book;" x="0 6.362305" y="-0.9765625">10</tspan>
+        <tspan style="font-family:DejaVu Sans;font-size:7px;font-style:book;font-weight:book;" x="12.820312" y="-4.8046875">3</tspan>
        </text>
       </g>
      </g>
@@ -67,15 +67,15 @@ L 0 3.5
     <g id="xtick_3">
      <g id="line2d_3">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="268.656674" xlink:href="#m8b22ce2d89" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="268.656674" xlink:href="#mb61a79b840" y="252"/>
       </g>
      </g>
      <g id="text_3">
       <!-- $\mathdefault{10^{4}}$ -->
       <g transform="translate(259.856674 266.598437)">
        <text>
-        <tspan style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:book;font-weight:book;" x="0 6.362305" y="-0.06406250000000036">10</tspan>
-        <tspan style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:7px;font-style:book;font-weight:book;" x="12.820312" y="-3.8921875000000004">4</tspan>
+        <tspan style="font-family:DejaVu Sans;font-size:10px;font-style:book;font-weight:book;" x="0 6.362305" y="-0.06406250000000036">10</tspan>
+        <tspan style="font-family:DejaVu Sans;font-size:7px;font-style:book;font-weight:book;" x="12.820312" y="-3.8921875000000004">4</tspan>
        </text>
       </g>
      </g>
@@ -83,15 +83,15 @@ L 0 3.5
     <g id="xtick_4">
      <g id="line2d_4">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="363.341003" xlink:href="#m8b22ce2d89" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="363.341003" xlink:href="#mb61a79b840" y="252"/>
       </g>
      </g>
      <g id="text_4">
       <!-- $\mathdefault{10^{5}}$ -->
       <g transform="translate(354.541003 266.598437)">
        <text>
-        <tspan style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:book;font-weight:book;" x="0 6.362305" y="-0.06406250000000036">10</tspan>
-        <tspan style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:7px;font-style:book;font-weight:book;" x="12.820312" y="-3.8921875000000004">5</tspan>
+        <tspan style="font-family:DejaVu Sans;font-size:10px;font-style:book;font-weight:book;" x="0 6.362305" y="-0.06406250000000036">10</tspan>
+        <tspan style="font-family:DejaVu Sans;font-size:7px;font-style:book;font-weight:book;" x="12.820312" y="-3.8921875000000004">5</tspan>
        </text>
       </g>
      </g>
@@ -101,204 +101,204 @@ L 0 3.5
       <defs>
        <path d="M 0 0 
 L 0 2 
-" id="meaa409caab" style="stroke:#000000;stroke-width:0.6;"/>
+" id="m0217cb7e6a" style="stroke:#000000;stroke-width:0.6;"/>
       </defs>
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="58.282416" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="58.282416" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_6">
      <g id="line2d_6">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="64.621228" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="64.621228" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_7">
      <g id="line2d_7">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="70.112157" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="70.112157" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_8">
      <g id="line2d_8">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="74.955499" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="74.955499" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_9">
      <g id="line2d_9">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="107.790839" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="107.790839" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_10">
      <g id="line2d_10">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="124.463922" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="124.463922" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_11">
      <g id="line2d_11">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="136.293662" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="136.293662" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_12">
      <g id="line2d_12">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="145.469522" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="145.469522" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_13">
      <g id="line2d_13">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="152.966745" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="152.966745" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_14">
      <g id="line2d_14">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="159.305557" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="159.305557" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_15">
      <g id="line2d_15">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="164.796485" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="164.796485" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_16">
      <g id="line2d_16">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="169.639828" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="169.639828" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_17">
      <g id="line2d_17">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="202.475168" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="202.475168" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_18">
      <g id="line2d_18">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="219.148251" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="219.148251" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_19">
      <g id="line2d_19">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="230.977991" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="230.977991" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_20">
      <g id="line2d_20">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="240.153851" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="240.153851" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_21">
      <g id="line2d_21">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="247.651074" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="247.651074" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_22">
      <g id="line2d_22">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="253.989886" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="253.989886" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_23">
      <g id="line2d_23">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="259.480814" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="259.480814" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_24">
      <g id="line2d_24">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="264.324157" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="264.324157" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_25">
      <g id="line2d_25">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="297.159497" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="297.159497" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_26">
      <g id="line2d_26">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="313.83258" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="313.83258" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_27">
      <g id="line2d_27">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="325.66232" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="325.66232" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_28">
      <g id="line2d_28">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="334.83818" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="334.83818" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_29">
      <g id="line2d_29">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="342.335403" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="342.335403" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_30">
      <g id="line2d_30">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="348.674215" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="348.674215" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_31">
      <g id="line2d_31">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="354.165143" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="354.165143" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="xtick_32">
      <g id="line2d_32">
       <g>
-       <use style="stroke:#000000;stroke-width:0.6;" x="359.008486" xlink:href="#meaa409caab" y="252"/>
+       <use style="stroke:#000000;stroke-width:0.6;" x="359.008486" xlink:href="#m0217cb7e6a" y="252"/>
       </g>
      </g>
     </g>
     <g id="text_5">
-     <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-0, 221.4, 280.276563)" x="221.4" y="280.276563">Number of training levels</text>
+     <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-0, 221.4, 280.276563)" x="221.4" y="280.276563">Number of training levels</text>
     </g>
    </g>
    <g id="matplotlib.axis_2">
@@ -307,102 +307,102 @@ L 0 2
       <defs>
        <path d="M 0 0 
 L -3.5 0 
-" id="md553b49b0f" style="stroke:#000000;stroke-width:0.8;"/>
+" id="mfb83b9c430" style="stroke:#000000;stroke-width:0.8;"/>
       </defs>
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#md553b49b0f" y="251.494808"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#mfb83b9c430" y="251.494808"/>
       </g>
      </g>
      <g id="text_6">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 255.294026)" x="47" y="255.294026">60%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 255.294026)" x="47" y="255.294026">60%</text>
      </g>
     </g>
     <g id="ytick_2">
      <g id="line2d_34">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#md553b49b0f" y="225.587504"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#mfb83b9c430" y="225.587504"/>
       </g>
      </g>
      <g id="text_7">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 229.386723)" x="47" y="229.386723">65%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 229.386723)" x="47" y="229.386723">65%</text>
      </g>
     </g>
     <g id="ytick_3">
      <g id="line2d_35">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#md553b49b0f" y="199.6802"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#mfb83b9c430" y="199.6802"/>
       </g>
      </g>
      <g id="text_8">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 203.479419)" x="47" y="203.479419">70%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 203.479419)" x="47" y="203.479419">70%</text>
      </g>
     </g>
     <g id="ytick_4">
      <g id="line2d_36">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#md553b49b0f" y="173.772896"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#mfb83b9c430" y="173.772896"/>
       </g>
      </g>
      <g id="text_9">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 177.572115)" x="47" y="177.572115">75%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 177.572115)" x="47" y="177.572115">75%</text>
      </g>
     </g>
     <g id="ytick_5">
      <g id="line2d_37">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#md553b49b0f" y="147.865593"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#mfb83b9c430" y="147.865593"/>
       </g>
      </g>
      <g id="text_10">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 151.664812)" x="47" y="151.664812">80%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 151.664812)" x="47" y="151.664812">80%</text>
      </g>
     </g>
     <g id="ytick_6">
      <g id="line2d_38">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#md553b49b0f" y="121.958289"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#mfb83b9c430" y="121.958289"/>
       </g>
      </g>
      <g id="text_11">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 125.757508)" x="47" y="125.757508">85%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 125.757508)" x="47" y="125.757508">85%</text>
      </g>
     </g>
     <g id="ytick_7">
      <g id="line2d_39">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#md553b49b0f" y="96.050985"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#mfb83b9c430" y="96.050985"/>
       </g>
      </g>
      <g id="text_12">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 99.850204)" x="47" y="99.850204">90%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 99.850204)" x="47" y="99.850204">90%</text>
      </g>
     </g>
     <g id="ytick_8">
      <g id="line2d_40">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#md553b49b0f" y="70.143682"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#mfb83b9c430" y="70.143682"/>
       </g>
      </g>
      <g id="text_13">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 73.9429)" x="47" y="73.9429">95%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 73.9429)" x="47" y="73.9429">95%</text>
      </g>
     </g>
     <g id="ytick_9">
      <g id="line2d_41">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#md553b49b0f" y="44.236378"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54" xlink:href="#mfb83b9c430" y="44.236378"/>
       </g>
      </g>
      <g id="text_14">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 48.035597)" x="47" y="48.035597">100%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47, 48.035597)" x="47" y="48.035597">100%</text>
      </g>
     </g>
     <g id="text_15">
-     <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-90, 12.33125, 143.28)" x="12.33125" y="143.28">Percentage of levels completed</text>
+     <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-90, 12.33125, 143.28)" x="12.33125" y="143.28">Percentage of levels completed</text>
     </g>
    </g>
    <g id="line2d_42">
-    <path clip-path="url(#p3d7104a36a)" d="M 79.288016 44.443636 
+    <path clip-path="url(#pc56ced9039)" d="M 79.288016 44.443636 
 L 124.463922 45.169041 
 L 173.972345 45.94626 
 L 219.148251 46.049889 
@@ -421,20 +421,20 @@ C -1.341951 -0.77937 -1.5 -0.397805 -1.5 0
 C -1.5 0.397805 -1.341951 0.77937 -1.06066 1.06066 
 C -0.77937 1.341951 -0.397805 1.5 0 1.5 
 z
-" id="m8aca7d0807" style="stroke:#1f77b4;"/>
+" id="m73d593442d" style="stroke:#1f77b4;"/>
     </defs>
-    <g clip-path="url(#p3d7104a36a)">
-     <use style="fill:#1f77b4;stroke:#1f77b4;" x="79.288016" xlink:href="#m8aca7d0807" y="44.443636"/>
-     <use style="fill:#1f77b4;stroke:#1f77b4;" x="124.463922" xlink:href="#m8aca7d0807" y="45.169041"/>
-     <use style="fill:#1f77b4;stroke:#1f77b4;" x="173.972345" xlink:href="#m8aca7d0807" y="45.94626"/>
-     <use style="fill:#1f77b4;stroke:#1f77b4;" x="219.148251" xlink:href="#m8aca7d0807" y="46.049889"/>
-     <use style="fill:#1f77b4;stroke:#1f77b4;" x="268.656674" xlink:href="#m8aca7d0807" y="46.982552"/>
-     <use style="fill:#1f77b4;stroke:#1f77b4;" x="313.83258" xlink:href="#m8aca7d0807" y="46.568035"/>
-     <use style="fill:#1f77b4;stroke:#1f77b4;" x="363.341003" xlink:href="#m8aca7d0807" y="46.464406"/>
+    <g clip-path="url(#pc56ced9039)">
+     <use style="fill:#1f77b4;stroke:#1f77b4;" x="79.288016" xlink:href="#m73d593442d" y="44.443636"/>
+     <use style="fill:#1f77b4;stroke:#1f77b4;" x="124.463922" xlink:href="#m73d593442d" y="45.169041"/>
+     <use style="fill:#1f77b4;stroke:#1f77b4;" x="173.972345" xlink:href="#m73d593442d" y="45.94626"/>
+     <use style="fill:#1f77b4;stroke:#1f77b4;" x="219.148251" xlink:href="#m73d593442d" y="46.049889"/>
+     <use style="fill:#1f77b4;stroke:#1f77b4;" x="268.656674" xlink:href="#m73d593442d" y="46.982552"/>
+     <use style="fill:#1f77b4;stroke:#1f77b4;" x="313.83258" xlink:href="#m73d593442d" y="46.568035"/>
+     <use style="fill:#1f77b4;stroke:#1f77b4;" x="363.341003" xlink:href="#m73d593442d" y="46.464406"/>
     </g>
    </g>
    <g id="line2d_43">
-    <path clip-path="url(#p3d7104a36a)" d="M 79.288016 242.116364 
+    <path clip-path="url(#pc56ced9039)" d="M 79.288016 242.116364 
 L 124.463922 215.483655 
 L 173.972345 174.135599 
 L 219.148251 96.724575 
@@ -453,16 +453,16 @@ C -1.341951 -0.77937 -1.5 -0.397805 -1.5 0
 C -1.5 0.397805 -1.341951 0.77937 -1.06066 1.06066 
 C -0.77937 1.341951 -0.397805 1.5 0 1.5 
 z
-" id="m29669b0d4f" style="stroke:#ff7f0e;"/>
+" id="m71ec028f00" style="stroke:#ff7f0e;"/>
     </defs>
-    <g clip-path="url(#p3d7104a36a)">
-     <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="79.288016" xlink:href="#m29669b0d4f" y="242.116364"/>
-     <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="124.463922" xlink:href="#m29669b0d4f" y="215.483655"/>
-     <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="173.972345" xlink:href="#m29669b0d4f" y="174.135599"/>
-     <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="219.148251" xlink:href="#m29669b0d4f" y="96.724575"/>
-     <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="268.656674" xlink:href="#m29669b0d4f" y="57.034586"/>
-     <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="313.83258" xlink:href="#m29669b0d4f" y="51.179535"/>
-     <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="363.341003" xlink:href="#m29669b0d4f" y="48.122473"/>
+    <g clip-path="url(#pc56ced9039)">
+     <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="79.288016" xlink:href="#m71ec028f00" y="242.116364"/>
+     <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="124.463922" xlink:href="#m71ec028f00" y="215.483655"/>
+     <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="173.972345" xlink:href="#m71ec028f00" y="174.135599"/>
+     <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="219.148251" xlink:href="#m71ec028f00" y="96.724575"/>
+     <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="268.656674" xlink:href="#m71ec028f00" y="57.034586"/>
+     <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="313.83258" xlink:href="#m71ec028f00" y="51.179535"/>
+     <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="363.341003" xlink:href="#m71ec028f00" y="48.122473"/>
     </g>
    </g>
    <g id="patch_3">
@@ -486,7 +486,7 @@ L 388.8 34.56
 " style="fill:none;stroke:#000000;stroke-linecap:square;stroke-linejoin:miter;stroke-width:0.8;"/>
    </g>
    <g id="text_16">
-    <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-0, 221.4, 28.56)" x="221.4" y="28.56">Interpretability and generalization</text>
+    <text style="font-family:DejaVu Sans;font-size:14px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-0, 221.4, 28.56)" x="221.4" y="28.56">Interpretability and generalization</text>
    </g>
    <g id="legend_1">
     <g id="patch_7">
@@ -509,11 +509,11 @@ L 99.74 135.200312
     </g>
     <g id="line2d_45">
      <g>
-      <use style="fill:#1f77b4;stroke:#1f77b4;" x="89.74" xlink:href="#m8aca7d0807" y="135.200312"/>
+      <use style="fill:#1f77b4;stroke:#1f77b4;" x="89.74" xlink:href="#m73d593442d" y="135.200312"/>
      </g>
     </g>
     <g id="text_17">
-     <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 107.74, 138.700312)" x="107.74" y="138.700312">Train</text>
+     <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 107.74, 138.700312)" x="107.74" y="138.700312">Train</text>
     </g>
     <g id="line2d_46">
      <path d="M 79.74 149.878437 
@@ -522,17 +522,17 @@ L 99.74 149.878437
     </g>
     <g id="line2d_47">
      <g>
-      <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="89.74" xlink:href="#m29669b0d4f" y="149.878437"/>
+      <use style="fill:#ff7f0e;stroke:#ff7f0e;" x="89.74" xlink:href="#m71ec028f00" y="149.878437"/>
      </g>
     </g>
     <g id="text_18">
-     <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 107.74, 153.378437)" x="107.74" y="153.378437">Test</text>
+     <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 107.74, 153.378437)" x="107.74" y="153.378437">Test</text>
     </g>
    </g>
   </g>
   <g id="axes_2">
    <g id="patch_8">
-    <path clip-path="url(#p3d7104a36a)" d="M 69.218182 250.664523 
+    <path clip-path="url(#pc56ced9039)" d="M 69.218182 250.664523 
 L 89.528831 250.664523 
 L 89.528831 250.664523 
 L 69.218182 250.664523 
@@ -540,7 +540,7 @@ z
 " style="fill:#2ca02c;"/>
    </g>
    <g id="patch_9">
-    <path clip-path="url(#p3d7104a36a)" d="M 114.394088 250.664523 
+    <path clip-path="url(#pc56ced9039)" d="M 114.394088 250.664523 
 L 134.704737 250.664523 
 L 134.704737 250.664523 
 L 114.394088 250.664523 
@@ -548,7 +548,7 @@ z
 " style="fill:#2ca02c;"/>
    </g>
    <g id="patch_10">
-    <path clip-path="url(#p3d7104a36a)" d="M 163.902511 250.664523 
+    <path clip-path="url(#pc56ced9039)" d="M 163.902511 250.664523 
 L 184.21316 250.664523 
 L 184.21316 250.664523 
 L 163.902511 250.664523 
@@ -556,7 +556,7 @@ z
 " style="fill:#2ca02c;"/>
    </g>
    <g id="patch_11">
-    <path clip-path="url(#p3d7104a36a)" d="M 209.078417 250.664523 
+    <path clip-path="url(#pc56ced9039)" d="M 209.078417 250.664523 
 L 229.389066 250.664523 
 L 229.389066 250.664523 
 L 209.078417 250.664523 
@@ -564,7 +564,7 @@ z
 " style="fill:#2ca02c;"/>
    </g>
    <g id="patch_12">
-    <path clip-path="url(#p3d7104a36a)" d="M 258.58684 250.664523 
+    <path clip-path="url(#pc56ced9039)" d="M 258.58684 250.664523 
 L 278.897489 250.664523 
 L 278.897489 250.664523 
 L 258.58684 250.664523 
@@ -572,7 +572,7 @@ z
 " style="fill:#2ca02c;"/>
    </g>
    <g id="patch_13">
-    <path clip-path="url(#p3d7104a36a)" d="M 303.762745 250.664523 
+    <path clip-path="url(#pc56ced9039)" d="M 303.762745 250.664523 
 L 324.073395 250.664523 
 L 324.073395 250.664523 
 L 303.762745 250.664523 
@@ -580,7 +580,7 @@ z
 " style="fill:#2ca02c;"/>
    </g>
    <g id="patch_14">
-    <path clip-path="url(#p3d7104a36a)" d="M 353.271169 250.664523 
+    <path clip-path="url(#pc56ced9039)" d="M 353.271169 250.664523 
 L 373.581818 250.664523 
 L 373.581818 250.664523 
 L 353.271169 250.664523 
@@ -593,98 +593,98 @@ z
       <defs>
        <path d="M 0 0 
 L 3.5 0 
-" id="mabdba5ec17" style="stroke:#000000;stroke-width:0.8;"/>
+" id="m8d054a66f8" style="stroke:#000000;stroke-width:0.8;"/>
       </defs>
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#mabdba5ec17" y="250.664523"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#m8d054a66f8" y="250.664523"/>
       </g>
      </g>
      <g id="text_19">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 254.463741)" x="395.8" y="254.463741">0</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 254.463741)" x="395.8" y="254.463741">0</text>
      </g>
     </g>
     <g id="ytick_11">
      <g id="line2d_49">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#mabdba5ec17" y="226.383116"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#m8d054a66f8" y="226.383116"/>
       </g>
      </g>
      <g id="text_20">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 230.182334)" x="395.8" y="230.182334">1</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 230.182334)" x="395.8" y="230.182334">1</text>
      </g>
     </g>
     <g id="ytick_12">
      <g id="line2d_50">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#mabdba5ec17" y="202.101709"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#m8d054a66f8" y="202.101709"/>
       </g>
      </g>
      <g id="text_21">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 205.900927)" x="395.8" y="205.900927">2</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 205.900927)" x="395.8" y="205.900927">2</text>
      </g>
     </g>
     <g id="ytick_13">
      <g id="line2d_51">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#mabdba5ec17" y="177.820302"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#m8d054a66f8" y="177.820302"/>
       </g>
      </g>
      <g id="text_22">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 181.61952)" x="395.8" y="181.61952">3</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 181.61952)" x="395.8" y="181.61952">3</text>
      </g>
     </g>
     <g id="ytick_14">
      <g id="line2d_52">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#mabdba5ec17" y="153.538894"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#m8d054a66f8" y="153.538894"/>
       </g>
      </g>
      <g id="text_23">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 157.338113)" x="395.8" y="157.338113">4</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 157.338113)" x="395.8" y="157.338113">4</text>
      </g>
     </g>
     <g id="ytick_15">
      <g id="line2d_53">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#mabdba5ec17" y="129.257487"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#m8d054a66f8" y="129.257487"/>
       </g>
      </g>
      <g id="text_24">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 133.056706)" x="395.8" y="133.056706">5</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 133.056706)" x="395.8" y="133.056706">5</text>
      </g>
     </g>
     <g id="ytick_16">
      <g id="line2d_54">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#mabdba5ec17" y="104.97608"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#m8d054a66f8" y="104.97608"/>
       </g>
      </g>
      <g id="text_25">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 108.775299)" x="395.8" y="108.775299">6</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 108.775299)" x="395.8" y="108.775299">6</text>
      </g>
     </g>
     <g id="ytick_17">
      <g id="line2d_55">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#mabdba5ec17" y="80.694673"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#m8d054a66f8" y="80.694673"/>
       </g>
      </g>
      <g id="text_26">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 84.493892)" x="395.8" y="84.493892">7</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 84.493892)" x="395.8" y="84.493892">7</text>
      </g>
     </g>
     <g id="ytick_18">
      <g id="line2d_56">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#mabdba5ec17" y="56.413266"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="388.8" xlink:href="#m8d054a66f8" y="56.413266"/>
       </g>
      </g>
      <g id="text_27">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 60.212485)" x="395.8" y="60.212485">8</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 395.8, 60.212485)" x="395.8" y="60.212485">8</text>
      </g>
     </g>
     <g id="text_28">
-     <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-90, 413.760938, 143.28)" x="413.760938" y="143.28">Number of meaningful features</text>
+     <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-90, 413.760938, 143.28)" x="413.760938" y="143.28">Number of meaningful features</text>
     </g>
    </g>
    <g id="patch_15">
@@ -710,7 +710,7 @@ L 388.8 34.56
   </g>
  </g>
  <defs>
-  <clipPath id="p3d7104a36a">
+  <clipPath id="pc56ced9039">
    <rect height="217.44" width="334.8" x="54" y="34.56"/>
   </clipPath>
  </defs>

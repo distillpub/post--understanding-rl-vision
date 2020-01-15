@@ -27,7 +27,7 @@ z
 " style="fill:#ffffff;"/>
    </g>
    <g id="patch_3">
-    <path clip-path="url(#pc600c44862)" d="M 70.655114 260.3 
+    <path clip-path="url(#pf97095588c)" d="M 70.655114 260.3 
 L 94.430276 260.3 
 L 94.430276 253.865458 
 L 70.655114 253.865458 
@@ -35,7 +35,7 @@ z
 " style="fill:#df6060;"/>
    </g>
    <g id="patch_4">
-    <path clip-path="url(#pc600c44862)" d="M 189.530925 260.3 
+    <path clip-path="url(#pf97095588c)" d="M 189.530925 260.3 
 L 213.306088 260.3 
 L 213.306088 38.395238 
 L 189.530925 38.395238 
@@ -43,7 +43,7 @@ z
 " style="fill:#df6060;"/>
    </g>
    <g id="patch_5">
-    <path clip-path="url(#pc600c44862)" d="M 308.406737 260.3 
+    <path clip-path="url(#pf97095588c)" d="M 308.406737 260.3 
 L 332.181899 260.3 
 L 332.181899 254.039364 
 L 308.406737 254.039364 
@@ -51,7 +51,7 @@ z
 " style="fill:#df6060;"/>
    </g>
    <g id="patch_6">
-    <path clip-path="url(#pc600c44862)" d="M 94.430276 260.3 
+    <path clip-path="url(#pf97095588c)" d="M 94.430276 260.3 
 L 118.205438 260.3 
 L 118.205438 257.517495 
 L 94.430276 257.517495 
@@ -59,7 +59,7 @@ z
 " style="fill:#b0df60;"/>
    </g>
    <g id="patch_7">
-    <path clip-path="url(#pc600c44862)" d="M 213.306088 260.3 
+    <path clip-path="url(#pf97095588c)" d="M 213.306088 260.3 
 L 237.08125 260.3 
 L 237.08125 257.517495 
 L 213.306088 257.517495 
@@ -67,7 +67,7 @@ z
 " style="fill:#b0df60;"/>
    </g>
    <g id="patch_8">
-    <path clip-path="url(#pc600c44862)" d="M 332.181899 260.3 
+    <path clip-path="url(#pf97095588c)" d="M 332.181899 260.3 
 L 355.957062 260.3 
 L 355.957062 178.737827 
 L 332.181899 178.737827 
@@ -75,7 +75,7 @@ z
 " style="fill:#b0df60;"/>
    </g>
    <g id="patch_9">
-    <path clip-path="url(#pc600c44862)" d="M 118.205438 260.3 
+    <path clip-path="url(#pf97095588c)" d="M 118.205438 260.3 
 L 141.980601 260.3 
 L 141.980601 258.213121 
 L 118.205438 258.213121 
@@ -83,7 +83,7 @@ z
 " style="fill:#60df87;"/>
    </g>
    <g id="patch_10">
-    <path clip-path="url(#pc600c44862)" d="M 237.08125 260.3 
+    <path clip-path="url(#pf97095588c)" d="M 237.08125 260.3 
 L 260.856412 260.3 
 L 260.856412 258.908748 
 L 237.08125 258.908748 
@@ -91,7 +91,7 @@ z
 " style="fill:#60df87;"/>
    </g>
    <g id="patch_11">
-    <path clip-path="url(#pc600c44862)" d="M 355.957062 260.3 
+    <path clip-path="url(#pf97095588c)" d="M 355.957062 260.3 
 L 379.732224 260.3 
 L 379.732224 243.431064 
 L 355.957062 243.431064 
@@ -99,7 +99,7 @@ z
 " style="fill:#60df87;"/>
    </g>
    <g id="patch_12">
-    <path clip-path="url(#pc600c44862)" d="M 141.980601 260.3 
+    <path clip-path="url(#pf97095588c)" d="M 141.980601 260.3 
 L 165.755763 260.3 
 L 165.755763 258.908748 
 L 141.980601 258.908748 
@@ -107,7 +107,7 @@ z
 " style="fill:#1f77b4;"/>
    </g>
    <g id="patch_13">
-    <path clip-path="url(#pc600c44862)" d="M 260.856412 260.3 
+    <path clip-path="url(#pf97095588c)" d="M 260.856412 260.3 
 L 284.631575 260.3 
 L 284.631575 259.430467 
 L 260.856412 259.430467 
@@ -115,7 +115,7 @@ z
 " style="fill:#1f77b4;"/>
    </g>
    <g id="patch_14">
-    <path clip-path="url(#pc600c44862)" d="M 379.732224 260.3 
+    <path clip-path="url(#pf97095588c)" d="M 379.732224 260.3 
 L 403.507386 260.3 
 L 403.507386 259.082654 
 L 379.732224 259.082654 
@@ -128,34 +128,34 @@ z
       <defs>
        <path d="M 0 0 
 L 0 3.5 
-" id="mf3127053d9" style="stroke:#000000;stroke-width:0.8;"/>
+" id="m4635ce8f99" style="stroke:#000000;stroke-width:0.8;"/>
       </defs>
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="118.205438" xlink:href="#mf3127053d9" y="260.3"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="118.205438" xlink:href="#m4635ce8f99" y="260.3"/>
       </g>
      </g>
      <g id="text_1">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-0, 118.205438, 274.898438)" x="118.205438" y="274.898438">Original model</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-0, 118.205438, 274.898438)" x="118.205438" y="274.898438">Original model</text>
      </g>
     </g>
     <g id="xtick_2">
      <g id="line2d_2">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="237.08125" xlink:href="#mf3127053d9" y="260.3"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="237.08125" xlink:href="#m4635ce8f99" y="260.3"/>
       </g>
      </g>
      <g id="text_2">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-0, 237.08125, 274.898438)" x="237.08125" y="274.898438">Saw obstacle edit</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-0, 237.08125, 274.898438)" x="237.08125" y="274.898438">Saw obstacle edit</text>
      </g>
     </g>
     <g id="xtick_3">
      <g id="line2d_3">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="355.957062" xlink:href="#mf3127053d9" y="260.3"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="355.957062" xlink:href="#m4635ce8f99" y="260.3"/>
       </g>
      </g>
      <g id="text_3">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-0, 355.957062, 274.898438)" x="355.957062" y="274.898438">Enemy moving left edit</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-0, 355.957062, 274.898438)" x="355.957062" y="274.898438">Enemy moving left edit</text>
      </g>
     </g>
    </g>
@@ -165,78 +165,78 @@ L 0 3.5
       <defs>
        <path d="M 0 0 
 L -3.5 0 
-" id="mb9430da34f" style="stroke:#000000;stroke-width:0.8;"/>
+" id="md3ce5f569e" style="stroke:#000000;stroke-width:0.8;"/>
       </defs>
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54.0125" xlink:href="#mb9430da34f" y="260.3"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54.0125" xlink:href="#md3ce5f569e" y="260.3"/>
       </g>
      </g>
      <g id="text_4">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47.0125, 264.099219)" x="47.0125" y="264.099219">0%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47.0125, 264.099219)" x="47.0125" y="264.099219">0%</text>
      </g>
     </g>
     <g id="ytick_2">
      <g id="line2d_5">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54.0125" xlink:href="#mb9430da34f" y="225.518689"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54.0125" xlink:href="#md3ce5f569e" y="225.518689"/>
       </g>
      </g>
      <g id="text_5">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47.0125, 229.317908)" x="47.0125" y="229.317908">2%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47.0125, 229.317908)" x="47.0125" y="229.317908">2%</text>
      </g>
     </g>
     <g id="ytick_3">
      <g id="line2d_6">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54.0125" xlink:href="#mb9430da34f" y="190.737379"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54.0125" xlink:href="#md3ce5f569e" y="190.737379"/>
       </g>
      </g>
      <g id="text_6">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47.0125, 194.536597)" x="47.0125" y="194.536597">4%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47.0125, 194.536597)" x="47.0125" y="194.536597">4%</text>
      </g>
     </g>
     <g id="ytick_4">
      <g id="line2d_7">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54.0125" xlink:href="#mb9430da34f" y="155.956068"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54.0125" xlink:href="#md3ce5f569e" y="155.956068"/>
       </g>
      </g>
      <g id="text_7">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47.0125, 159.755287)" x="47.0125" y="159.755287">6%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47.0125, 159.755287)" x="47.0125" y="159.755287">6%</text>
      </g>
     </g>
     <g id="ytick_5">
      <g id="line2d_8">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54.0125" xlink:href="#mb9430da34f" y="121.174757"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54.0125" xlink:href="#md3ce5f569e" y="121.174757"/>
       </g>
      </g>
      <g id="text_8">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47.0125, 124.973976)" x="47.0125" y="124.973976">8%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47.0125, 124.973976)" x="47.0125" y="124.973976">8%</text>
      </g>
     </g>
     <g id="ytick_6">
      <g id="line2d_9">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54.0125" xlink:href="#mb9430da34f" y="86.393447"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54.0125" xlink:href="#md3ce5f569e" y="86.393447"/>
       </g>
      </g>
      <g id="text_9">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47.0125, 90.192666)" x="47.0125" y="90.192666">10%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47.0125, 90.192666)" x="47.0125" y="90.192666">10%</text>
      </g>
     </g>
     <g id="ytick_7">
      <g id="line2d_10">
       <g>
-       <use style="stroke:#000000;stroke-width:0.8;" x="54.0125" xlink:href="#mb9430da34f" y="51.612136"/>
+       <use style="stroke:#000000;stroke-width:0.8;" x="54.0125" xlink:href="#md3ce5f569e" y="51.612136"/>
       </g>
      </g>
      <g id="text_10">
-      <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47.0125, 55.411355)" x="47.0125" y="55.411355">12%</text>
+      <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:end;" transform="rotate(-0, 47.0125, 55.411355)" x="47.0125" y="55.411355">12%</text>
      </g>
     </g>
     <g id="text_11">
-     <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-90, 18.70625, 143.8)" x="18.70625" y="143.8">Percentage of levels failed</text>
+     <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-90, 18.70625, 143.8)" x="18.70625" y="143.8">Percentage of levels failed</text>
     </g>
    </g>
    <g id="patch_15">
@@ -260,7 +260,7 @@ L 420.15 27.3
 " style="fill:none;stroke:#000000;stroke-linecap:square;stroke-linejoin:miter;stroke-width:0.8;"/>
    </g>
    <g id="text_12">
-    <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-0, 237.08125, 21.3)" x="237.08125" y="21.3">Failure rate by cause</text>
+    <text style="font-family:DejaVu Sans;font-size:14px;font-style:normal;font-weight:normal;text-anchor:middle;" transform="rotate(-0, 237.08125, 21.3)" x="237.08125" y="21.3">Failure rate by cause</text>
    </g>
    <g id="legend_1">
     <g id="patch_19">
@@ -277,7 +277,7 @@ z
 " style="fill:#ffffff;opacity:0.8;stroke:#cccccc;stroke-linejoin:miter;"/>
     </g>
     <g id="text_13">
-     <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:bold;text-anchor:start;" transform="rotate(-0, 326.422656, 43.898437)" x="326.422656" y="43.898437">Causes</text>
+     <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:bold;text-anchor:start;" transform="rotate(-0, 326.422656, 43.898437)" x="326.422656" y="43.898437">Causes</text>
     </g>
     <g id="patch_20">
      <path d="M 281.5875 58.576562 
@@ -288,7 +288,7 @@ z
 " style="fill:#df6060;"/>
     </g>
     <g id="text_14">
-     <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 309.5875, 58.576562)" x="309.5875" y="58.576562">Saw obstacle</text>
+     <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 309.5875, 58.576562)" x="309.5875" y="58.576562">Saw obstacle</text>
     </g>
     <g id="patch_21">
      <path d="M 281.5875 73.254687 
@@ -299,7 +299,7 @@ z
 " style="fill:#b0df60;"/>
     </g>
     <g id="text_15">
-     <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 309.5875, 73.254687)" x="309.5875" y="73.254687">Enemy moving left</text>
+     <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 309.5875, 73.254687)" x="309.5875" y="73.254687">Enemy moving left</text>
     </g>
     <g id="patch_22">
      <path d="M 281.5875 87.932812 
@@ -310,7 +310,7 @@ z
 " style="fill:#60df87;"/>
     </g>
     <g id="text_16">
-     <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 309.5875, 87.932812)" x="309.5875" y="87.932812">Enemy moving right</text>
+     <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 309.5875, 87.932812)" x="309.5875" y="87.932812">Enemy moving right</text>
     </g>
     <g id="patch_23">
      <path d="M 281.5875 102.610937 
@@ -321,13 +321,13 @@ z
 " style="fill:#1f77b4;"/>
     </g>
     <g id="text_17">
-     <text style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 309.5875, 102.610937)" x="309.5875" y="102.610937">Multiple or other</text>
+     <text style="font-family:DejaVu Sans;font-size:10px;font-style:normal;font-weight:normal;text-anchor:start;" transform="rotate(-0, 309.5875, 102.610937)" x="309.5875" y="102.610937">Multiple or other</text>
     </g>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="pc600c44862">
+  <clipPath id="pf97095588c">
    <rect height="233" width="366.1375" x="54.0125" y="27.3"/>
   </clipPath>
  </defs>

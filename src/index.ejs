@@ -346,8 +346,8 @@
     <p>
       Our results show that our edits were successful and targeted, with no statistically measurable effects on the agent's other abilities.<d-footnote>The data for this plot are as follows.<br>Percentage of levels failed due to: saw obstacle / enemy moving left / enemy moving right / multiple or other:<br>- Original model: 0.37% / 0.16% / 0.12% / 0.08%<br>- Saw obstacle edit: 12.76% / 0.16% / 0.08% / 0.05%<br>- Enemy moving left edit: 0.36% / 4.69% / 0.97% / 0.07%<br>Each model was tested on 10,000 levels.</d-footnote>
     </p>
-    <figure style="text-align: center;">
-      <object type="image/svg+xml" data="images/model_editing_results.svg" style="width: 100%; font-family: inherit;"></object>
+    <figure class="matplotlib-svg" style="text-align: center;">
+      <%= require("../static/diagrams/model_editing_results.svg") %>
       <figcaption>Results of testing each model on 10,000 levels. Note that moving enemies can change direction.</figcaption>
     </figure>
     <p>
@@ -434,8 +434,8 @@
     <p>
       Procedural generation also provides us with a way to measure the relationship between interpretability and generalization. We measured generalization by training the agent on a limited number of levels, testing on unseen levels <d-cite key="coinrun"></d-cite>. We tried to measure interpretability using our interface, though this is much more subjective. We asked an interpretability researcher to score the 8 features identified by our interface on how meaningful they seemed, taking into account &hellip;.<d-footnote>The interfaces we showed to the researcher are listed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/finite_levels/index.html" target="_blank">here</a>.</d-footnote> By varying the number of levels in the training set, we could then see how interpretability varied with generalization.<d-footnote>The data for this plot are as follows.<br>- Number of training levels: 100 / 300 / 1000 / 3,000 / 10,000 / 30,000 / 100,000<br>- Percentage of levels completed (train): 99.96% / 99.82% / 99.67% / 99.65% / 99.47% / 99.55% / 99.57%<br>- Percentage of levels completed (test): 61.81% / 66.95% / 74.93% / 89.87% / 97.53% / 98.66% / 99.25%<br>- Number of meaningful features: ? / ? / ? / ? / ? / ? / ?<br>Percentages of levels completed are estimated by sampling 10,000 levels with replacement.</d-footnote>
     </p>
-    <figure style="text-align: center;">
-      <object type="image/svg+xml" data="images/generalization_results.svg" style="width: 100%; font-family: inherit;"></object>
+    <figure class="matplotlib-svg" style="text-align: center;">
+      <%= require("../static/diagrams/generalization_results.svg") %>
       <figcaption>Results of interpreting models trained on different numbers of levels.</figcaption>
     </figure>
     <p>

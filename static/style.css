@@ -108,6 +108,10 @@ button {
   margin: 0em 1em;
 }
 
+.matplotlib-svg text, .matplotlib-svg tspan {
+  font-family: inherit !important;
+}
+
 #model-editing-levels label {
   white-space: nowrap;
 }
