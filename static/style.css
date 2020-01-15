@@ -144,6 +144,18 @@ button {
   border: 1px solid gray;
 }
 
+#feature-vis-spatial {
+  margin: 0.5em auto;
+  height: 512px;
+  width: 512px;
+  background: repeating-linear-gradient(135deg, lightgray 0px, whitesmoke 10px, lightgray 20px);
+}
+
+#feature-vis-spatial img {
+  image-rendering: pixelated;
+  border: 1px solid gray;
+}
+
 #attribution .attribution-outer {
   position: relative;
   height: 16em;
