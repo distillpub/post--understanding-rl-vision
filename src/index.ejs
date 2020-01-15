@@ -15,7 +15,6 @@
     <script type="text/json">{
       "title": "Understanding RL vision models",
       "description": "We can analyze, debug and edit deep reinforcement learning models using attribution and dimensionality reduction.",
-      "password": false,
       "authors": [
         {
           "author": "Jacob Hilton",
@@ -237,7 +236,7 @@
     </p>
     <h2>Model analysis</h2>
     <p>
-      We developed an interface for examining trajectories of the agent playing the game. This incorporates attribution, which highlights objects that positively or negatively influence a particular network output (either the value function, or a policy logit). Using dimensionality reduction, attribution is broken down according to the type of object detected, which we indicate using different colors. (We will explain the precise calculation involved later.)
+      We developed an interface for examining trajectories of the agent playing the game. This incorporates attribution, which highlights objects that positively or negatively influence a particular network output (either the value function, or a policy logit). Using dimensionality reduction, attribution is broken down according to the type of object detected, which we indicate using different colors. (We will explain the precise calculation involved <a href="#attribution">later</a>.)
     </p>
     <p>
       Our interface for a typical trajectory is displayed in the <a href="#header">header</a> of this page, with the value function as the network output. It reveals the model using coins, enemies, walls and more to compute the value function. (Note that the text labels in our interface are hand-composed, while everything else is automatically generated.)
@@ -339,15 +338,15 @@
         <div id="interface-bug-saw-target" style="display: none;"></div>
       </figure>
     </d-figure>
-    <h3>Model editing</h3>
+    <h3 id="model-editing-results">Model editing</h3>
     <p>
-      Our analysis so far has been mostly qualitative. To quantitatively validate our analysis, we hand-edited the model to make the agent blind to certain features: saw obstacles in one case, and left-moving enemies in another. (We will explain the precise calculation involved later.) We evaluated each edit by measuring the percentage of levels that the new agent failed to complete, broken down by the direct cause of failure.
+      Our analysis so far has been mostly qualitative. To quantitatively validate our analysis, we hand-edited the model to make the agent blind to certain features: saw obstacles in one case, and left-moving enemies in another. (We will explain the precise calculation involved <a href="#model-editing-method">later</a>.) We evaluated each edit by measuring the percentage of levels that the new agent failed to complete, broken down by the direct cause of failure.
     </p>
     <p>
       Our results show that our edits were successful and targeted, with no statistically measurable effects on the agent's other abilities.<d-footnote>The data for this plot are as follows.<br>Percentage of levels failed due to: saw obstacle / enemy moving left / enemy moving right / multiple or other:<br>- Original model: 0.37% / 0.16% / 0.12% / 0.08%<br>- Saw obstacle edit: 12.76% / 0.16% / 0.08% / 0.05%<br>- Enemy moving left edit: 0.36% / 4.69% / 0.97% / 0.07%<br>Each model was tested on 10,000 levels.</d-footnote>
     </p>
-    <figure style="text-align: center;">
-      <object type="image/svg+xml" data="images/model_editing_results.svg" style="width: 100%; font-family: inherit;"></object>
+    <figure class="matplotlib-svg" style="text-align: center;">
+      <%= require("../static/diagrams/model_editing_results.svg") %>
       <figcaption>Results of testing each model on 10,000 levels. Note that moving enemies can change direction.</figcaption>
     </figure>
     <p>
@@ -432,21 +431,27 @@
       Our results depend critically on the fact that CoinRun is procedurally-generated (each new level encountered by the agent is randomly generated from scratch). When models are trained to play video games with a limited number of levels, they tend to heavily overfit, "memorizing" the levels using irrelevant background objects <d-cite key="sonicsaliency"></d-cite>. Using procedural generation incentivizes the model to learn to recognise relevant objects, so that the agent's skills generalize to unseen layouts <d-cite key="procgen,gvgai,obstacletower"></d-cite>.
     </p>
     <p>
-      Procedural generation also provides us with a way to measure the relationship between interpretability and generalization. We measured generalization by training the agent on a limited number of levels, testing on unseen levels <d-cite key="coinrun"></d-cite>. We tried to measure interpretability using our interface, though this is much more subjective. We asked an interpretability researcher to score the 8 features identified by our interface on how meaningful they seemed, taking into account &hellip;.<d-footnote>The interfaces we showed to the researcher are listed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/finite_levels/index.html" target="_blank">here</a>.</d-footnote> By varying the number of levels in the training set, we could then see how interpretability varied with generalization.<d-footnote>The data for this plot are as follows.<br>- Number of training levels: 100 / 300 / 1000 / 3,000 / 10,000 / 30,000 / 100,000<br>- Percentage of levels completed (train): 99.96% / 99.82% / 99.67% / 99.65% / 99.47% / 99.55% / 99.57%<br>- Percentage of levels completed (test): 61.81% / 66.95% / 74.93% / 89.87% / 97.53% / 98.66% / 99.25%<br>- Number of meaningful features: ? / ? / ? / ? / ? / ? / ?<br>Percentages of levels completed are estimated by sampling 10,000 levels with replacement.</d-footnote>
+      Procedural generation also provides us with a way to measure the relationship between interpretability and generalization. We measured generalization by training the agent on a limited number of levels, testing on unseen levels <d-cite key="coinrun"></d-cite>. We tried to measure interpretability using our interface, though this is much more subjective. We asked an interpretability researcher to score the 8 features identified by our interface on how meaningful they seemed, taking into account &hellip;.<d-footnote>The interfaces we showed to the researcher are listed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/finite_levels/index.html" target="_blank">here</a>.</d-footnote> By varying the number of levels in the training set, we could then see how interpretability varied with generalization.<d-footnote>The data for this plot are as follows.<br>- Number of training levels: 100 / 300 / 1000 / 3,000 / 10,000 / 30,000 / 100,000<br>- Percentage of levels completed (train): 99.96% / 99.82% / 99.67% / 99.65% / 99.47% / 99.55% / 99.57%<br>- Percentage of levels completed (test): 61.81% / 66.95% / 74.93% / 89.87% / 97.53% / 98.66% / 99.25%<br>- Neaningfulness of features: 52.5% / 22.5% / 11.25% / 45% / 90% / 75% / 91.25%<br>Percentages of levels completed are estimated by sampling 10,000 levels with replacement.</d-footnote>
     </p>
-    <figure style="text-align: center;">
-      <object type="image/svg+xml" data="images/generalization_results.svg" style="width: 100%; font-family: inherit;"></object>
+    <figure class="matplotlib-svg" style="text-align: center;">
+      <%= require("../static/diagrams/generalization_results.svg") %>
       <figcaption>Results of interpreting models trained on different numbers of levels.</figcaption>
     </figure>
     <p>
-      Our results are limited in scope, but suggest that &hellip;. The generalization gap starts to plateau at around 10,000 training levels, which is also where training performance starts to increase. <d-footnote>The effect of increasing training performance is small enough here to be attributable to noise, but it is a phenomenon that occurs for a number of other procedurally-generated games <d-cite key="procgen"></d-cite>.</d-footnote>
+      TODO: re-run experiment to reduce variance
+    </p>
+    <p>
+      Our results provide some limited evidence that interpretability emerges with generalization (though this does not explain the high interpretability score at 100 levels). There is a notable jump in interpretability at around 10,000 levels, which is where the generalization gap starts to plateau.<d-footnote>Training performance also starts to increase at around 10,000 levels. This effect is small enough here to be attributable to noise, but it is a phenomenon that occurs for a number of other procedurally-generated games <d-cite key="procgen"></d-cite>.</d-footnote>
     </p>
     <h3>Impact of architecture on interpretability</h3>
     <p>
-      We tried to chose a convolutional architecture (described <a href="#d-footnote-4-listing">below</a>) that would be conducive to interpretability, without sacrificing performance.<d-footnote>Starting with the architecture from IMPALA <d-cite key="impala"></d-cite>, we made the following modifications.<br>- We used fewer convolutional layers and more dense layers, to allow for more non-visual processing.<br>- We removed the residual connections, so that the flow of information passes through every layer.<br>- We made the pool size equal to the pool stride, to avoid gradient gridding.<br>- We used L2 pooling instead of max pooling, for more continuous gradients.</d-footnote> The choice that seemed to make the most difference was using only 5 convolutional layers, and applying our techniques to the 3rd of these layers. When applied to earlier layers, the features identify simple visual elements such as shape and color, which are not that semantically interesting. When applied to later layers, the features involve confusing aggregations of objects.<d-footnote>An interface for these layers can be viewed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/demo/interface.html" target="_blank">here</a>.</d-footnote> Architectures with more layers tend to have their object-identifying features spread over multiple layers, mixed in with less interpretable features.<d-footnote>An interface for 6 of the the 12 layers of the architecture from IMPALA <d-cite key="impala"></d-cite> can be viewed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/impala/ablation_0/interface.html" target="_blank">here</a>.</d-footnote>
+      We tried to chose a convolutional architecture (described <a href="#d-footnote-4-listing">below</a>) that would be conducive to interpretability, without sacrificing performance.<d-footnote>Starting with the architecture from IMPALA <d-cite key="impala"></d-cite>, we made the following modifications.<br>- We used fewer convolutional layers and more dense layers, to allow for more non-visual processing.<br>- We removed the residual connections, so that the flow of information passes through every layer.<br>- We made the pool size equal to the pool stride, to avoid gradient gridding.<br>- We used L2 pooling instead of max pooling, for more continuous gradients.</d-footnote> The choice that seemed to make the most difference was using only 5 convolutional layers, and applying our techniques to the 3rd of these. When applied to earlier layers, the features identify simple visual elements such as shape and color, which are not that semantically interesting. When applied to later layers, the features involve combinations of objects that are hard to decipher.<d-footnote>An interface for these layers can be viewed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/demo/interface.html" target="_blank">here</a>.</d-footnote> Architectures with more layers tend to have their object-identifying features spread over multiple layers, mixed in with less interpretable features.<d-footnote>An interface for 6 of the the 12 layers of the architecture from IMPALA <d-cite key="impala"></d-cite> can be viewed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/impala/ablation_0/interface.html" target="_blank">here</a>.</d-footnote>
     </p>
     <p>
-      Our takeaway is that models trained on CoinRun develop crisp features for relevant objects, but rely on less interpretable features at other levels of abstraction. We believe that this is directly related to generalization, via the nature of the game's diversity: using procedural generation encourages the model to generalize over layouts, but there is nothing to stop the model memorizing the small number of visual patterns and dynamics rules that appear in the game. In the following section we find further evidence that the model's low-level features are hard to interpret.
+      Our takeaway is that models trained on CoinRun develop crisp features for relevant objects, but rely on less interpretable features at other levels of abstraction. We believe that this is directly related to generalization, via the nature of the game's diversity: using procedural generation encourages the model to generalize over layouts, but there is nothing to stop the model memorizing the small number of visual patterns and dynamics rules that appear in the game.
+    </p>
+    <p>
+      In the following section we find further evidence that the model's low-level features are hard to interpret.
     </p>
     <h2>Feature visualization</h2>
     <p>
@@ -496,17 +501,15 @@
     <ul>
       <li><b>Transformation robustness.</b> This is the method of stochastically jittering, rotating and scaling the image between optimization steps, to search for examples that are robust to these transformations <d-cite key="featurevis"></d-cite>. We tried both increasing and decreasing the size of the jittering. Rotating and scaling are less appropriate for CoinRun, since the observations themselves are not invariant to these transformations.</li>
       <li><b>Penalizing saturation.</b> Noticing that our visualizations tend to use fully saturated<d-footnote>We are slightly abusing "fully saturated" here to mean being one of the 8 colors with maximal or minimal RGB values.</d-footnote> colors towards the middle, we tried including in the visualization objective an L2 penalty of various strengths on the activations of the first layer, which successfully reduced the size of the saturated region.</li>
+      <li><b>Alternative objectives.</b> We tried using an alternative optimization objective <d-cite key="featurevis"></d-cite>, such as the caricature objective <d-cite key="caricatures"></d-cite>.<d-footnote>The caricature objective is to maximize the dot product between the activations of the input image and the activations of a reference image.</d-footnote> We also tried using dimensionality reduction (as described <a href="#dataset-example-based-feature-visualization">below</a>) to choose non-axis-aligned directions in activation space to maximize.
       <li><b>Low-level visual diversity.</b> In an attempt to broaden the distribution of images seen by the model, we retrained it on a version of the game with procedurally-generated sprites. We additionally tried adding noise to the images, both independent per-pixel noise and spatially-correlated noise. Finally, we experimented briefly with adversarial training, though we did not pursue this line of inquiry very far.</li>
     </ul>
     <p>
-      We consider this failure of gradient-based feature visualization to be an important negative result, because it shows that this technique can fail to illuminate features that are critical to a model's performance. This is despite the fact that the model seems to understand a number of human-interpretable concepts, judging by our other techniques. This suggests that the exhaustiveness of our interpretability methods is an important area for future research.
+      We were able to use dataset examples to identify a number of channels that pick out human-interpretable features. It is therefore striking how resistant gradient-based methods were to our efforts. We believe that this is because solving CoinRun does not ultimately require much visual ability. Even with our modifications, it is possible to solve the game use simple visual shortcuts, such as picking out certain small configurations of pixels. These shortcuts work well on the narrow distribution of images on which the model is trained, but behave unpredictably in the full space of images in which gradient-based optimization takes place.
     </p>
+    <h3 id="dataset-example-based-feature-visualization">Dataset example-based feature visualization</h3>
     <p>
-      Our best guess is that this failure is due to the narrowness of the distribution of images on which the model is trained (which are made up of the same blocks pieced together in a small number of different ways), together with the fact that the model only needs to extract a small amount of information from each image to perform well. This means that model can use simple shortcuts, such as picking out certain small configurations of pixels, that behave unpredictably when appled to arbitrary images.
-    </p>
-    <h3>Dataset example-based visualization</h3>
-    <p>
-      As an alternative to gradient-based feature visualization, we construct images out of dataset examples, which can be thought of as a heavily-regularized form of visualization. To do this, we sample a few thousand independent observations from the agent interacting with the environment, and pass them through the model. We then apply a dimensionality reduction method known as non-negative matrix factorization (NMF) to the activation channels.<d-footnote>More precisely, we find a non-negative approximate low-rank factorization of the matrix obtained by flattening the spatial dimensions of the activations into the batch dimension. This matrix has one row per observation <i>per spatial position</i> and one column per channel: thus the dimensionality reduction does not use spatial information. More information about NMF can be found in Olah et al.<d-cite key="buildingblocks"></d-cite></d-footnote> For each of the reduced number of channels, we choose the observations and spatial positions with the strongest activation in that direction (with a limited number of examples per position, for diversity), and display a patch from the observation at that position.
+      As an alternative to gradient-based feature visualization, our interface uses images made up of dataset examples, which can be thought of as a heavily-regularized form of visualization <d-cite key="featurevis,featurevisadversarial"></d-cite>. To construct a basic version of these, we sample a few thousand independent observations from the agent interacting with the environment, and pass them through the model. We then apply a dimensionality reduction method known as non-negative matrix factorization (NMF) to the activation channels <d-cite key="buildingblocks"></d-cite>.<d-footnote>More precisely, we find a non-negative approximate low-rank factorization of the matrix obtained by flattening the spatial dimensions of the activations into the batch dimension. This matrix has one row per observation <i>per spatial position</i> and one column per channel: thus the dimensionality reduction does not use spatial information.</d-footnote> For each of the reduced number of channels, we choose the observations and spatial positions with the strongest activation in that direction (with a limited number of examples per position, for diversity), and display a patch from the observation at that position.
     </p>
     <figure>
       <div id="feature-vis-dataset">
@@ -530,11 +533,21 @@
       <figcaption>Dataset example-based feature visualizations for 16 NMF directions of layer 2b of our CoinRun model. The grey-white checkerboard represents the edge of the screen.</figcaption>
     </figure>
     <p>
-      Unlike gradient-based feature visualization, this method finds some meaning to the different directions in activation space: there are walls, coins, platforms, saw obstacles, moving enemies, boxes, and more. It may still fail to provide  a complete picture for each direction, however, since it only shows a limited number of dataset examples, and with limited context.
+      Unlike gradient-based feature visualization, this method finds some meaning to the different directions in activation space: there are walls, coins, platforms, saw obstacles, moving enemies, boxes, and more. It may still fail to provide a complete picture for each direction, however, since it only shows a limited number of dataset examples, and with limited context.
     </p>
-    <h2>Attribution</h2>
+    <h3>Spatially-aware feature visualization</h3>
     <p>
-      A technique we had more success with than feature visualization was <a href="https://distill.pub/2018/building-blocks/">attribution</a>, which answers questions about the relationships between neurons. Specifically, we looked at how the activations of a given layer affect the outputs of the network, using the method of integrated gradients of Sundararajan, Taly and Yan <d-cite key="integratedgradients"></d-cite>. For this exposition we consider only the value function, ignoring the logits of the policy. Recall that for CoinRun, the value function estimates the time-discounted probability that the agent will successfully complete the level.
+      CoinRun observations differ from natural images in that they lack the same degree of spatial invariance. For example, the agent always appears in the center, and the agent's velocity is always encoded in the top left. As a result, some features behave differently at different spatial positions. To account for this, we developed a spatially-aware version of dataset example-based feature visualization, in which we fix each spatial position in turn, and choose the observation with the strongest activation at that position (with a limited number of reuses of the same observation, for diversity). This creates a spatial correspondence between visualizations and observations.
+    </p>
+    <figure>
+      <div id="feature-vis-spatial">
+        <img src="images/feature_vis_spatial.png">
+      </div>
+      <figcaption>Spatially-aware dataset example-based feature visualizations for the coin-detecting NMF direction of layer 2b. The feature also responds strongly in the very top left square when the velocity info there is white. Transparency (revealing the diagonally-striped background) indicates a weak response, so the left half of the visualization is mostly transparent because coins never appear in the left half of observations.</figcaption>
+    </figure>
+    <h2 id="attribution">Attribution</h2>
+    <p>
+      <a href="https://istill.pub/2018/building-blocks/">Attribution</a> <d-cite key="attribution1,attribution2,attribution3,attribution4,attribution5,attribution6,attribution7,integratedgradients"></d-cite> answers questions about the relationships between neurons. For our interface, we look at how the activations of a given layer affect the outputs of the network. In this section we focus on the value function output (which estimates the time-discounted probability that the agent will successfully complete the level). We compute attribution using the method of integrated gradients <d-cite key="integratedgradients"></d-cite>.
     </p>
     <div>
       <div style="float: right;">
@@ -561,7 +574,7 @@
         </figure>
       </div>
       <p>
-        Let <d-math>V:\mathbb R^{64\times 64\times 3}\to\mathbb R</d-math> be the value function computed by our network, which accepts a 64x64 RGB observation. Given any layer in the network, we may write <d-math>V</d-math> as <d-math>V\left(\mathbf x\right)=F\left(\mathbf A\left(\mathbf x\right)\right)</d-math>, where <d-math>\mathbf A</d-math> computes the layer's activations. Given an observation <d-math>\mathbf x</d-math>, a simple method of attribution is to compute <d-math>\nabla_{\mathbf a}F\left(\mathbf a\right)\odot\mathbf a</d-math>, where <d-math>\mathbf a=\mathbf A\left(\mathbf x\right)</d-math> and <d-math>\odot</d-math> denotes the pointwise product. This tells us the sensitivity of the value function to each activation, multiplied by the strength of that activation. However, it does not account for the fact that the sensitivity of the value function may change as the activation is increased from zero.
+        To explain this method, let <d-math>V:\mathbb R^{64\times 64\times 3}\to\mathbb R</d-math> be the value function computed by our network, which accepts a 64x64 RGB observation. Given any layer in the network, we may write <d-math>V</d-math> as <d-math>V\left(\mathbf x\right)=F\left(\mathbf A\left(\mathbf x\right)\right)</d-math>, where <d-math>\mathbf A</d-math> computes the layer's activations. Given an observation <d-math>\mathbf x</d-math>, a simple method of attribution is to compute <d-math>\nabla_{\mathbf a}F\left(\mathbf a\right)\odot\mathbf a</d-math>, where <d-math>\mathbf a=\mathbf A\left(\mathbf x\right)</d-math> and <d-math>\odot</d-math> denotes the pointwise product. This tells us the sensitivity of the value function to each activation, multiplied by the strength of that activation. However, it does not account for the fact that the sensitivity of the value function may change as the activation is increased from zero.
       </p>
     </div>
     <div>
@@ -674,15 +687,15 @@
       Attributions for our CoinRun model have some interesting properties that would be unusual for an ImageNet model.
     </p>
     <ul>
-      <li><b>Sparsity.</b> Most of the attribution is concentrated in a small number of spatial positions and channels. (We are using NMF-reduced channels here, though in fact the NMF directions are often close one-hot.) This supports our earlier hypothesis that the model is often picking out certain small configurations of pixels. Because of this sparsity, we smooth out attribution over nearby spatial positions for the main version of our interface, so that the amount of visual space taken up can be used to judge attribution strength. This trades off some spatial precision for more precision with magnitudes.</li>
+      <li><b>Sparsity.</b> Most of the attribution is concentrated in a small number of spatial positions and channels. (We are using NMF-reduced channels here, though in fact the NMF directions are often close to one-hot, so this would also be true in the original basis.) This supports our earlier hypothesis that the model is often picking out certain small configurations of pixels. Because of this sparsity, we smooth out attribution over nearby spatial positions for the main version of our interface, so that the amount of visual space taken up can be used to judge attribution strength. This trades off some spatial precision for more precision with magnitudes.</li>
       <li><b>Unexpected sign.</b> Value function attribution usually has the sign one would expect: positive for coins, negative for enemies, and so on. However, this is often not the case. For example, in the figure above, the red channel (which detects saw obstacles) has both positive and negative attribution in two neighbouring spatial positions towards the left. Our best guess is that this phenomenon is a result of statistical <a href="https://en.wikipedia.org/wiki/Multicollinearity">collinearity</a>, caused by certain correlations in the procedual level generation together with the agent's behaviour. These could be visual, such as correlations between nearby pixels, or more abstract, such as the end of the level being correlated with having an enemy behind the agent in a certain configuration.</li>
     </ul>
     <p>
       These considerations suggest that some care may be required when interpreting attributions.
     </p>
-    <h3>Model editing</h3>
+    <h3 id="model-editing-method">Model editing</h3>
     <p>
-      We can also use the features identified by attribution-based NMF to edit the model. For example, we can blind the model to a feature, by making the weights project out the corresponding NMF direction.
+      As shown <a href="#model-editing-results">above</a>, we can hand-edit the model to make the agent blind to certain features. To do this, we used attribution-based NMF to reduce to 8 channels, which we visualized using dataset example-based feature visualization. To blind the agent to a feature, we edited the weights to make them project out the corresponding NMF direction.<d-footnote>As it turned out, the NMF directions were close to one-hot, so the procedure was approximately equivalent to zeroing out the slice of the following layer corresponding to a particlar in-channel.</d-footnote>
     </p>
     <div>
       <div style="float: right;">
@@ -699,13 +712,14 @@
         </figure>
       </div>
       <p>
-        To do this, let <d-math>\mathbf v</d-math> be the NMF direction corresponding to the feature we wish to blind the model to. This is a vector of length <d-math>c</d-math>, the number of channels in activation space. Using this we construct the <a href="https://en.wikipedia.org/wiki/Projection_(linear_algebra)">orthogonal projection</a> matrix <d-math>P:=I-\frac 1{\|\mathbf v\|^2}\mathbf v\mathbf v^{\mathsf T}</d-math>,<d-footnote>Here <d-math>I</d-math> denotes the identity matrix and <d-math>\mathbf v\mathbf v^{\mathsf T}</d-math> denotes the outer product of <d-math>\mathbf v</d-math> with itself.</d-footnote> which projects out the direction of <d-math>\mathbf v</d-math> from activation vectors. We then take the convolutional kernel of the following layer, which has shape <d-math>\text{height}\times\text{width}\times c\times d</d-math>, where <d-math>d</d-math> is the number of output channels. Broadcasting across the height and width dimensions, we left-multiply each <d-math>c\times d</d-math> matrix in the kernel by <d-math>P</d-math>. The effect of the new kernel is to project out the direction of <d-math>\mathbf v</d-math> from activations before applying the original kernel.
+        To explain this, let <d-math>\mathbf v</d-math> be the NMF direction corresponding to the feature we wish to blind the model to. This is a vector of length <d-math>c</d-math>, the number of channels in activation space. Using this we construct the <a href="https://en.wikipedia.org/wiki/Projection_(linear_algebra)">orthogonal projection</a> matrix <d-math>P:=I-\frac 1{\|\mathbf v\|^2}\mathbf v\mathbf v^{\mathsf T}</d-math>,<d-footnote>Here <d-math>I</d-math> denotes the identity matrix and <d-math>\mathbf v\mathbf v^{\mathsf T}</d-math> denotes the outer product of <d-math>\mathbf v</d-math> with itself.</d-footnote> which projects out the direction of <d-math>\mathbf v</d-math> from activation vectors. We then take the convolutional kernel of the following layer, which has shape <d-math>\text{height}\times\text{width}\times c\times d</d-math>, where <d-math>d</d-math> is the number of output channels. Broadcasting across the height and width dimensions, we left-multiply each <d-math>c\times d</d-math> matrix in the kernel by <d-math>P</d-math>. The effect of the new kernel is to project out the direction of <d-math>\mathbf v</d-math> from activations before applying the original kernel.
       </p>
     </div>
+    <h2>Discussion</h2>
     <p>
-      We performed this procedure, using attribution-based NMF to reduce to 8 channels, and then using dataset-example based feature visualization to select the 2 directions corresponding to saw obstacles and to enemies moving left. After projecting out the saw obstacle direction, we found that the model was still able to avoid saw obstacles, and so we repeated the procedure, and found that a new saw obstacle direction had appeared. Projecting out the new saw obstacle direction resulted in a model that failed to respond to saws but otherwise behaved normally. For enemies moving left, we were able to achieve this effect using a single edit. We provide a quantitative evaluation of this procedure above.
+      To be continued...
     </p>
-    <h2>Full interface</h2>
+    <h2>Supplementary material</h2>
     <figure>
       <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/demo/interface.html" target="_blank" style="border-bottom: none;">
         <img id="interface-screenshot" src="images/screenshots/0.png" style="border: 1px solid gray;">
@@ -720,15 +734,10 @@
     <ul>
       <li><b>Trajectory navigation.</b> You can step through trajectories of the agent interacting with the environment, viewing observations, actions and rewards, as well the model's value function and policy.</li>
       <li><b>Value function and policy attribution.</b> For each observation, there are visualizations of NMF-reduced attribution for both the value function and the policy, using several different model layers (discussed below). For the policy, we use the logits output by the model, from which the action probabilities are obtained by applying a softmax.</li>
-      <li><b>Spatially-aware feature visualization.</b> The dataset example-based feature visualizations can be expanded to reveal a version in which each patch is taken from a specific spatial position. This creates a spatial correspondence between visualizations and observations, making it easier to understand NMF directions that respond to different features at different spatial positions (such as the agent's velociy, which is painted into top left of the observations).</li>
       <li><b>Identification of interesting events.</b> We automatically identify particular moments of interest, by choosing the actions from each level with the highest and lowest advantage, computed using using generalized advantage estimation (GAE)<d-cite key="gae"></d-cite>. GAE measures how successful each action turned out relative to the agent's expectations, and is used to improve the agent's policy during training. Low advantage actions can identify mistakes made by the agent, and both high and low advantage actions can identify situations in which the value function is inaccurate.</li>
     </ul>
     <p>
       The interface can be used with any non-recurrent convolutional neural network, though as we discuss below, it produces better results for certain architectures.
-    </p>
-    <h2>Discussion</h2>
-    <p>
-      To be continued...
     </p>
 
   </d-article>

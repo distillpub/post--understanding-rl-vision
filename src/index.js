@@ -33,7 +33,7 @@ const add_path_prefix = function(props, path_prefix) {
 
 const adjust_options = function(props) {
   props.action_combos[0] = ["C"];
-  props.colors.actions = ["#d3d3d3", "#d3d3d3", "#d3d3d3", "#d3d3d3", "#d3d3d3", "#d3d3d3", "#d3d3d3", "#d3d3d3", "#d3d3d3"]; //["#303030", "#484848", "#606060", "#787878", "#8f8f8f", "#a7a7a7", "#bfbfbf", "#d7d7d7", "#efefef"];
+  props.colors.actions = ["#d3d3d3", "#d3d3d3", "#d3d3d3", "#d3d3d3", "#d3d3d3", "#d3d3d3", "#d3d3d3", "#d3d3d3", "#d3d3d3"];
   props.colors.graphs.v = "black";
   props.colors.trajectory = "black";
   props.formatting.video_speed = 12;
@@ -59,6 +59,11 @@ const initialize_interface = function(props, extra_options, name) {
   });
 };
 
+const adjust_options_header = function(props) {
+  props.formatting.legend_item_height = "7em";
+  props.formatting.legend_item_width = "7em";
+};
+
 import props_header from "./props_header.js";
 let extra_options_header = {
   init_focus: false,
@@ -82,6 +87,7 @@ let extra_options_header = {
   chart_fixed_lower_value: null,
   feature_descriptions
 };
+adjust_options_header(props_header);
 initialize_interface(props_header, extra_options_header, "header");
 
 let extra_options_bug = {
