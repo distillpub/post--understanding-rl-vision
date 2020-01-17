@@ -451,7 +451,7 @@
           {#if extra_options.show_extra_help_text}
             <br>
             <span style="font-weight: normal; font-size: 0.75em; color: gray;">
-              Colors correspond to channels after dimensionality reduction, and icons show dataset examples
+              Colors correspond to channels after dimensionality reduction, icons show dataset examples, and labels are hand-composed
             </span>
           {/if}
         </div>
