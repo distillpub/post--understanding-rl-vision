@@ -183,6 +183,7 @@ button {
   border: 1px solid white;
   border-radius: 0.25em;
   cursor: pointer;
+  overflow: hidden;
 }
 
 #attribution .attribution-legend-item:hover {
