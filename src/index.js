@@ -166,13 +166,13 @@ document.addEventListener("DOMContentLoaded", function() {
   for (let feature_number = 0; feature_number < 4; feature_number++) {
     document.getElementById("attribution-legend-item-" + feature_number.toString()).addEventListener("mouseover", (function(feature_number) {
       return function() {
-        document.getElementById("attribution-overlay-pos").style.backgroundImage="url('attribution/attribution_pos_" + feature_number.toString() + ".png')";
-        document.getElementById("attribution-overlay-neg").style.backgroundImage="url('attribution/attribution_neg_" + feature_number.toString() + ".png')";
+        document.getElementById("attribution-overlay-pos").style.backgroundImage="url('images/attribution/attribution_pos_" + feature_number.toString() + ".png')";
+        document.getElementById("attribution-overlay-neg").style.backgroundImage="url('images/attribution/attribution_neg_" + feature_number.toString() + ".png')";
       };
     })(feature_number));
     document.getElementById("attribution-legend-item-" + feature_number.toString()).addEventListener("mouseout", function() {
-      document.getElementById("attribution-overlay-pos").style.backgroundImage="url('attribution/attribution_pos.png')";
-      document.getElementById("attribution-overlay-neg").style.backgroundImage="url('attribution/attribution_neg.png')";
+      document.getElementById("attribution-overlay-pos").style.backgroundImage="url('images/attribution/attribution_pos.png')";
+      document.getElementById("attribution-overlay-neg").style.backgroundImage="url('images/attribution/attribution_neg.png')";
     });
   }
 });
