@@ -137,11 +137,25 @@ button {
   max-width: 640px;
 }
 
-#feature-vis-dataset img {
+.feature-vis-dataset-item {
   display: inline-block;
+  vertical-align: top;
+  width: 136px;
+}
+
+#feature-vis-dataset img {
+  display: block;
   width: 128px;
   image-rendering: pixelated;
   border: 1px solid gray;
+}
+
+.feature-vis-dataset-text {
+  margin-top: 0.2em;
+  margin-bottom: 0.5em;
+  font-size: 0.75em;
+  line-height: 1.5em;
+  font-style: italic;
 }
 
 #feature-vis-spatial {
