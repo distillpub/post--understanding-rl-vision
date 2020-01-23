@@ -308,7 +308,10 @@
     </d-figure>
     <h3 id="error-diagnosis">Error diagnosis</h3>
     <p>
-      Occasionally, the model's value function spikes unexpectedly. In a couple of cases, we were able to diagnose this behavior with the help of our interface. The spiking was caused by the model "hallucinating" a feature not present in the observation.
+      We searched for errors in the model using generalized advantage estimation (GAE)<d-cite key="gae"></d-cite>, which measures how successful each action turned out relative to the agent's expectations. Filtering for timesteps with unusually high or low GAE can pinpoint problems with the value function or policy.
+    </p>
+    <p>
+      Using our interface, we found a couple of cases in which the model "hallucinated" a feature not present in the observation, causing the value function to spike.
     </p>
     <table style="margin-top: 1em; margin-bottom: 0em;">
       <tr>
@@ -526,17 +529,17 @@
       <div id="feature-vis-dataset">
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_0.png"><div class="feature-vis-dataset-text">Short left-facing wall</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_1.png"><div class="feature-vis-dataset-text">Velocity info or left edge of screen</div></div>
-        <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_2.png"><div class="feature-vis-dataset-text">Velocity info or long left-facing wall</div></div>
+        <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_2.png"><div class="feature-vis-dataset-text">Long left-facing wall</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_3.png"><div class="feature-vis-dataset-text">Left end of platform</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_4.png"><div class="feature-vis-dataset-text">Right end of platform</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_5.png"><div class="feature-vis-dataset-text">Saw obstacle or platform</div></div>
-        <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_6.png"><div class="feature-vis-dataset-text">Velocity info or coin</div></div>
+        <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_6.png"><div class="feature-vis-dataset-text">Coin</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_7.png"><div class="feature-vis-dataset-text">Top/right edge of screen</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_8.png"><div class="feature-vis-dataset-text">Left end of platform</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_9.png"><div class="feature-vis-dataset-text">Step</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_10.png"><div class="feature-vis-dataset-text">Agent or enemy moving right</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_11.png"><div class="feature-vis-dataset-text">Left edge of box</div></div>
-        <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_12.png"><div class="feature-vis-dataset-text">Velocity info or right end of platform</div></div>
+        <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_12.png"><div class="feature-vis-dataset-text">Right end of platform</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_13.png"><div class="feature-vis-dataset-text">Saw obstacle</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_14.png"><div class="feature-vis-dataset-text">Top left corner of box</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_15.png"><div class="feature-vis-dataset-text">Left end of platform or bottom/right of screen?</div></div>
@@ -708,8 +711,11 @@
     <p>
       To be continued...
     </p>
-    <!--
     <h2>Supplementary material</h2>
+    <ul>
+      <li><b>Code.</b> The <a href="http://go/rl-clarity-library"><code>rl-clarity</code> library</a> includes code for generating an expanded version of our interface, along with tools for feature visualization, attribution and dimensionality reduction.</li>
+      <li><b>More interfaces.</b> We generated an expanded version of our interface for every convolutional layer in our model <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/demo/interface.html" target="_blank">here</a>. We also generated interfaces for a number of other models, including the models trained on different numbers of levels, the edited models, and models trained on all 16 of the Procgen Benchmark <d-cite key="procgen"></d-cite> environments. These are indexed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/index.html" target="_blank">here</a>.</li>
+    </ul>
     <figure>
       <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/demo/interface.html" target="_blank" style="border-bottom: none;">
         <img id="interface-screenshot" src="images/screenshots/0.png" style="border: 1px solid gray;">
@@ -718,18 +724,6 @@
         Our expanded interface. Click to open an interactive version in a new tab.
       </figcaption>
     </figure>
-    <p>
-      We have incorporated our methods into an expanded interface for exploring RL vision models. This includes a number of additional features.
-    </p>
-    <ul>
-      <li><b>Trajectory navigation.</b> You can step through trajectories of the agent interacting with the environment, viewing observations, actions and rewards, as well the model's value function and policy.</li>
-      <li><b>Value function and policy attribution.</b> For each observation, there are visualizations of NMF-reduced attribution for both the value function and the policy, using several different model layers (discussed below). For the policy, we use the logits output by the model, from which the action probabilities are obtained by applying a softmax.</li>
-      <li><b>Identification of interesting events.</b> We automatically identify particular moments of interest, by choosing the actions from each level with the highest and lowest advantage, computed using using generalized advantage estimation (GAE)<d-cite key="gae"></d-cite>. GAE measures how successful each action turned out relative to the agent's expectations, and is used to improve the agent's policy during training. Low advantage actions can identify mistakes made by the agent, and both high and low advantage actions can identify situations in which the value function is inaccurate.</li>
-    </ul>
-    <p>
-      The interface can be used with any non-recurrent convolutional neural network, though as we discuss below, it produces better results for certain architectures.
-    </p>
-    -->
 
   </d-article>
 
