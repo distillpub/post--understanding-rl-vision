@@ -81,6 +81,7 @@
     show_attribution_toggles: true,
     show_attribution_chart: true,
     show_residual_legend_item: true,
+    show_news_text: false,
     show_extra_help_text: false,
     simple_navigator: false,
     navigation_above: true,
@@ -285,6 +286,14 @@
  :global(.underrule) {
    border-bottom: 1px solid gray;
  }
+ 
+ .indicator {
+   margin: 0 auto;
+   border-width: 0px 6px;
+   border-color: #a3a3a3;
+   border-style: solid;
+   background: white;
+ }
 </style>
 
 <svelte:window on:load={() => {if (extra_options.init_focus) {navigator_div.focus();}}}/>
@@ -314,14 +323,20 @@
 
     {#if extra_options.show_scrubbers}
 
-      <div style="width: {formatting.scrubber_width}; margin: 0 auto;">
+      <div style="width: {formatting.scrubber_width};
+                  margin: 0 auto;
+                  background: whitesmoke;
+                  border: 1px solid gray;
+                  border-radius: 0.5em;
+                  box-shadow: inset 0 0 0.5em gray;">
 
         <div style="height: {css_multiply(formatting.scrubber_height, 0.2)};
                     width: 2px;
                     margin: 0 auto;
-                    border-width: 1px 1px 0px 1px;
+                    border-width: 0px 6px;
                     border-color: black;
-                    border-style: solid;"
+                    border-style: solid;
+                    opacity: 0.4;"
         ></div>
 
         <Screen
@@ -349,21 +364,13 @@
           />
         {/each}
 
-        <div style="height: {css_multiply(formatting.scrubber_height, 0.1)};
-                    width: 4px;
-                    margin: 0 auto;
-                    border-width: 0px 1px;
-                    border-color: black;
-                    border-style: solid;"
-        ></div>
+        <div class="indicator" style="height: {css_multiply(formatting.scrubber_height, 0.05)}; width: 2px;"></div>
 
-        <div style="height: {css_multiply(formatting.scrubber_height, 0.1)};
-                    width: 6px;
-                    margin: 0 auto;
-                    border-width: 0px 1px;
-                    border-color: black;
-                    border-style: solid;"
-        ></div>
+        <div class="indicator" style="height: {css_multiply(formatting.scrubber_height, 0.05)}; width: 4px;"></div>
+
+        <div class="indicator" style="height: {css_multiply(formatting.scrubber_height, 0.05)}; width: 8px;"></div>
+
+        <div class="indicator" style="height: {css_multiply(formatting.scrubber_height, 0.05)}; width: 14px;"></div>
 
       </div>
 
@@ -376,17 +383,17 @@
               margin: 0 auto;
               padding: 0.5em;
               border-top: {extra_options.show_scrubbers && extra_options.navigation_above ? '1px solid black' : 'none'};
-              border-bottom: {extra_options.show_scrubbers && (!extra_options.navigation_above) ? '1px solid black' : 'none'};
+              border-bottom: none;
               border-radius: 1em;
               text-align: center;">
-    {#if extra_options.show_scrubbers}
+    {#if extra_options.show_scrubbers && extra_options.navigation_above}
       <div style="position: absolute;
-                  top: {extra_options.navigation_above ? '0%': '100%'};
+                  top: 0%;
                   left: 50%;
-                  margin-top: -1px;
-                  margin-left: {(extra_options.navigation_above || (!extra_options.show_navigator)) ? '-3px' : css_multiply(formatting.scrubber_width, 0.145)};
-                  height: 3px;
-                  width: 6px;
+                  margin-top: -2px;
+                  margin-left: -13px;
+                  height: 4px;
+                  width: 25px;
                   background-color: white;"
       ></div>
     {/if}
@@ -435,6 +442,7 @@
       action_colors={colors.actions}
       show_toggles={extra_options.show_attribution_toggles}
       show_chart={extra_options.show_attribution_chart}
+      show_news_text={extra_options.show_news_text}
       show_extra_help_text={extra_options.show_extra_help_text}
       show_attribution_selector={show_attribution_selector}
       action_permutation={extra_options.action_permutation}
@@ -451,7 +459,7 @@
           {#if extra_options.show_extra_help_text}
             <br>
             <span style="font-weight: normal; font-size: 0.75em; color: gray;">
-              Colors correspond to channels after dimensionality reduction, and icons show dataset examples
+              Colors correspond to channels after dimensionality reduction, icons show dataset examples, and labels are hand-composed
             </span>
           {/if}
         </div>
@@ -485,7 +493,8 @@
     >
 
       {#if extra_options.show_navigator}
-        <div style="position: absolute; top: 2em; left: 0em;">
+        <div style="position: absolute; top: 0em; left: 0em;">
+          <div style="font-weight: bold; margin-bottom: 1em;">Timeline</div>
           <Navigator
             bind:state={video_state}
             bind:speed={formatting.video_speed}
@@ -502,23 +511,20 @@
         <div style="position: absolute;
                     top: 0px;
                     left: {css_multiply(formatting.scrubber_width, extra_options.show_navigator ? 0.3 : 0)};
-                    width: {formatting.scrubber_width};"
+                    width: {formatting.scrubber_width};
+                    background: whitesmoke;
+                    border: 1px solid gray;
+                    border-radius: 0.5em;
+                    box-shadow: inset 0 0 0.5em gray;"
         >
 
-          <div style="height: {css_multiply(formatting.scrubber_height, 0.1)};
-                      width: 6px;
+          <div style="height: {css_multiply(formatting.scrubber_height, 0.2)};
+                      width: 2px;
                       margin: 0 auto;
-                      border-width: 0px 1px;
+                      border-width: 0px 6px;
                       border-color: black;
-                      border-style: solid;"
-          ></div>
-
-          <div style="height: {css_multiply(formatting.scrubber_height, 0.1)};
-                      width: 4px;
-                      margin: 0 auto;
-                      border-width: 0px 1px;
-                      border-color: black;
-                      border-style: solid;"
+                      border-style: solid;
+                      opacity: 0.4;"
           ></div>
 
           <Screen
@@ -549,9 +555,10 @@
           <div style="height: {css_multiply(formatting.scrubber_height, 0.2)};
                       width: 2px;
                       margin: 0 auto;
-                      border-width: 0px 1px 1px 1px;
+                      border-width: 0px 6px;
                       border-color: black;
-                      border-style: solid;"
+                      border-style: solid;
+                      opacity: 0.4;"
           ></div>
 
         </div>

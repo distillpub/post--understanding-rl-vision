@@ -14,7 +14,7 @@
   <d-front-matter>
     <script type="text/json">{
       "title": "Understanding RL vision models",
-      "description": "We can analyze, debug and edit deep reinforcement learning models using attribution and dimensionality reduction.",
+      "description": "If the environment is diverse enough, we can analyze, diagnose and even edit deep reinforcement learning models using attribution.",
       "authors": [
         {
           "author": "Jacob Hilton",
@@ -54,7 +54,7 @@
 
   <d-title>
     <h1>Understanding RL vision</h1>
-    <p>We can analyze, debug and edit deep reinforcement learning models using attribution and dimensionality reduction.</p>
+    <p>If the environment is diverse enough, we can analyze, diagnose and even edit deep reinforcement learning models using attribution.</p>
     <d-figure id="header">
       <figure>
         <div id="interface-header-target"></div>
@@ -68,17 +68,17 @@
       In this article, we apply interpretability techniques to a reinforcement learning (RL) model trained to play the video game CoinRun <d-cite key="coinrun"></d-cite>. Using attribution <d-cite key="attribution1,attribution2,attribution3,attribution4,attribution5,attribution6,attribution7,integratedgradients"></d-cite> and dimensionality reduction, we build an interface <d-cite key="buildingblocks"></d-cite> for exploring the objects detected by the model, and how they influence its value function and policy. We leverage this interface in several ways.
     </p>
     <ul>
-      <li><b>Dissecting failure.</b> We perform a step-by-step analysis of the agent's behaviour in cases where it failed to achieve the maximum reward, allowing us to understand what went wrong.</li>
-      <li><b>Debugging.</b> We find bugs in which the model "hallucinated" a feature not present in the observation, thereby explaining inaccuracies in the model's value function.</li>
-      <li><b>Model editing.</b> We hand-edit the weights of the model to blind the agent to certain objects, without otherwise changing the agent's behavior. We verify this by looking at causes of failure, quantitatively validating our analysis.</li>
+      <li><b><a href="#dissecting-failure">Dissecting failure</a>.</b> We perform a step-by-step analysis of the agent's behaviour in cases where it failed to achieve the maximum reward, allowing us to understand what went wrong, and why.</li>
+      <li><b><a href="#error-diagnosis">Error diagnosis</a>.</b> We find situations when the model "hallucinated" a feature not present in the observation, thereby explaining inaccuracies in the model's value function.</li>
+      <li><b><a href="#model-editing-results">Model editing</a>.</b> We hand-edit the weights of the model to blind the agent to certain hazards, without otherwise changing the agent's behavior. We verify this by checking which hazards cause the new agents to fail, quantitatively validating our analysis.</li>
     </ul>
     <p>
-      Our results depend critically on the fact that CoinRun is procedurally-generated, leading us to formulate the <span style="font-style: italic;"><a href="#diversity-hypothesis">Diversity Hypothesis</a></span> for interpretability. If it is true, we can expect RL models to become more interpretable as the environments they are trained on become more diverse. We provide evidence for our hypothesis by measuring the relationship between interpretability and generalization.
+      Our results lead us to formulate a <span style="font-style: italic;"><a href="#diversity-hypothesis">diversity hypothesis</a></span> for interpretability. If it is correct, then we can expect RL models to become more interpretable as the environments they are trained on become more diverse. We provide evidence for our hypothesis by measuring the relationship between interpretability and generalization.
     </p>
     <p>
       Finally, we provide a thorough investigation of several interpretability techniques in the context of RL vision, and pose a number of questions for further research.
     </p>
-    <h2>Our CoinRun model</h2>
+    <h2 id="coinrun">Our CoinRun model</h2>
     <p>
       CoinRun is a side-scrolling platformer in which the agent must dodge enemies and other traps and collect the coin at the end of the level.
     </p>
@@ -194,7 +194,7 @@
       </table>
     </figure>
     <p>
-      We trained a convolutional neural network<d-footnote>Our architecture consists of the following layers in the order given, together with ReLU activations for all except the final layer.<br>- 7x7 convolutional layer with 16 channels (layer 1a)<br>- 2x2 L2 pooling layer<br>- 5x5 convolutional layer with 32 channels (layer 2a)<br>- 5x5 convolutional layer with 32 channels (layer 2b)<br>- 2x2 L2 pooling layer<br>- 5x5 convolutional layer with 32 channels (layer 3a)<br>- 2x2 L2 pooling layer<br>- 5x5 convolutional layer with 32 channels (layer 4a)<br>- 2x2 L2 pooling layer<br>- 256-unit dense layer<br>- 512-unit dense layer<br>- 10-unit dense layer (1 unit for the value function, 9 units for the policy logits)</d-footnote> on CoinRun for around 2 billion timesteps, using PPO <d-cite key="ppo"></d-cite>, an actor-critic algorithm.<d-footnote>We used the standard PPO hyperparameters for CoinRun <d-cite key="coinrun"></d-cite>, except that we used twice as many environments per worker and twice and many workers. The effect of these changes was to increase the effective batch size, which seemed to be necessary to reach the same performace with our smaller architecture.</d-footnote> We used a non-recurrent network, so that we could focus on interpreting the visual processing performed by the model. Thus the model takes in a single RGB observation, which has been downsampled to 64x64, and outputs a value function (an estimate of the total future time-discounted reward) and a policy (a probability distribution over the actions, from which the next action is sampled).
+      We trained a convolutional neural network<d-footnote>Our architecture consists of the following layers in the order given, together with ReLU activations for all except the final layer.<br>- 7x7 convolutional layer with 16 channels (layer 1a)<br>- 2x2 L2 pooling layer<br>- 5x5 convolutional layer with 32 channels (layer 2a)<br>- 5x5 convolutional layer with 32 channels (layer 2b)<br>- 2x2 L2 pooling layer<br>- 5x5 convolutional layer with 32 channels (layer 3a)<br>- 2x2 L2 pooling layer<br>- 5x5 convolutional layer with 32 channels (layer 4a)<br>- 2x2 L2 pooling layer<br>- 256-unit dense layer<br>- 512-unit dense layer<br>- 10-unit dense layer (1 unit for the value function, 9 units for the policy logits)</d-footnote> on CoinRun for around 2 billion timesteps, using PPO <d-cite key="ppo"></d-cite>, an actor-critic algorithm.<d-footnote>We used the standard PPO hyperparameters for CoinRun <d-cite key="coinrun"></d-cite>, except that we used twice as many environments per worker and twice and many workers. The effect of these changes was to increase the effective batch size, which seemed to be necessary to reach the same performace with our smaller architecture.</d-footnote> We used a non-recurrent network, so that we could focus on interpreting the visual processing of individual frames by the model. Thus the model takes in a single RGB observation, which has been downsampled to 64x64, and outputs a value function (an estimate of the total future time-discounted reward) and a policy (a probability distribution over the actions, from which the next action is sampled).
     </p>
     <figure style="text-align: center;">
       <svg height="160px" width="448px">
@@ -234,14 +234,14 @@
     <p>
       Since the only available reward is a fixed bonus for collecting the coin, the value function estimates the time-discounted<d-footnote>We use a discount rate of 0.999 per timestep.</d-footnote> probability that the agent will successfully complete the level.
     </p>
-    <h2>Model analysis</h2>
+    <h2 id="analysis">Model analysis</h2>
     <p>
       We developed an interface for examining trajectories of the agent playing the game. This incorporates attribution, which highlights objects that positively or negatively influence a particular network output (either the value function, or a policy logit). Using dimensionality reduction, attribution is broken down according to the type of object detected, which we indicate using different colors. (We will explain the precise calculation involved <a href="#attribution">later</a>.)
     </p>
     <p>
-      Our interface for a typical trajectory is displayed in the <a href="#header">header</a> of this page, with the value function as the network output. It reveals the model using coins, enemies, walls and more to compute the value function. (Note that the text labels in our interface are hand-composed, while everything else is automatically generated.)
+      Our interface for a typical trajectory is displayed in the <a href="#header">header</a> of this page, with the value function as the network output. It reveals the model using coins, enemies, walls and more to compute the value function.
     </p>
-    <h3>Dissecting failure</h3>
+    <h3 id="dissecting-failure">Dissecting failure</h3>
     <p>
       Our fully-trained model fails to complete around 1 in every 200 levels. We explored some of these failures using our interface, and found that we were usually able to understand why the failure occurred.
     </p>
@@ -295,7 +295,7 @@
           <span id="interface-failure-position"></span>
         </td>
         <td style="vertical-align: top;">
-          <b id="interface-failure-description-positions"></b>: <span id="interface-failure-description-text"></span>
+          <div id="interface-failure-description" style="position: relative;"></div>
         </td>
       </tr>
     </table>
@@ -306,9 +306,9 @@
         <div id="interface-failure-offscreen-target" style="display: none;"></div>
       </figure>
     </d-figure>
-    <h3>Debugging</h3>
+    <h3 id="error-diagnosis">Error diagnosis</h3>
     <p>
-      Occasionally, the model's value function spikes unexpectedly. In a couple of cases, we were able to debug this behavior with the help of our interface. The spiking was caused by bugs in which the model "hallucinated" a feature not present in the observation.
+      Occasionally, the model's value function spikes unexpectedly. In a couple of cases, we were able to diagnose this behavior with the help of our interface. The spiking was caused by the model "hallucinating" a feature not present in the observation.
     </p>
     <table style="margin-top: 1em; margin-bottom: 0em;">
       <tr>
@@ -343,7 +343,7 @@
       Our analysis so far has been mostly qualitative. To quantitatively validate our analysis, we hand-edited the model to make the agent blind to certain features: saw obstacles in one case, and left-moving enemies in another. (We will explain the precise calculation involved <a href="#model-editing-method">later</a>.) The idea of weight editing originated in forthcoming research <d-cite key="circuits"></d-cite>, where it will be explored much more thoroughly.
     </p>
     <p>
-      We evaluated each edit by measuring the percentage of levels that the new agent failed to complete, broken down by the direct cause of failure. Our results show that our edits were successful and targeted, with no statistically measurable effects on the agent's other abilities.<d-footnote>The data for this plot are as follows.<br>Percentage of levels failed due to: saw obstacle / enemy moving left / enemy moving right / multiple or other:<br>- Original model: 0.37% / 0.16% / 0.12% / 0.08%<br>- Saw obstacle edit: 12.76% / 0.16% / 0.08% / 0.05%<br>- Enemy moving left edit: 0.36% / 4.69% / 0.97% / 0.07%<br>Each model was tested on 10,000 levels.</d-footnote>
+      We evaluated each edit by measuring the percentage of levels that the new agent failed to complete, broken down by the direct cause of failure. Our results show that our edits were successful and targeted, with no statistically measurable effects on the agent's other abilities.<d-footnote>The data for this plot are as follows.<br>Percentage of levels failed due to: saw obstacle / enemy moving left / enemy moving right / multiple or other:<br>- Original model: 0.37% / 0.16% / 0.12% / 0.08%<br>- Saw obstacle blindness: 12.76% / 0.16% / 0.08% / 0.05%<br>- Enemy moving left blindness: 0.36% / 4.69% / 0.97% / 0.07%<br>Each model was tested on 10,000 levels.</d-footnote>
     </p>
     <figure class="matplotlib-svg" style="text-align: center;">
       <%= require("../static/diagrams/model_editing_results.svg") %>
@@ -421,42 +421,47 @@
         <tr>
           <td></td>
           <td><figcaption>Original model.</figcaption></td>
-          <td><figcaption>Saw obstacle edit.</figcaption></td>
-          <td><figcaption>Enemy moving left edit.</figcaption></td>
+          <td><figcaption>Saw obstacle blindness.</figcaption></td>
+          <td><figcaption>Enemy moving left blindness.</figcaption></td>
         </tr>
       </table>
     </figure>
-    <h2 id="diversity-hypothesis">The Diversity Hypothesis</h2>
+    <h2 id="diversity-hypothesis">The diversity hypothesis</h2>
     <p>
-      We formulate the <span style="font-style: italic;">Diversity Hypothesis</span> as follows.
+      We formulate the following <span style="font-style: italic;">diversity hypothesis</span>.
     </p>
     <blockquote>
-      Interpretable features tend to arise (at a given level of abstraction) once the training distribution is diverse enough (at that level of abstraction).
+      Interpretable features tend to arise (at a given level of abstraction) if and only if the training distribution is diverse enough (at that level of abstraction).
     </blockquote>
     <p>
-      Our reasoning behind this hypothesis is that features only become interpretable once they are general enough. When the training distribution is not diverse enough, models have no incentive to develop features that generalize instead of overfitting. (Diversity on its own is not enough, as the training objective must also provide an incentive for a feature to develop, but it is often the bottleneck in practice.)
+      Our reasoning behind this hypothesis is as follows. For the forward implication ("only if"), we only expect features to be interpretable if they are general enough, and when the training distribution is not diverse enough, models have no incentive to develop features that generalize instead of overfitting. For the reverse implication ("if"), while diversity on its own is not enough to guarantee the development of interpretable features (they must also be relevant to the task), diversity tends to be a key bottleneck in typical training processes.
     </p>
     <p>
       In CoinRun, this diversity is provided by procedural generation (meaning that each new level encountered by the agent is randomly generated from scratch). This incentivizes the model to learn to recognise relevant objects, so that the agent's skills generalize to unseen layouts <d-cite key="procgen,gvgai,obstacletower"></d-cite>. By contrast, when models are trained to play video games with a limited number of levels, they tend to heavily overfit, "memorizing" the levels using irrelevant background objects <d-cite key="sonicsaliency"></d-cite>.
     </p>
     <p>
-      Conversely, CoinRun is <span style="font-style: italic;">not</span> diverse in other respects: the low-level visual patterns and high-level dynamics rules are very consistent between levels. Correspondingly, our techniques work best when applied to the middle layer of our architecture (described <a href="#d-footnote-4-listing">below</a>). When applied to earlier layers, the features seem to mostly pick out specific color configurations. When applied to later layers, the features involve mixtures of combinations of objects that are hard to decipher.<d-footnote>An interface for these layers can be viewed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/demo/interface.html" target="_blank">here</a>.</d-footnote> This is the sense in which we relativize (in parentheses) the Diversity Hypothesis to a specific level of abstraction.
+      Conversely, CoinRun is <span style="font-style: italic;">not</span> diverse in other respects: the low-level visual patterns and high-level dynamics rules are very consistent between levels. Correspondingly, our techniques work best when applied to the middle layer of our architecture (described <a href="#d-footnote-4-listing">below</a>). When applied to earlier layers, the features seem to mostly pick out specific color configurations. When applied to later layers, the features involve mixtures of combinations of objects that are hard to decipher. (An interface for all convolutional layers can be viewed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/demo/interface.html" target="_blank">here</a>.) This is the sense in which we relativize (in parentheses) the diversity hypothesis to a specific level of abstraction.
     </p>
-    <h3>Interpretability and generalization</h3>
+    <h3 id="interpretability-and-generalization">Interpretability and generalization</h3>
     <p>
-      Procedural generation also provides us with a way to measure the relationship between interpretability and generalization. We measured generalization by training the agent on a limited number of levels, testing on unseen levels <d-cite key="coinrun"></d-cite>. We tried to measure interpretability using our interface, though this is much more subjective. We asked an interpretability researcher to score the 8 features identified by our interface on how meaningful they seemed, taking into account &hellip;.<d-footnote>The interfaces we showed to the researcher are listed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/finite_levels/index.html" target="_blank">here</a>.</d-footnote> By varying the number of levels in the training set, we could then see how interpretability varied with generalization.<d-footnote>The data for this plot are as follows.<br>- Number of training levels: 100 / 300 / 1000 / 3,000 / 10,000 / 30,000 / 100,000<br>- Percentage of levels completed (train): 99.96% / 99.82% / 99.67% / 99.65% / 99.47% / 99.55% / 99.57%<br>- Percentage of levels completed (test): 61.81% / 66.95% / 74.93% / 89.87% / 97.53% / 98.66% / 99.25%<br>- Meaningfulness of features: 52.5% / 22.5% / 11.25% / 45% / 90% / 75% / 91.25%<br>Percentages of levels completed are estimated by sampling 10,000 levels with replacement.</d-footnote>
+      To test our hypothesis, we made the training distribution less diverse, by training the agent on a fixed set of 100 levels. This dramatically reduced our ability to interpret the model's features. Here we display an interface for the new model, generated in the same way as the one in the <a href="#header">header</a> of this page. The smoothly increasing value function shows that the model has memorized the number of timesteps until the end of the level, and the features it uses for this focus on irrelevant background objects.
     </p>
-    <figure class="matplotlib-svg" style="text-align: center;">
+    <d-figure style="grid-column: page; margin-bottom: 3em;">
+      <figure>
+        <div id="interface-100-levels-target"></div>
+      </figure>
+    </d-figure>
+    <p>
+      We attempted to quantify this effect by varying the number of levels used to train the agent, and evaluating the 8 features identified by our interface on how interpretable they were.<d-footnote>The interfaces used for this evaluation can be found <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/finite_levels/index.html" target="_blank">here</a>.</d-footnote> Features were judged based on how consistently they focused on the same objects, and whether the value function attribution made sense (for example, background objects should not be relevant). This process was subjective and noisy, but that may be unavoidable. We also measured the generalization ability of each model, by testing the agent on unseen levels <d-cite key="coinrun"></d-cite>.<d-footnote>The data for this plot are as follows.<br>- Number of training levels: 100 / 300 / 1000 / 3,000 / 10,000 / 30,000 / 100,000<br>- Percentage of levels completed (train, run 1): 99.96% / 99.82% / 99.67% / 99.65% / 99.47% / 99.55% / 99.57%<br>- Percentage of levels completed (train, run 2): 99.97% / 99.86% / 99.70% / 99.46% / 99.39% / 99.50% / 99.37%<br>- Percentage of levels completed (test, run 1): 61.81% / 66.95% / 74.93% / 89.87% / 97.53% / 98.66% / 99.25%<br>- Percentage of levels completed (test, run 2): 64.13% / 67.64% / 73.46% / 90.36% / 97.44% / 98.89% / 99.35%<br>- Percentage of features interpretable (researcher 1, run 1): 52.5% / 22.5% / 11.25% / 45% / 90% / 75% / 91.25%<br>- Percentage of features interpretable (researcher 2, run 1): 8.75% / 8.75% / 10% / 26.25% / 56.25% / 90% / 70%<br>- Percentage of features interpretable (researcher 1, run 2): 15% / 13.75% / 15% / 23.75% / 53.75% / 90% / 96.25%<br>- Percentage of features interpretable (researcher 2, run 2): 3.75% / 6.25% / 21.25% / 45% / 72.5% / 83.75% / 77.5%<br>Percentages of levels completed are estimated by sampling 10,000 levels with replacement.</d-footnote>
+    </p>
+    <figure class="matplotlib-svg">
       <%= require("../static/diagrams/generalization_results.svg") %>
-      <figcaption>Results of interpreting models trained on different numbers of levels.</figcaption>
+      <figcaption>Comparison of models trained on different numbers of levels. Two models were trained for each number of levels, and two researchers independently evaluated how interpretable the features of each model were, without being shown the number of levels.<d-footnote>Our methodology had some flaws. Firstly, the researchers were not completely blind to the number of levels: for example, it is possible to infer something about the number of levels from the smoothness of graphs of the value function, since with fewer levels the model is better able to memorize the number of timesteps until the end of the level. Secondly, since evaluations are somewhat tedious, we stopped them once we thought the trend had become clear, introducing some selection bias. Therefore these results should be considered primarily illustrative.</d-footnote> Each model was tested on 10,000 train and 10,000 test levels sampled with replacement. Shaded areas in the left plot show the range of values over both models (though these are mostly too narrow to be visible). Error bars in the right plot show &plusmn;1 population standard deviation over all four model&ndash;researcher pairs.</figcaption>
     </figure>
     <p>
-      TODO: re-run experiment to reduce variance
+      Our results illustrate how diversity may lead to interpretable features via generalization, lending support to the diversity hypothesis.
     </p>
-    <p>
-      Our results provide some limited evidence that interpretability emerges with generalization (though this does not explain the high interpretability score at 100 levels). There is a notable jump in interpretability at around 10,000 levels, which is where the generalization gap starts to plateau.<d-footnote>Training performance also starts to increase at around 10,000 levels. This effect is small enough here to be attributable to noise, but it is a phenomenon that occurs for a number of other procedurally-generated games <d-cite key="procgen"></d-cite>.</d-footnote>
-    </p>
-    <h2>Feature visualization</h2>
+    <h2 id="feature-visualization">Feature visualization</h2>
     <p>
       <a href="https://distill.pub/2017/feature-visualization/">Feature visualization</a> <d-cite key="attribution1,featurevis,featurevis1,featurevis2,featurevis3,featurevis4"></d-cite> answers questions about what certain parts of a network are looking for by generating examples. This can be done by applying gradient descent to the input image, starting from random noise, with the objective of activating a particular neuron, or group of neurons. While this method works well for an image classifier trained on ImagetNet <d-cite key="imagenet"></d-cite>, for our CoinRun model it yields only featureless clouds of saturated colors. Only for the first layer, which computes simple convolutions of the input, does the method produce comparable visualizations for the two models.
     </p>
@@ -504,16 +509,16 @@
     <ul>
       <li><b>Transformation robustness.</b> This is the method of stochastically jittering, rotating and scaling the image between optimization steps, to search for examples that are robust to these transformations <d-cite key="featurevis"></d-cite>. We tried both increasing and decreasing the size of the jittering. Rotating and scaling are less appropriate for CoinRun, since the observations themselves are not invariant to these transformations.</li>
       <li><b>Penalizing saturation.</b> Noticing that our visualizations tend to use fully saturated<d-footnote>We are slightly abusing "fully saturated" here to mean being one of the 8 colors with maximal or minimal RGB values.</d-footnote> colors towards the middle, we tried including in the visualization objective an L2 penalty of various strengths on the activations of the first layer, which successfully reduced the size of the saturated region.</li>
-      <li><b>Alternative objectives.</b> We tried using an alternative optimization objective <d-cite key="featurevis"></d-cite>, such as the caricature objective <d-cite key="caricatures"></d-cite>.<d-footnote>The caricature objective is to maximize the dot product between the activations of the input image and the activations of a reference image.</d-footnote> We also tried using dimensionality reduction (as described <a href="#dataset-example-based-feature-visualization">below</a>) to choose non-axis-aligned directions in activation space to maximize.
+      <li><b>Alternative objectives.</b> We tried using an alternative optimization objective <d-cite key="featurevis"></d-cite>, such as the caricature objective <d-cite key="caricatures"></d-cite>.<d-footnote>The caricature objective is to maximize the dot product between the activations of the input image and the activations of a reference image.</d-footnote> We also tried using dimensionality reduction (as described <a href="#dataset-examples">below</a>) to choose non-axis-aligned directions in activation space to maximize.
       <li><b>Low-level visual diversity.</b> In an attempt to broaden the distribution of images seen by the model, we retrained it on a version of the game with procedurally-generated sprites. We additionally tried adding noise to the images, both independent per-pixel noise and spatially-correlated noise. Finally, we experimented briefly with adversarial training, though we did not pursue this line of inquiry very far.</li>
     </ul>
     <p>
       We were able to use dataset examples to identify a number of channels that pick out human-interpretable features. It is therefore striking how resistant gradient-based methods were to our efforts. We believe that this is because solving CoinRun does not ultimately require much visual ability. Even with our modifications, it is possible to solve the game use simple visual shortcuts, such as picking out certain small configurations of pixels. These shortcuts work well on the narrow distribution of images on which the model is trained, but behave unpredictably in the full space of images in which gradient-based optimization takes place.
     </p>
     <p>
-      If our analysis here is valid, it provides futher evidence in favor of the Diversity Hypothesis.
+      If our analysis here is valid, it provides futher evidence for the <a href="#diversity-hypothesis">diversity hypothesis</a>, as an example of features that are hard to interpret in the absence of diversity.
     </p>
-    <h3 id="dataset-example-based-feature-visualization">Dataset example-based feature visualization</h3>
+    <h3 id="dataset-examples">Dataset example-based feature visualization</h3>
     <p>
       As an alternative to gradient-based feature visualization, our interface uses images made up of dataset examples, which can be thought of as a heavily-regularized form of visualization <d-cite key="featurevis,featurevisadversarial"></d-cite>. To construct a basic version of these, we sample a few thousand independent observations from the agent interacting with the environment, and pass them through the model. We then apply a dimensionality reduction method known as non-negative matrix factorization (NMF) to the activation channels <d-cite key="buildingblocks"></d-cite>.<d-footnote>More precisely, we find a non-negative approximate low-rank factorization of the matrix obtained by flattening the spatial dimensions of the activations into the batch dimension. This matrix has one row per observation <i>per spatial position</i> and one column per channel: thus the dimensionality reduction does not use spatial information.</d-footnote> For each of the reduced number of channels, we choose the observations and spatial positions with the strongest activation in that direction (with a limited number of examples per position, for diversity), and display a patch from the observation at that position.
     </p>
@@ -603,7 +608,7 @@
     <p>
       This has the same dimensions as <d-math>\mathbf A\left(\mathbf x\right)</d-math>, and its components sum to <d-math>V\left(\mathbf x\right)-F\left(\mathbf 0\right)</d-math>. So for a convolutional layer, this method allows us to attribute the value function (in excess of the baseline <d-math>F\left(\mathbf 0\right)</d-math>) across the horizontal, vertical and channel dimensions of activation space. Positive value function attribution can be thought of as "good news", components that cause the agent to think it is more likely to collect the coin at the end of the level. Similarly, negative value function attribution can be thought of as "bad news".
     </p>
-    <h3>Dimensionality reduction for attribution</h3>
+    <h3 id="dimensionality-reduction">Dimensionality reduction for attribution</h3>
     <p>
       We showed above that a dimensionality reduction method known as non-negative matrix factorization (NMF) could be applied to the channels of activations to produce meaningful directions in activation space. We have in fact found that it is even more effective to apply NMF not to activations, but to <span style="font-style: italic;">value function attributions</span>.<d-footnote>As before, we obtain the NMF directions by sampling a few thousand independent observations from the agent interacting with the environment, computing the attributions, and flattening the spatial dimensions into the batch dimension. Because NMF can only be applied to non-negative matrices, we separate out the positive and negative parts of the attributions and concatenate them along the batch dimension.</d-footnote> When reducing to enough dimensions, both methods tend to produce similar results, but when reducing to a smaller number of dimensions, using attributions usually produces more salient features. This is because attribution takes into account not just <span style="font-style: italic;">what neurons respond to</span> but also <span style="font-style: italic;">whether their response matters</span>.
     </p>

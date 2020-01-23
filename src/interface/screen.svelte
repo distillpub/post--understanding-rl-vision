@@ -70,7 +70,9 @@
                  background-image: url('{image_dir + image}');
                  height: 100%;
                  width: {(durations[index] / visible_duration) * 100}%;
-                 left: {(0.5 - (state.position + 0.5) / visible_duration) * 100}%;"
+                 left: {(0.5 - (state.position + 0.5) / visible_duration) * 100}%;
+                 outline: {scrubber ? '2px solid gray' : 'none'};
+                 outline-offset: -1px;"
         ></div>
       </div>
     {/each}

@@ -81,7 +81,10 @@
              position: absolute;
              height: 100%;
              width: {(max_duration / visible_duration) * 100}%;
-             left: {(0.5 - (state.position + 0.5) / visible_duration) * 100}%;"
+             left: {(0.5 - (state.position + 0.5) / visible_duration) * 100}%;
+             background: white;
+             outline: 2px solid gray;
+             outline-offset: -1px;"
     >
       {#each Array.from(series.keys()) as index}
         {#each Array.from(Array(series[index].length - 1).keys()) as position}
@@ -92,6 +95,14 @@
               x2={position + 1.5}
               y2={- series_rescaled[index][position + 1]}
               style="stroke: {colors[index]}; stroke-width: {stroke_width};"
+            ></line>
+          {:else}
+            <line
+              x1={position + 1}
+              y1={0}
+              x2={position + 1}
+              y2={- vertical_scale}
+              style="stroke: lightgray;"
             ></line>
           {/if}
         {/each}
@@ -122,7 +133,7 @@
             class="label"
             style="position: absolute;
                    bottom: {((series.length - index - 0.5) / series.length) * 100}%;
-                   right: calc(50% + 3px);
+                   right: calc(50% + 8px);
                    margin-bottom: -0.75em;
                    padding: 0.25em;"
           >

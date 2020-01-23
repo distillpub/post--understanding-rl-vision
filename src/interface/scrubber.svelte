@@ -38,10 +38,10 @@
    height: 100%;
    width: 2px;
    margin: 0 auto;
-   background-color: white;
-   border-width: 0px 1px;
+   border-width: 0px 6px;
    border-color: black;
    border-style: solid;
+   opacity: 0.4;
  }
 </style>
 
@@ -57,9 +57,7 @@
     style="z-index: -1;
            position: absolute;
            height: 100%;
-           width: 100%;
-           outline: {drag_position === null ? '2px' : '4px'} solid gray;
-           outline-offset: {drag_position === null ? '-1px' : '-2px'};"
+           width: 100%;"
   ></div>
   <div class="indicator"></div>
 </div>

@@ -53,7 +53,8 @@
               background: {selected_channel === index ? 'whitesmoke' : 'white'};
               border: 1px solid {selected_channel === index ? 'gray' : 'white'}; 
               border-radius: 0.25em;
-              cursor: pointer;"
+              cursor: pointer;
+              overflow: hidden;"
        on:mouseover={() => {if (enable_hover) {selected_channel = index;}}}
        on:mouseout={() => {if (enable_hover) {selected_channel = null;}}}
   >
@@ -102,7 +103,8 @@
               background: {selected_channel === 'res' ? 'whitesmoke' : 'white'};
               border: 1px solid {selected_channel === 'res' ? 'gray' : 'white'}; 
               border-radius: 0.25em;
-              cursor: pointer;"
+              cursor: pointer;
+              overflow: hidden;"
        on:mouseover={() => {if (enable_hover) {selected_channel = "res";}}}
        on:mouseout={() => {if (enable_hover) {selected_channel = null;}}}
   >
