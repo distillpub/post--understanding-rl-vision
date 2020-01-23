@@ -35,6 +35,7 @@
   export let action_colors;
   export let show_toggles;
   export let show_chart;
+  export let show_news_text;
   export let show_extra_help_text;
   export let show_attribution_selector;
   export let action_permutation;
@@ -295,10 +296,12 @@
             <span>Positive and negative attribution</span>
           {:else}
             <span>Positive attribution
-              {#if show_extra_help_text && attribution_kind.type === "v"}
+              {#if show_news_text && attribution_kind.type === "v"}
                 <span style="font-weight: normal;">(good news)</span>
+              {/if}
+              {#if show_extra_help_text && attribution_kind.type === "v"}
                 <br>
-                <span class="help">Color overlay shows objects that predict success</span>
+                <span class="help">Color overlay shows objects predictive of success</span>
               {/if}
             </span>
           {/if}
@@ -307,10 +310,12 @@
           {#if !attribution_abs}
             <span>
               Negative attribution
-              {#if show_extra_help_text && attribution_kind.type === "v"}
+              {#if show_news_text && attribution_kind.type === "v"}
                 <span style="font-weight: normal;">(bad news)</span>
+              {/if}
+              {#if show_extra_help_text && attribution_kind.type === "v"}
                 <br>
-                <span class="help">Color overlay shows objects that predict failure</span>
+                <span class="help">Color overlay shows objects predictive of failure</span>
               {/if}
             </span>
           {/if}

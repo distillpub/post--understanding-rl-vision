@@ -14,7 +14,7 @@
   <d-front-matter>
     <script type="text/json">{
       "title": "Understanding RL vision models",
-      "description": "We can analyze, debug and edit deep reinforcement learning models using attribution and dimensionality reduction.",
+      "description": "If the environment is diverse enough, we can analyze, diagnose and even edit deep reinforcement learning models using attribution.",
       "authors": [
         {
           "author": "Jacob Hilton",
@@ -54,7 +54,7 @@
 
   <d-title>
     <h1>Understanding RL vision</h1>
-    <p>We can analyze, debug and edit deep reinforcement learning models using attribution and dimensionality reduction.</p>
+    <p>If the environment is diverse enough, we can analyze, diagnose and even edit deep reinforcement learning models using attribution.</p>
     <d-figure id="header">
       <figure>
         <div id="interface-header-target"></div>
@@ -69,7 +69,7 @@
     </p>
     <ul>
       <li><b><a href="#dissecting-failure">Dissecting failure</a>.</b> We perform a step-by-step analysis of the agent's behaviour in cases where it failed to achieve the maximum reward, allowing us to understand what went wrong, and why.</li>
-      <li><b><a href="#debugging">Debugging</a>.</b> We find bugs in which the model "hallucinated" a feature not present in the observation, thereby explaining inaccuracies in the model's value function.</li>
+      <li><b><a href="#error-diagnosis">Error diagnosis</a>.</b> We find situations when the model "hallucinated" a feature not present in the observation, thereby explaining inaccuracies in the model's value function.</li>
       <li><b><a href="#model-editing-results">Model editing</a>.</b> We hand-edit the weights of the model to blind the agent to certain hazards, without otherwise changing the agent's behavior. We verify this by checking which hazards cause the new agents to fail, quantitatively validating our analysis.</li>
     </ul>
     <p>
@@ -295,7 +295,7 @@
           <span id="interface-failure-position"></span>
         </td>
         <td style="vertical-align: top;">
-          <b id="interface-failure-description-positions"></b>: <span id="interface-failure-description-text"></span>
+          <div id="interface-failure-description" style="position: relative;"></div>
         </td>
       </tr>
     </table>
@@ -306,9 +306,9 @@
         <div id="interface-failure-offscreen-target" style="display: none;"></div>
       </figure>
     </d-figure>
-    <h3 id="debugging">Debugging</h3>
+    <h3 id="error-diagnosis">Error diagnosis</h3>
     <p>
-      Occasionally, the model's value function spikes unexpectedly. In a couple of cases, we were able to debug this behavior with the help of our interface. The spiking was caused by bugs in which the model "hallucinated" a feature not present in the observation.
+      Occasionally, the model's value function spikes unexpectedly. In a couple of cases, we were able to diagnose this behavior with the help of our interface. The spiking was caused by the model "hallucinating" a feature not present in the observation.
     </p>
     <table style="margin-top: 1em; margin-bottom: 0em;">
       <tr>
@@ -434,7 +434,7 @@
       Interpretable features tend to arise (at a given level of abstraction) if and only if the training distribution is diverse enough (at that level of abstraction).
     </blockquote>
     <p>
-      Our reasoning behind this hypothesis is as follows. For the forward implication ("only if"), we only expect features to be interpretable if they are general enough, and when the training distribution is not diverse enough, models have no incentive to develop features that generalize instead of overfitting. For the reverse implication ("if"), while diversity on its own is not enough to guarantee the development of interpretable features (for example, the training objective must also provide an incentive), diversity tends to be a major bottleneck in typical training processes.
+      Our reasoning behind this hypothesis is as follows. For the forward implication ("only if"), we only expect features to be interpretable if they are general enough, and when the training distribution is not diverse enough, models have no incentive to develop features that generalize instead of overfitting. For the reverse implication ("if"), while diversity on its own is not enough to guarantee the development of interpretable features (they must also be relevant to the task), diversity tends to be a key bottleneck in typical training processes.
     </p>
     <p>
       In CoinRun, this diversity is provided by procedural generation (meaning that each new level encountered by the agent is randomly generated from scratch). This incentivizes the model to learn to recognise relevant objects, so that the agent's skills generalize to unseen layouts <d-cite key="procgen,gvgai,obstacletower"></d-cite>. By contrast, when models are trained to play video games with a limited number of levels, they tend to heavily overfit, "memorizing" the levels using irrelevant background objects <d-cite key="sonicsaliency"></d-cite>.
@@ -448,11 +448,16 @@
     </p>
     <figure class="matplotlib-svg">
       <%= require("../static/diagrams/generalization_results.svg") %>
-      <figcaption>Results of interpreting models trained on different numbers of levels. Two models were trained for each number of levels, and two researchers independently evaluated how interpretable the features of each model were, without being shown the number of levels.<d-footnote>Our methodology had some flaws. Firstly, the researchers were not completely blind to the number of levels: for example, it is possible to infer something about the number of levels from the smoothness of graphs of the value function, since with fewer levels the model is better able to memorize the number of timesteps until the end of the level. Secondly, since evaluations are somewhat tedious, we stopped them once we thought the trend had become clear, introducing some selection bias. Therefore these results should be considered purely illustrative.</d-footnote> Shaded areas in the left plot show the range of values over both models (though these are mostly too small to be visible). Error bars in the right plot show &plusmn;1 population standard deviation over all four model&ndash;researcher pairs.</figcaption>
+      <figcaption>Results of interpreting models trained on different numbers of levels. Two models were trained for each number of levels, and two researchers independently evaluated how interpretable the features of each model were, without being shown the number of levels.<d-footnote>Our methodology had some flaws. Firstly, the researchers were not completely blind to the number of levels: for example, it is possible to infer something about the number of levels from the smoothness of graphs of the value function, since with fewer levels the model is better able to memorize the number of timesteps until the end of the level. Secondly, since evaluations are somewhat tedious, we stopped them once we thought the trend had become clear, introducing some selection bias. Therefore these results should be considered primarily illustrative.</d-footnote> Shaded areas in the left plot show the range of values over both models (though these are mostly too small to be visible). Error bars in the right plot show &plusmn;1 population standard deviation over all four model&ndash;researcher pairs.</figcaption>
     </figure>
     <p>
       Our results provide some limited evidence that interpretability emerges with generalization. There is a notable jump in interpretability at around 10,000 levels, which is where the generalization gap starts to plateau.<d-footnote>Training performance also starts to increase at around 10,000 levels. This effect is small enough here to be attributable to noise, but it is a phenomenon that occurs for a number of other procedurally-generated games <d-cite key="procgen"></d-cite>.</d-footnote>
     </p>
+    <d-figure style="grid-column: page">
+      <figure>
+        <div id="interface-100-levels-target"></div>
+      </figure>
+    </d-figure>
     <h2 id="feature-visualization">Feature visualization</h2>
     <p>
       <a href="https://distill.pub/2017/feature-visualization/">Feature visualization</a> <d-cite key="attribution1,featurevis,featurevis1,featurevis2,featurevis3,featurevis4"></d-cite> answers questions about what certain parts of a network are looking for by generating examples. This can be done by applying gradient descent to the input image, starting from random noise, with the objective of activating a particular neuron, or group of neurons. While this method works well for an image classifier trained on ImagetNet <d-cite key="imagenet"></d-cite>, for our CoinRun model it yields only featureless clouds of saturated colors. Only for the first layer, which computes simple convolutions of the input, does the method produce comparable visualizations for the two models.

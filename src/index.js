@@ -76,6 +76,7 @@ let extra_options_header = {
   show_attribution_toggles: false,
   show_attribution_chart: false,
   show_residual_legend_item: false,
+  show_news_text: true,
   show_extra_help_text: true,
   simple_navigator: true,
   navigation_above: false,
@@ -101,6 +102,7 @@ let extra_options_bug = {
   show_attribution_toggles: false,
   show_attribution_chart: true,
   show_residual_legend_item: true,
+  show_news_text: false,
   show_extra_help_text: false,
   simple_navigator: false,
   navigation_above: true,
@@ -138,6 +140,7 @@ let extra_options_failure = {
   show_attribution_toggles: false,
   show_attribution_chart: true,
   show_residual_legend_item: true,
+  show_news_text: false,
   show_extra_help_text: false,
   simple_navigator: false,
   navigation_above: true,
@@ -161,6 +164,20 @@ initialize_interface(props_failure_down, extra_options_failure, "failure_down");
 import props_failure_offscreen from "./props_failure_offscreen.js";
 adjust_options_bug_failure(props_failure_offscreen);
 initialize_interface(props_failure_offscreen, extra_options_failure, "failure_offscreen");
+
+import props_100_levels from "./props_100_levels.js";
+let extra_options_100_levels = Object.assign({}, extra_options_header);
+extra_options_100_levels.show_extra_help_text = false;
+extra_options_100_levels.feature_descriptions = ["???", "???", "???", "???", "???", "???", "???", "Agent, walls<br>and velocity<br>info?"];
+(function (){
+  for (let feature_number = 0; feature_number < extra_options_100_levels.feature_descriptions.length; feature_number++) {
+    if (extra_options_100_levels.feature_descriptions[feature_number] === "???") {
+      extra_options_100_levels.feature_descriptions[feature_number] = "<span style=\"font-size: 1.25em;\">&emsp;???</span>";
+    }
+  }
+})();
+adjust_options_header(props_header);
+initialize_interface(props_100_levels, extra_options_100_levels, "100_levels");
 
 document.addEventListener("DOMContentLoaded", function() {
   for (let feature_number = 0; feature_number < 4; feature_number++) {
@@ -244,6 +261,32 @@ const get_failure_description = function(option, position) {
   return [positions, text];
 };
 
+let failure_description_divs = [];
+
+const append_all_failure_descriptions = function(option) {
+  let duration = interface_props["failure_" + option].trajectories.actions[0].length;
+  for (let position = 0; position < duration; position++) {
+    let positions_and_text = get_failure_description(option, position);
+    let positions = positions_and_text[0];
+    let text = positions_and_text[1];
+    let description_div = document.createElement("div");
+    description_div.id = "interface-failure-description-" + option + "-" + position.toString();
+    description_div.style.visibility = "hidden";
+    description_div.style.position = "absolute";
+    description_div.innerHTML = "<b>" + positions + "</b>: " + text;
+    document.getElementById("interface-failure-description").appendChild(description_div);
+    failure_description_divs.push(description_div);
+  }
+};
+
+const fix_failure_description_height = function() {
+  let height = 0;
+  for (let description_div of failure_description_divs) {
+    height = Math.max(height, description_div.offsetHeight);
+  }
+  document.getElementById("interface-failure-description").style.height = height + "px";
+};
+
 const arg_max = function(arr) {
   return arr.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
 };
@@ -291,11 +334,10 @@ const update_failure_position = function(delta, absolute, loop){
   if (typeof(failure_action_overrides[option][new_position]) !== "undefined") {
     new_action = failure_action_overrides[option][new_position];
   }
-  let positions_and_text = get_failure_description(option, new_position);
-  let positions = positions_and_text[0];
-  let text = positions_and_text[1];
-  document.getElementById("interface-failure-description-positions").innerHTML = positions;
-  document.getElementById("interface-failure-description-text").innerHTML = text;
+  for (let description_div of failure_description_divs) {
+    description_div.style.visibility = (description_div.id === "interface-failure-description-" + option + "-" + new_position.toString() ? "visible" : "hidden");
+  }
+  fix_failure_description_height();
   document.getElementById("interface-failure-previous").disabled = new_position === 0;
   document.getElementById("interface-failure-previous").style.cursor = new_position === 0 ? "auto" : "pointer";
   document.getElementById("interface-failure-next").disabled = new_position === (duration - 1);
@@ -338,6 +380,10 @@ document.addEventListener("DOMContentLoaded", function() {
             }
           };
         })(bug_or_failure, option, radio_button));
+        if (bug_or_failure === "failure") {
+          append_all_failure_descriptions(option);
+        }
+        fix_failure_description_height();
       }
     }
   }

@@ -81,6 +81,7 @@
     show_attribution_toggles: true,
     show_attribution_chart: true,
     show_residual_legend_item: true,
+    show_news_text: false,
     show_extra_help_text: false,
     simple_navigator: false,
     navigation_above: true,
@@ -441,6 +442,7 @@
       action_colors={colors.actions}
       show_toggles={extra_options.show_attribution_toggles}
       show_chart={extra_options.show_attribution_chart}
+      show_news_text={extra_options.show_news_text}
       show_extra_help_text={extra_options.show_extra_help_text}
       show_attribution_selector={show_attribution_selector}
       action_permutation={extra_options.action_permutation}
@@ -492,7 +494,7 @@
 
       {#if extra_options.show_navigator}
         <div style="position: absolute; top: 0em; left: 0em;">
-          <h3 style="margin-top: 0em;">Timeline</h3>
+          <div style="font-weight: bold; margin-bottom: 1em;">Timeline</div>
           <Navigator
             bind:state={video_state}
             bind:speed={formatting.video_speed}
