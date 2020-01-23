@@ -194,14 +194,6 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-  let screenshot_number = 0;
-  window.setInterval(function() {
-    document.getElementById("interface-screenshot").src = "images/screenshots/" + Math.min(screenshot_number, 9).toString() + ".png";
-    screenshot_number = (screenshot_number + 1) % 15;
-  }, 500);
-});
-
 const interface_bug_failure_options = {
   "bug": ["coin", "saw"],
   "failure": ["obscured", "down", "offscreen"]
