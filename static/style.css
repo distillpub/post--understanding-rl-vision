@@ -40,6 +40,10 @@ d-figure > figure {
   left: -48px;
 }
 
+body d-article {
+  overflow: visible;
+}
+
 d-title h1, d-title p, d-title d-figure {
   grid-column: page;
 }
@@ -95,7 +99,9 @@ button {
   border-radius: 0.25em;
 }
 
-#interface-failure-play-pause {
+#interface-failure-play-pause-button {
+  height: 1.3em;
+  width: 1.3em;
   font-size: 3em;
 }
 
