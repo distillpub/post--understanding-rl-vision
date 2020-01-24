@@ -162,7 +162,6 @@ button {
   margin: 0.5em auto;
   height: 512px;
   width: 512px;
-  background: repeating-linear-gradient(135deg, lightgray 0px, whitesmoke 10px, lightgray 20px);
 }
 
 #feature-vis-spatial img {
