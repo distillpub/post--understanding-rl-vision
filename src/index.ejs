@@ -64,7 +64,7 @@
 
   <d-article>
 
-    <p>
+    <p id="introduction">
       In this article, we apply interpretability techniques to a reinforcement learning (RL) model trained to play the video game CoinRun <d-cite key="coinrun"></d-cite>. Using attribution <d-cite key="attribution1,attribution2,attribution3,gradcam,attribution4,attribution5,attribution6,integratedgradients"></d-cite> and dimensionality reduction, we build an interface <d-cite key="buildingblocks"></d-cite> for exploring the objects detected by the model, and how they influence its value function and policy. We leverage this interface in several ways.
     </p>
     <ul>
@@ -517,7 +517,7 @@
       <li><b>Alternative objectives.</b> We tried using an alternative optimization objective <d-cite key="featurevis"></d-cite>, such as the caricature objective <d-cite key="caricatures"></d-cite>.<d-footnote>The caricature objective is to maximize the dot product between the activations of the input image and the activations of a reference image.</d-footnote> We also tried using dimensionality reduction (as described <a href="#dataset-examples">below</a>) to choose non-axis-aligned directions in activation space to maximize.
       <li><b>Low-level visual diversity.</b> In an attempt to broaden the distribution of images seen by the model, we retrained it on a version of the game with procedurally-generated sprites. We additionally tried adding noise to the images, both independent per-pixel noise and spatially-correlated noise. Finally, we experimented briefly with adversarial training <d-cite key="adversarialtraining"></d-cite>, though we did not pursue this line of inquiry very far.</li>
     </ul>
-    <p>
+    <p id="feature-visualization-discussion">
       As shown <a href="#dataset-examples">below</a>, we were able to use dataset examples to identify a number of channels that pick out human-interpretable features. It is therefore striking how resistant gradient-based methods were to our efforts. We believe that this is because solving CoinRun does not ultimately require much visual ability. Even with our modifications, it is possible to solve the game use simple visual shortcuts, such as picking out certain small configurations of pixels. These shortcuts work well on the narrow distribution of images on which the model is trained, but behave unpredictably in the full space of images in which gradient-based optimization takes place.
     </p>
     <p>
@@ -551,7 +551,7 @@
     <p>
       Unlike gradient-based feature visualization, this method finds some meaning to the different directions in activation space. It may still fail to provide a complete picture for each direction, however, since it only shows a limited number of dataset examples, and with limited context.
     </p>
-    <h3>Spatially-aware feature visualization</h3>
+    <h3 id="feature-visualization-spatial">Spatially-aware feature visualization</h3>
     <p>
       CoinRun observations differ from natural images in that they are much less spatially invariant. For example, the agent always appears in the center, and the agent's velocity is always encoded in the top left. As a result, some features detect unrelated things at different spatial positions (such as high horizontal velocity in the top left and coins elsewhere). To account for this, we developed a spatially-aware version of dataset example-based feature visualization, in which we fix each spatial position in turn, and choose the observation with the strongest activation at that position (with a limited number of reuses of the same observation, for diversity). This creates a spatial correspondence between visualizations and observations.
     </p>
@@ -703,18 +703,33 @@
       Attributions for our CoinRun model have some interesting properties that would be unusual for an ImageNet model.
     </p>
     <ul>
-      <li><b>Sparsity.</b> Attribution tends to be concentrated in a very small number of spatial positions and channels. (We are referring to post-NMF channels here, though in fact the NMF directions are often close to one-hot, so this would also be true for the original channels.) For example, in the figure above, the top 10 position&ndash;channel pairs account for more than 80% of the total absolute attribution. This might be explained by our earlier hypothesis that the model is often picking out certain small configurations of pixels. Because of this sparsity, we smooth out attribution over nearby spatial positions for the main version of our interface, so that the amount of visual space taken up can be used to judge attribution strength. This trades off some spatial precision for more precision with magnitudes.</li>
+      <li><b>Sparsity.</b> Attribution tends to be concentrated in a very small number of spatial positions and channels. (We are referring to post-NMF channels here, though in fact the NMF directions are often close to one-hot, so this would also be true for the original channels.) For example, in the figure above, the top 10 position&ndash;channel pairs account for more than 80% of the total absolute attribution. This might be explained by our <a href="#feature-visualization-discussion">earlier</a> hypothesis that the model identifies objects by picking out certain small configurations of pixels. Because of this sparsity, we smooth out attribution over nearby spatial positions for the main version of our interface, so that the amount of visual space taken up can be used to judge attribution strength. This trades off some spatial precision for more precision with magnitudes.</li>
       <li><b>Unexpected sign.</b> Value function attribution usually has the sign one would expect: positive for coins, negative for enemies, and so on. However, this is sometimes not the case. For example, in the figure above, the red channel (which detects saw obstacles) has both positive and negative attribution in two neighbouring spatial positions towards the left. Our best guess is that this phenomenon is a result of statistical <a href="https://en.wikipedia.org/wiki/Multicollinearity">collinearity</a>, caused by certain correlations in the procedual level generation together with the agent's behaviour. These could be visual, such as correlations between nearby pixels, or more abstract, such as both coins and long walls appearing at the end of every level. As a toy example, supposing the value function ought to increase by 2% when the end of the level becomes visible, the model could either increase the value function by 1% for coins and 1% for long walls, or by 3% for coins and &minus;1% for long walls, and the effect would be similar.</li>
-      <li><b>Outlier frames.</b> When an unusual event causes the network to output extreme values, attribution can behave particularly strangely. For example, in the <a id="bug-saw-link" href="#error-diagnosis">saw obstacle hallucination</a> frame, most features have a significant amount of both positive and negative attribution. We do not have a good explanation for this, but perhaps features are interacting in more complicated ways than usual. Moreover, in these cases there is often a significant component of the attribution lying outside the space spanned by the NMF directions (which we sometimes display as an additional "residual" feature). This could be because each frame is weighted equally when computing NMF, so outlier frames have little influence on the NMF directions.</li>
+      <li><b>Outlier frames.</b> When an unusual event causes the network to output extreme values, attribution can behave particularly strangely. For example, in the <a id="bug-saw-link" href="#error-diagnosis">saw obstacle hallucination</a> frame, most features have a significant amount of both positive and negative attribution. We do not have a good explanation for this, but perhaps features are interacting in more complicated ways than usual. Moreover, in these cases there is often a significant component of the attribution lying outside the space spanned by the NMF directions (which we sometimes display as an additional "residual" feature). This could be because each frame is weighted equally when computing NMF, so outlier frames have little influence over the NMF directions.</li>
     </ul>
     <p>
       These considerations suggest that some care may be required when interpreting attributions.
     </p>
-    <h2>Questions</h2>
+    <h2 id="questions">Questions</h2>
     <p>
-      To be continued...
+      <ul>
+        <li>Research agenda doc</li>
+        <li>Feature vis: discuss connection to robustness (2 last citations)</li>
+        <li>what do we have in the RL setting that we don’t have otherwise”. A state distribution, you can measure policy gradients (which tell you the causal effect of changing your actions on any aspect of the environment), etc</li>
+        <li>Biology perspective vs. testbed for interpretability techniques (why feature vis fail)</li>
+        <li>Distinguish between the "how to make systems interpretable" perspective and "how to interpret systems" (which one could call interpretability vs ability to interpret)</li>
+        <li>Exhausitveness of interpretability methods</li>
+        <li>PC thoughts, criteria sent to Sergei. wanting scalable techniques: not paying a safety cost, and having an aligned interpretability objective, e.g. not "what we want to see"</li>
+        <li>DH stuff</li>
+        <li>We tried to make the methods scalable, but we could actually have just done all 32 channels. Does it really scale????</li>
+        <li>Verify trustworthiness of attribution given sign stuff</li>
+        <li>Can you quantify the diversity thing without relying on an implicit distribution?</li>
+        <li>Figuring this out is related to adversarial examples. <d-footnote>These features may be related to the "non-robust features" of Ilyas et al <d-cite key="advexfeatures"></d-cite>, further discussed by a number of authors <d-cite key="advexfeaturesdiscussion"></d-cite>.</d-footnote>. What do the bugs say about robustness?</li>
+        <li>Engage with the Chakrabarti paper about explicability, predictability, ... (see alignment newsletter #74)</li>
+        <li>Failure of feature visualization: how relevant is this?; Unreasonable effectiveness of NMF; Reliability: attribution sometimes unexpected sign; Architecture: choice of layer matters (“object” level of abstraction); High and low advantage (GAE) reveal interesting moments; Can see the difference between overfit and generalizing models</li>
+      </ul>
     </p>
-    <h2>Supplementary material</h2>
+    <h2 id="supplementary-material">Supplementary material</h2>
     <ul>
       <li><b>Code.</b> The <a href="http://go/rl-clarity-library"><code>rl-clarity</code> library</a> includes code for generating an expanded version of our interface, along with tools for feature visualization, attribution and dimensionality reduction. We demonstrate these tools in a <a href="http://go/rl-clarity-notebook">Colab notebook</a>.</li>
       <li><b>More interfaces.</b> We generated an expanded version of our interface for every convolutional layer in our model <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/demo/interface.html" target="_blank">here</a>. We also generated interfaces for a number of other models, including the models trained on different numbers of levels, the edited models, and models trained on all 16 of the Procgen Benchmark <d-cite key="procgen"></d-cite> games. These are indexed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/index.html" target="_blank">here</a>.</li>
@@ -722,7 +737,7 @@
 
   </d-article>
 
-  <d-appendix>
+  <d-appendix id="appendix">
     <h3>Acknowledgments</h3>
     <p>
       We are deeply grateful to...
