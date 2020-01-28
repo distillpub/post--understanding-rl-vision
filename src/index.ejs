@@ -73,10 +73,10 @@
       <li><b><a href="#model-editing">Model editing</a>.</b> We hand-edit the weights of the model to blind the agent to certain hazards, without otherwise changing the agent's behavior. We verify this by checking which hazards cause the new agents to fail, quantitatively validating our analysis.</li>
     </ul>
     <p>
-      Our results lead us to formulate a <span style="font-style: italic;"><a href="#diversity-hypothesis">diversity hypothesis</a></span> for interpretability. If it is correct, then we can expect RL models to become more interpretable as the environments they are trained on become more diverse. We provide evidence for our hypothesis by measuring the relationship between interpretability and generalization.
+      Our results depend on levels in CoinRun being procedurally-generated, leading us to formulate a <span style="font-style: italic;"><a href="#diversity-hypothesis">diversity hypothesis</a></span> for interpretability. If it is correct, then we can expect RL models to become more interpretable as the environments they are trained on become more diverse. We provide evidence for our hypothesis by measuring the relationship between interpretability and generalization.
     </p>
     <p>
-      Finally, we provide a thorough investigation of several interpretability techniques in the context of RL vision, and pose a number of questions for further research.
+      Finally, we provide a thorough <a href="#feature-visualization">investigation</a> of several interpretability techniques in the context of RL vision, and pose a number of <a href="#questions">questions</a> for further research.
     </p>
     <h2 id="coinrun">Our CoinRun model</h2>
     <p>
@@ -468,7 +468,7 @@
     </p>
     <h2 id="feature-visualization">Feature visualization</h2>
     <p>
-      <a href="https://distill.pub/2017/feature-visualization/">Feature visualization</a> <d-cite key="attribution1,featurevis,featurevis1,featurevis2,featurevis3,featurevis4"></d-cite> answers questions about what certain parts of a network are looking for by generating examples. This can be done by applying gradient descent to the input image, starting from random noise, with the objective of activating a particular neuron, or group of neurons. While this method works well for an image classifier trained on ImagetNet <d-cite key="imagenet"></d-cite>, for our CoinRun model it yields only featureless clouds of saturated colors. Only for the first layer, which computes simple convolutions of the input, does the method produce comparable visualizations for the two models.
+      <a href="https://distill.pub/2017/feature-visualization/">Feature visualization</a> <d-cite key="attribution1,featurevis,featurevis1,featurevis2,featurevis3,featurevis4"></d-cite> answers questions about what certain parts of a network are looking for by generating examples. This can be done by applying gradient descent to the input image, starting from random noise, with the objective of activating a particular neuron, or group of neurons. While this method works well for an image classifier trained on ImagetNet <d-cite key="imagenet"></d-cite>, for our CoinRun model it yields only featureless clouds of extremal colors. Only for the first layer, which computes simple convolutions of the input, does the method produce comparable visualizations for the two models.
     </p>
     <figure style="grid-column: page;">
       <div style="display: table; margin: 0 auto;">
@@ -513,7 +513,7 @@
     </p>
     <ul>
       <li><b>Transformation robustness.</b> This is the method of stochastically jittering, rotating and scaling the image between optimization steps, to search for examples that are robust to these transformations <d-cite key="featurevis"></d-cite>. We tried both increasing and decreasing the size of the jittering. Rotating and scaling are less appropriate for CoinRun, since the observations themselves are not invariant to these transformations.</li>
-      <li><b>Penalizing saturation.</b> Noticing that our visualizations tend to use fully saturated<d-footnote>We are slightly abusing "fully saturated" here to mean being one of the 8 colors with maximal or minimal RGB values.</d-footnote> colors towards the middle, we tried including in the visualization objective an L2 penalty of various strengths on the activations of the first layer, which successfully reduced the size of the saturated region.</li>
+      <li id="extremal-colors"><b>Penalizing extremal colors.</b><d-footnote>By an "extremal" color we mean one of the 8 colors with maximal or minimal RGB values (black, white, red, green, blue, yellow, cyan and magenta).</d-footnote> Noticing that our visualizations tend to use extremal colors towards the middle, we tried including in the visualization objective an L2 penalty of various strengths on the activations of the first layer, which successfully reduced the size of the extremally-colored region.</li>
       <li><b>Alternative objectives.</b> We tried using an alternative optimization objective <d-cite key="featurevis"></d-cite>, such as the caricature objective <d-cite key="caricatures"></d-cite>.<d-footnote>The caricature objective is to maximize the dot product between the activations of the input image and the activations of a reference image.</d-footnote> We also tried using dimensionality reduction (as described <a href="#dataset-examples">below</a>) to choose non-axis-aligned directions in activation space to maximize.
       <li><b>Low-level visual diversity.</b> In an attempt to broaden the distribution of images seen by the model, we retrained it on a version of the game with procedurally-generated sprites. We additionally tried adding noise to the images, both independent per-pixel noise and spatially-correlated noise. Finally, we experimented briefly with adversarial training <d-cite key="adversarialtraining"></d-cite>, though we did not pursue this line of inquiry very far.</li>
     </ul>
@@ -699,7 +699,7 @@
         </figcaption>
       </div>
     </figure>
-    <p>
+    <p id="attribution-discussion">
       Attributions for our CoinRun model have some interesting properties that would be unusual for an ImageNet model.
     </p>
     <ul>
@@ -710,25 +710,55 @@
     <p>
       These considerations suggest that some care may be required when interpreting attributions.
     </p>
-    <h2 id="questions">Questions</h2>
+    <h2 id="questions">Questions for further research</h2>
+    <h3>The <a href="#diversity-hypothesis">diversity hypothesis</a></h3>
+    <ol>
+      <li><b>Validity.</b> Does the diversity hypothesis hold in other contexts, both within and outside of reinforcement learning?</li>
+      <li><b>Relationship to generalization.</b> What is the three-way relationship between diversity, interpretable features and generalization? Generalization refers implicitly to an underlying distribution &ndash; how should this distribution be chosen?<d-footnote>For example, to measure generalization for CoinRun models trained on a limited number of levels, we used the distribution over all possible procedurally-generated levels. However, to formalize the sense in which CoinRun is not diverse in its visual patterns or dynamics rules, one would need a distribution over levels from a wider class of games.</d-footnote></li>
+      <li><b>Caveats.</b> How are interpretable features affected by other factors, such as the choice of task or algorithm, and how do these interact with diversity? Even in the absence of diversity, do you eventually get interpretable features with a big enough model, via the double descent phenomenon <d-cite key="doubledescent1,doubledescent2,doubledescent3,doubledescent4"></d-cite>?</li>
+      <li><b>Quantification.</b> Can we quantitatively predict how much diversity is needed for interpretable features, perhaps using generalization? Can we be precise about what is meant by an "interpretable feature" and a "level of abstraction"?</li>
+    </ol>
+    <h3>Interpretability in the absence of diversity</h3>
+    <ol>
+      <li><b>Pervasiveness of non-diverse features.</b> Do the "non-diverse features" that appear in the absence of diversity remain when diversity is present? Is there a connection between these non-diverse features and the "non-robust features" of adversarial examples<d-cite key="advexfeatures,advexfeaturesdiscussion"></d-cite>?</li>
+      <li><b>Coping with non-diverse levels of abstraction.</b> Are there levels of abstraction at which even broad distributions like ImageNet remain non-diverse, and how can we best interpret models at these levels of abstraction?</li>
+      <li><b>Gradient-based feature visualization.</b> Why does gradient-based feature visualization break down in the absence of diversity, and can it be made to work using transformation robustness, regularization, data augmentation, adversarial training, or other techniques? What property of the optimization leads to the clouds of <a href="#extremal-colors">extremal colors</a>?</li>
+      <li><b>Trustworthiness of dataset examples and attribution.</b> How reliable and trustworthy can we make very heavily-regularized versions of feature visualization, such as those based on dataset examples? What explains the <a href="attribution-discussion">unusual behavior</a> of attribution, and how trustworthy is it?</li>
+    </ol>
+    <h3>Interpretability for RL</h3>
+    <ol>
+      <li><b>Abstract features.</b> For models with interpretable abstract features, such as relationships between objects or anticipated events, how can we build interfaces capable of representing these? For models with memory, how can we interpret their hidden states<d-cite key="dota,rubik"></d-cite>?</li>
+      <li>Can we leverage data from the RL environment to help?</li>
+      <li>Get stuff really reliable (advantage) / debug etc. extend.</li>
+      <li><b>Other stuff.</b> Model outputs cf Dota etc.</li>
+      <li>It may be valuable simply to analyze many more RL models What can we learn about our algorithms and environments by analyzing more models?</li>
+    </ol>
+    <h3>Remarks</h3>
     <p>
-      <ul>
-        <li>Research agenda doc</li>
-        <li>Feature vis: discuss connection to robustness (2 last citations)</li>
-        <li>what do we have in the RL setting that we don’t have otherwise”. A state distribution, you can measure policy gradients (which tell you the causal effect of changing your actions on any aspect of the environment), etc</li>
-        <li>Biology perspective vs. testbed for interpretability techniques (why feature vis fail)</li>
-        <li>Distinguish between the "how to make systems interpretable" perspective and "how to interpret systems" (which one could call interpretability vs ability to interpret)</li>
-        <li>Exhausitveness of interpretability methods</li>
-        <li>PC thoughts, criteria sent to Sergei. wanting scalable techniques: not paying a safety cost, and having an aligned interpretability objective, e.g. not "what we want to see"</li>
-        <li>DH stuff</li>
-        <li>We tried to make the methods scalable, but we could actually have just done all 32 channels. Does it really scale????</li>
-        <li>Verify trustworthiness of attribution given sign stuff</li>
-        <li>Can you quantify the diversity thing without relying on an implicit distribution?</li>
-        <li>Figuring this out is related to adversarial examples. <d-footnote>These features may be related to the "non-robust features" of Ilyas et al <d-cite key="advexfeatures"></d-cite>, further discussed by a number of authors <d-cite key="advexfeaturesdiscussion"></d-cite>.</d-footnote>. What do the bugs say about robustness?</li>
-        <li>Engage with the Chakrabarti paper about explicability, predictability, ... (see alignment newsletter #74)</li>
-        <li>Failure of feature visualization: how relevant is this?; Unreasonable effectiveness of NMF; Reliability: attribution sometimes unexpected sign; Architecture: choice of layer matters (“object” level of abstraction); High and low advantage (GAE) reveal interesting moments; Can see the difference between overfit and generalizing models</li>
-      </ul>
+      We're most excited by work to better understand interpretability for neural nets, and our questions reflect this.
+      It seems like RL is in an interesting regime at the border right now between memorization and generalization... We think there is insight to be had by just sitting down and studying a network like a biologist and we think this work is underexplored relative to "novel" garbage.
     </p>
+    <ul>
+      <li>Why study RL interpretability: to understand RL, and to understand interpretability</li>
+    </ul>
+    <ul>
+      <li>Can we use RL-specific. the environment or state distribution to generate relevant data?</li>
+      <li>Research agenda doc</li>
+      <li>what do we have in the RL setting that we don’t have otherwise”. A state distribution, you can measure policy gradients (which tell you the causal effect of changing your actions on any aspect of the environment), etc</li>
+      <li>Biology perspective vs. testbed for interpretability techniques (why feature vis fail)</li>
+      <li>Distinguish between the "how to make systems interpretable" perspective and "how to interpret systems" (which one could call interpretability vs ability to interpret)</li>
+      <li>Exhausitveness of interpretability methods</li>
+      <li>PC thoughts, criteria sent to Sergei. wanting scalable techniques: not paying a safety cost, and having an aligned interpretability objective, e.g. not "what we want to see"</li>
+      <li>DH stuff</li>
+      <li>We tried to make the methods scalable, but we could actually have just done all 32 channels. Does it really scale????</li>
+      <li>Verify trustworthiness of attribution given sign stuff</li>
+      <li>Can you quantify the diversity thing without relying on an implicit distribution?</li>
+      <li>Figuring this out is related to adversarial examples. . What do the bugs say about robustness?</li>
+      <li>Engage with the Chakrabarti paper about explicability, predictability, ... (see alignment newsletter #74)</li>
+      <li>Failure of feature visualization: how relevant is this?; Unreasonable effectiveness of NMF; Reliability: attribution sometimes unexpected sign; Architecture: choice of layer matters (“object” level of abstraction); High and low advantage (GAE) reveal interesting moments; Can see the difference between overfit and generalizing models</li>
+      <li>The saturation and stuff seems like it's actually an optimization thing</li>
+      <li>Double descent / would you eventually get good features with a non-diverse distribution?</li>
+    </ul>
     <h2 id="supplementary-material">Supplementary material</h2>
     <ul>
       <li><b>Code.</b> The <a href="http://go/rl-clarity-library"><code>rl-clarity</code> library</a> includes code for generating an expanded version of our interface, along with tools for feature visualization, attribution and dimensionality reduction. We demonstrate these tools in a <a href="http://go/rl-clarity-notebook">Colab notebook</a>.</li>
