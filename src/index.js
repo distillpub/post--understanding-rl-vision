@@ -357,7 +357,7 @@ const update_interface_bug_failure_option = function(bug_or_failure, choice) {
 let failure_playing = false;
 const update_failure_playing = function(new_failure_playing) {
   failure_playing = new_failure_playing;
-  document.getElementById("interface-failure-play-pause-div").innerHTML = failure_playing ? "&#10074;&#10074;" : "&#9658";
+  document.getElementById("interface-failure-play-pause-span").innerHTML = failure_playing ? "&#10074;&#10074;" : "&#9658";
 };
 
 document.addEventListener("DOMContentLoaded", function() {

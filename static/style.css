@@ -49,7 +49,7 @@ d-title h1, d-title p, d-title d-figure {
 }
 
 b {
-  style: font-weight: bold;
+  font-weight: bold;
 }
 
 label, button {
@@ -175,27 +175,27 @@ button {
   border: 1px solid gray;
 }
 
-#attribution .attribution-outer {
+#attribution-demo .attribution-outer {
   position: relative;
   height: 16em;
   width: 16em;
   border: 1px solid gray;
 }
 
-#attribution .attribution-inner {
+#attribution-demo .attribution-inner {
   position: absolute;
   height: 100%;
   width: 100%;
 }
 
-#attribution .attribution-image {
+#attribution-demo .attribution-image {
   height: 100%;
   width: 100%;
   background-size: 100% 100%;
   image-rendering: pixelated;
 }
 
-#attribution .attribution-legend-item {
+#attribution-demo .attribution-legend-item {
   display: inline-block;
   padding: 0.5em;
   background: white;
@@ -205,18 +205,18 @@ button {
   overflow: hidden;
 }
 
-#attribution .attribution-legend-item:hover {
+#attribution-demo .attribution-legend-item:hover {
   background: whitesmoke;
   border: 1px solid gray;
 }
 
-#attribution .attribution-legend-outer {
+#attribution-demo .attribution-legend-outer {
   position: relative;
   height: 192px;
   width: 128px;
 }
 
-#attribution .attribution-legend-dot {
+#attribution-demo .attribution-legend-dot {
   position: absolute;
   top: 140.8px;
   left: 0px;
@@ -225,7 +225,7 @@ button {
   border-radius: 20%;
 }
 
-#attribution .attribution-legend-inner {
+#attribution-demo .attribution-legend-inner {
   position: absolute;
   height: 128px;
   width: 128px;
@@ -234,7 +234,7 @@ button {
   border: 1px solid gray;
 }
 
-#attribution .attribution-legend-label {
+#attribution-demo .attribution-legend-label {
   position: absolute;
   height: 64px;
   width: 96px;
