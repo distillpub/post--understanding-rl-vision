@@ -310,7 +310,7 @@
     </d-figure>
     <h3 id="error-diagnosis">Error diagnosis</h3>
     <p>
-      We searched for errors in the model using generalized advantage estimation (GAE)<d-cite key="gae"></d-cite>,<d-footnote>We use the same GAE hyperparameters as in training, namely <d-math>\gamma=0.999</d-math> and <d-math>\lambda=0.95</d-math>.</d-footnote> which measures how successful each action turned out relative to the agent's expectations. Filtering for timesteps with unusually high or low GAE can find problems with the value function or policy.
+      We searched for errors in the model using generalized advantage estimation (GAE) <d-cite key="gae"></d-cite>,<d-footnote>We use the same GAE hyperparameters as in training, namely <d-math>\gamma=0.999</d-math> and <d-math>\lambda=0.95</d-math>.</d-footnote> which measures how successful each action turned out relative to the agent's expectations. Filtering for timesteps with unusually high or low GAE can find problems with the value function or policy.
     </p>
     <p>
       Using our interface, we found a couple of cases in which the model "hallucinated" a feature not present in the observation, causing the value function to spike.
@@ -597,7 +597,7 @@
       <div style="float: right;">
         <figure style="width: 300px; margin: 0.5em 0.5em 1em 1em;">
           <img src="images/integrated_gradient.png">
-          <figcaption>Viewing <d-math>F</d-math> as the height of a surface, the integrated gradient of <d-math>F</d-math> measures the elevation gained while travelling in each direction, and sums to the total elevation gain.<d-cite key="attributionpaths"></d-cite></figcaption>
+          <figcaption>Viewing <d-math>F</d-math> as the height of a surface, the integrated gradient of <d-math>F</d-math> measures the elevation gained while travelling in each direction, and sums to the total elevation gain <d-cite key="attributionpaths"></d-cite>.</figcaption>
         </figure>
       </div>
       <p>
@@ -720,45 +720,41 @@
     </ol>
     <h3>Interpretability in the absence of diversity</h3>
     <ol>
-      <li><b>Pervasiveness of non-diverse features.</b> Do the "non-diverse features" that appear in the absence of diversity remain when diversity is present? Is there a connection between these non-diverse features and the "non-robust features" of adversarial examples<d-cite key="advexfeatures,advexfeaturesdiscussion"></d-cite>?</li>
+      <li><b>Pervasiveness of non-diverse features.</b> Do the "non-diverse features" that appear in the absence of diversity remain when diversity is present? Is there a connection between these non-diverse features and the "non-robust features" of adversarial examples <d-cite key="advexfeatures,advexfeaturesdiscussion"></d-cite>?</li>
       <li><b>Coping with non-diverse levels of abstraction.</b> Are there levels of abstraction at which even broad distributions like ImageNet remain non-diverse, and how can we best interpret models at these levels of abstraction?</li>
-      <li><b>Gradient-based feature visualization.</b> Why does gradient-based feature visualization break down in the absence of diversity, and can it be made to work using transformation robustness, regularization, data augmentation, adversarial training, or other techniques? What property of the optimization leads to the clouds of <a href="#extremal-colors">extremal colors</a>?</li>
-      <li><b>Trustworthiness of dataset examples and attribution.</b> How reliable and trustworthy can we make very heavily-regularized versions of feature visualization, such as those based on dataset examples? What explains the <a href="attribution-discussion">unusual behavior</a> of attribution, and how trustworthy is it?</li>
+      <li><b>Gradient-based feature visualization.</b> Why does gradient-based feature visualization <a href="#feature-visualization">break down</a> in the absence of diversity, and can it be made to work using transformation robustness, regularization, data augmentation, adversarial training, or other techniques? What property of the optimization leads to the clouds of <a href="#extremal-colors">extremal colors</a>?</li>
+      <li><b>Trustworthiness of dataset examples and attribution.</b> How reliable and trustworthy can we make very heavily-regularized versions of feature visualization, such as those based on <a href="#dataset-examples">dataset examples</a>? What explains the <a href="#attribution-discussion">strange behavior</a> of attribution, and how trustworthy is it?</li>
     </ol>
-    <h3>Interpretability for RL</h3>
+    <h3>Interpretability in the RL framework</h3>
     <ol>
-      <li><b>Abstract features.</b> For models with interpretable abstract features, such as relationships between objects or anticipated events, how can we build interfaces capable of representing these? For models with memory, how can we interpret their hidden states<d-cite key="dota,rubik"></d-cite>?</li>
-      <li>Can we leverage data from the RL environment to help?</li>
-      <li>Get stuff really reliable (advantage) / debug etc. extend.</li>
-      <li><b>Other stuff.</b> Model outputs cf Dota etc.</li>
-      <li>It may be valuable simply to analyze many more RL models What can we learn about our algorithms and environments by analyzing more models?</li>
+      <li><b>Abstract features.</b> For models with interpretable abstract features, such as relationships between objects or anticipated events, how can we build interfaces capable of representing these? For models with memory, how can we interpret their hidden states <d-cite key="capturetheflag,rubik,dota"></d-cite>?</li>
+      <li><b>Improving reliability.</b> How can we best identify, understand and correct rare <a href="#dissecting-failure">failures</a> and <a href="#error-diagnosis">errors</a> in RL models? Can we not only degrade but also improve models by <a href="#model-editing">model editing</a>?</li>
+      <li><b>Modifying training.</b> In what ways can we train RL models to make them more interpretable without a significant performance cost, such as by altering architectures or adding auxiliary predictive losses?</li>
+      <li><b>Leveraging the environment.</b> How can we enrich interfaces using RL-specific data, such as trajectories of agent&ndash;environment interaction, state distributions, and advantage estimates? What are the benefits of incorporating user&ndash;environment interaction, such as for exploring counterfactuals?</li>
     </ol>
-    <h3>Remarks</h3>
+    <h3>Research motivation</h3>
     <p>
-      We're most excited by work to better understand interpretability for neural nets, and our questions reflect this.
-      It seems like RL is in an interesting regime at the border right now between memorization and generalization... We think there is insight to be had by just sitting down and studying a network like a biologist and we think this work is underexplored relative to "novel" garbage.
+      We are motivated to study interpretability for RL for two reasons.
     </p>
     <ul>
-      <li>Why study RL interpretability: to understand RL, and to understand interpretability</li>
+      <li><b>To be able to interpret RL models.</b> RL has a number of real-world applications <d-cite key="rlapplications"></d-cite>, and seems likely to be a part of increasingly influential systems. It is therefore important to be able to scrutinize RL models and to understand how they might fail. RL research may also benefit from an improved understanding of the pitfalls of different algorithms and environments.</li>
+      <li><b>As a testbed for interpretability techniques.</b> RL models pose a number of distinctive challenges for interpretability techniques. Notably, environments like CoinRun appear to straddle the boundary between memorization and generalization, making them a useful place to study the <a href="#diversity-hypothesis">diversity hypothesis</a> and related ideas.</li>
     </ul>
+    <p>
+      We think that large neural networks are currently the most likely type of model to be used in highly capable and influential AI systems in the future. Contrary to the traditional perception of neural networks as black boxes, we think that there is a fighting chance that we will be able to clearly and thoroughly understand the behavior even of very large networks. We are therefore most excited by neural network interpretability research that scores highly according to the following criteria.
+    </p>
     <ul>
-      <li>Can we use RL-specific. the environment or state distribution to generate relevant data?</li>
-      <li>Research agenda doc</li>
-      <li>what do we have in the RL setting that we don’t have otherwise”. A state distribution, you can measure policy gradients (which tell you the causal effect of changing your actions on any aspect of the environment), etc</li>
-      <li>Biology perspective vs. testbed for interpretability techniques (why feature vis fail)</li>
-      <li>Distinguish between the "how to make systems interpretable" perspective and "how to interpret systems" (which one could call interpretability vs ability to interpret)</li>
-      <li>Exhausitveness of interpretability methods</li>
-      <li>PC thoughts, criteria sent to Sergei. wanting scalable techniques: not paying a safety cost, and having an aligned interpretability objective, e.g. not "what we want to see"</li>
-      <li>DH stuff</li>
-      <li>We tried to make the methods scalable, but we could actually have just done all 32 channels. Does it really scale????</li>
-      <li>Verify trustworthiness of attribution given sign stuff</li>
-      <li>Can you quantify the diversity thing without relying on an implicit distribution?</li>
-      <li>Figuring this out is related to adversarial examples. . What do the bugs say about robustness?</li>
-      <li>Engage with the Chakrabarti paper about explicability, predictability, ... (see alignment newsletter #74)</li>
-      <li>Failure of feature visualization: how relevant is this?; Unreasonable effectiveness of NMF; Reliability: attribution sometimes unexpected sign; Architecture: choice of layer matters (“object” level of abstraction); High and low advantage (GAE) reveal interesting moments; Can see the difference between overfit and generalizing models</li>
-      <li>The saturation and stuff seems like it's actually an optimization thing</li>
-      <li>Double descent / would you eventually get good features with a non-diverse distribution?</li>
+      <li><b>Scalability.</b> The takeaways should have some chance of scaling to harder problems and larger networks. If the techniques themselves do not scale, they should at least reveal some insight that does.</li>
+      <li><b>Trustworthiness.</b> Interpretations should be faithful to the model. If they are approximate, they should at least not be biased in some fatal way (such as by using a misaligned approval-based objective, or by relying on another model that badly distorts information).</li>
+      <li><b>Exhaustiveness.</b> This may be turn out to be impossible at scale, but we should strive for techniques that explain every essential feature of our models. If there are theoretical limits to exhaustiveness, it would be good to understand these.</li>
+      <li><b>Low performance cost.</b> We would ideally like interpretable models to be among the most competitive models, so that they are not disincentivized from being used in practice.</li>
     </ul>
+    <p>
+      Our proposed questions reflect this perspective. One of the reasons we emphasize diversity relates to exhaustiveness. If "non-diverse features" remain when diversity is present, then our current techniques are not exhaustive, and could be on track to miss important features of more capable models. Developing tools to understand non-diverse features may shed light on whether this is likely to be a problem.
+    </p>
+    <p>
+      We think there may be significant mileage in simply applying existing interpretability techniques, with attention to detail, to a much wider range of models. Indeed, this was the mindset with which we initially approached this project. Like early biologists encountering a new species, there may be a lot we can glean from taking a magnifying glass to the creatures in front of us.
+    </p>
     <h2 id="supplementary-material">Supplementary material</h2>
     <ul>
       <li><b>Code.</b> The <a href="http://go/rl-clarity-library"><code>rl-clarity</code> library</a> includes code for generating an expanded version of our interface, along with tools for feature visualization, attribution and dimensionality reduction. We demonstrate these tools in a <a href="http://go/rl-clarity-notebook">Colab notebook</a>.</li>
