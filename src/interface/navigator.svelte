@@ -101,12 +101,12 @@
     <div class="container" style="left: 0%; right: 0%; text-align: center; z-index: 0;">
       <button
         on:click={() => {state.velocity_direction = state.velocity_direction === 1 ? 0 : 1; last_direction = state.velocity_direction;}}
-        style="font-size: 3em;"
+        style="height: 1.3em; width: 1.3em; font-size: 3em;"
       >
-        {#if state.velocity_direction === 1}<span>&#10074;&#10074;</span>{:else}<span>&#9658;</span>{/if}
+        <div>{#if state.velocity_direction === 1}<span>&#10074;&#10074;</span>{:else}<span>&#9658;</span>{/if}</div>
       </button>
       <br>
-      <span style="font-size: 0.75em; color: gray;">Speed:&emsp;<input bind:value={speed} type="number" min="{-max_speed}" max="{max_speed}">&ensp;FPS</span>
+      <span style="font-size: 0.7em; color: gray;">Speed:&emsp;<input bind:value={speed} type="number" min="{-max_speed}" max="{max_speed}">&ensp;FPS</span>
     </div>
     <div class="container" style="top: 1.5em; right: 0%; text-align: right; z-index: 1;">
       <button

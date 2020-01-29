@@ -194,14 +194,6 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-  let screenshot_number = 0;
-  window.setInterval(function() {
-    document.getElementById("interface-screenshot").src = "images/screenshots/" + Math.min(screenshot_number, 9).toString() + ".png";
-    screenshot_number = (screenshot_number + 1) % 15;
-  }, 500);
-});
-
 const interface_bug_failure_options = {
   "bug": ["coin", "saw"],
   "failure": ["obscured", "down", "offscreen"]
@@ -365,7 +357,7 @@ const update_interface_bug_failure_option = function(bug_or_failure, choice) {
 let failure_playing = false;
 const update_failure_playing = function(new_failure_playing) {
   failure_playing = new_failure_playing;
-  document.getElementById("interface-failure-play-pause").innerHTML = failure_playing ? "&#10074;&#10074;" : "&#9658";
+  document.getElementById("interface-failure-play-pause-div").innerHTML = failure_playing ? "&#10074;&#10074;" : "&#9658";
 };
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -387,6 +379,13 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     }
   }
+  document.getElementById("bug-saw-link").addEventListener("click", function(){
+    document.getElementById("interface-bug-saw-option").checked = true;
+    update_interface_bug_failure_option("bug", "saw");
+    interfaces["bug_saw"].$set({
+      "video_state": {"position": 2, "velocity_direction": 0},
+    });
+  });
   update_failure_position(0, false, false);
   update_failure_playing(true);
   window.setInterval(function() {
@@ -394,7 +393,7 @@ document.addEventListener("DOMContentLoaded", function() {
       update_failure_position(1, false, true);
     }
   }, 1000);
-  document.getElementById("interface-failure-play-pause").addEventListener("click", function() {
+  document.getElementById("interface-failure-play-pause-button").addEventListener("click", function() {
     update_failure_playing(!failure_playing);
   });
   document.getElementById("interface-failure-start").addEventListener("click", function() {
