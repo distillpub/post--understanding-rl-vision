@@ -443,3 +443,7 @@ document.addEventListener("DOMContentLoaded", function() {
     })(level_number_option, radio_button));
   }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementsByClassName("velocity-info-footnote")[0].shadowRoot.styleSheets[0].insertRule('d-hover-box{left:-42em;}');
+});

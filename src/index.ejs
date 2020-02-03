@@ -13,7 +13,7 @@
 
   <d-front-matter>
     <script type="text/json">{
-      "title": "Understanding RL vision models",
+      "title": "Understanding RL vision",
       "description": "With a diverse environment, we can analyze, diagnose and edit deep reinforcement learning models using attribution.",
       "authors": [
         {
@@ -158,7 +158,7 @@
           <td><figcaption>Enemies, which must be dodged, moving left (left) and right (right).</figcaption></td>
           <td><figcaption>Boxes, which the agent can both move past and land on top of.</figcaption></td>
           <td><figcaption>Lava at the bottom of a chasm.</figcaption></td>
-          <td><figcaption>The velocity info painted into the top left of each observation, indicating the agent's horizontal and vertical velocities.<d-footnote>The left square indicates the agent's horizontal velocity (black for left, white for right), and the right square indicates the agent's vertical velocity (black for down, white for up). In this example, the agent is moving forward and about to land.</d-footnote></figcaption></td>
+          <td><figcaption>The velocity info painted into the top left of each observation, indicating the agent's horizontal and vertical velocities.<d-footnote class="velocity-info-footnote">The left square indicates the agent's horizontal velocity (black for left, white for right), and the right square indicates the agent's vertical velocity (black for down, white for up). In this example, the agent is moving forward and about to land.</d-footnote></figcaption></td>
         </tr>
       </table>
     </figure>
@@ -714,20 +714,20 @@
     <h3>The <a href="#diversity-hypothesis">diversity hypothesis</a></h3>
     <ol>
       <li><b>Validity.</b> Does the diversity hypothesis hold in other contexts, both within and outside of reinforcement learning?</li>
-      <li><b>Relationship to generalization.</b> What is the three-way relationship between diversity, interpretable features and generalization? Generalization refers implicitly to an underlying distribution &ndash; how should this distribution be chosen?<d-footnote>For example, to measure generalization for CoinRun models trained on a limited number of levels, we used the distribution over all possible procedurally-generated levels. However, to formalize the sense in which CoinRun is not diverse in its visual patterns or dynamics rules, one would need a distribution over levels from a wider class of games.</d-footnote></li>
+      <li><b>Relationship to generalization.</b> What is the three-way relationship between diversity, interpretable features and generalization? Do non-interpretable features indicate that a model will fail to generalize in certain ways? Generalization refers implicitly to an underlying distribution &ndash; how should this distribution be chosen?<d-footnote>For example, to measure generalization for CoinRun models trained on a limited number of levels, we used the distribution over all possible procedurally-generated levels. However, to formalize the sense in which CoinRun is not diverse in its visual patterns or dynamics rules, one would need a distribution over levels from a wider class of games.</d-footnote></li>
       <li><b>Caveats.</b> How are interpretable features affected by other factors, such as the choice of task or algorithm, and how do these interact with diversity? Even in the absence of diversity, do you eventually get interpretable features with a big enough model, via the double descent phenomenon <d-cite key="doubledescent1,doubledescent2,doubledescent3,doubledescent4"></d-cite>?</li>
       <li><b>Quantification.</b> Can we quantitatively predict how much diversity is needed for interpretable features, perhaps using generalization? Can we be precise about what is meant by an "interpretable feature" and a "level of abstraction"?</li>
     </ol>
     <h3>Interpretability in the absence of diversity</h3>
     <ol>
-      <li><b>Pervasiveness of non-diverse features.</b> Do the "non-diverse features" that appear in the absence of diversity remain when diversity is present? Is there a connection between these non-diverse features and the "non-robust features" of adversarial examples <d-cite key="advexfeatures,advexfeaturesdiscussion"></d-cite>?</li>
+      <li><b>Pervasiveness of non-diverse features.</b> Do the "non-diverse features" that appear in the absence of diversity remain when diversity is present? Is there a connection between these non-diverse features and the "non-robust features" that have been posited to explain adversarial examples <d-cite key="advexfeatures,advexfeaturesdiscussion"></d-cite>?</li>
       <li><b>Coping with non-diverse levels of abstraction.</b> Are there levels of abstraction at which even broad distributions like ImageNet remain non-diverse, and how can we best interpret models at these levels of abstraction?</li>
       <li><b>Gradient-based feature visualization.</b> Why does gradient-based feature visualization <a href="#feature-visualization">break down</a> in the absence of diversity, and can it be made to work using transformation robustness, regularization, data augmentation, adversarial training, or other techniques? What property of the optimization leads to the clouds of <a href="#extremal-colors">extremal colors</a>?</li>
-      <li><b>Trustworthiness of dataset examples and attribution.</b> How reliable and trustworthy can we make very heavily-regularized versions of feature visualization, such as those based on <a href="#dataset-examples">dataset examples</a>? What explains the <a href="#attribution-discussion">strange behavior</a> of attribution, and how trustworthy is it?</li>
+      <li><b>Trustworthiness of dataset examples and attribution.</b> How reliable and trustworthy can we make very heavily-regularized versions of feature visualization, such as those based on <a href="#dataset-examples">dataset examples</a>?<d-footnote>Heavily-regularized feature visualization may fail to separate the things causing behavior from things that merely correlate with the causes <d-cite key="featurevis"></d-cite>.</d-footnote> What explains the <a href="#attribution-discussion">strange behavior</a> of attribution, and how trustworthy is it?</li>
     </ol>
     <h3>Interpretability in the RL framework</h3>
     <ol>
-      <li><b>Abstract features.</b> For models with interpretable abstract features, such as relationships between objects or anticipated events, how can we build interfaces capable of representing these? For models with memory, how can we interpret their hidden states <d-cite key="capturetheflag,rubik,dota"></d-cite>?</li>
+      <li><b>Abstract features.</b> For models with interpretable abstract features, such as relationships between objects or anticipated events, will any method of generating examples be enough to understand these, or do we need an entirely new approach? For models with memory, how can we interpret their hidden states <d-cite key="capturetheflag,rubik,dota"></d-cite>?</li>
       <li><b>Improving reliability.</b> How can we best identify, understand and correct rare <a href="#dissecting-failure">failures</a> and <a href="#error-diagnosis">errors</a> in RL models? Can we not only degrade but also improve models by <a href="#model-editing">model editing</a>?</li>
       <li><b>Modifying training.</b> In what ways can we train RL models to make them more interpretable without a significant performance cost, such as by altering architectures or adding auxiliary predictive losses?</li>
       <li><b>Leveraging the environment.</b> How can we enrich interfaces using RL-specific data, such as trajectories of agent&ndash;environment interaction, state distributions, and advantage estimates? What are the benefits of incorporating user&ndash;environment interaction, such as for exploring counterfactuals?</li>
@@ -744,7 +744,7 @@
       We think that large neural networks are currently the most likely type of model to be used in highly capable and influential AI systems in the future. Contrary to the traditional perception of neural networks as black boxes, we think that there is a fighting chance that we will be able to clearly and thoroughly understand the behavior even of very large networks. We are therefore most excited by neural network interpretability research that scores highly according to the following criteria.
     </p>
     <ul>
-      <li><b>Scalability.</b> The takeaways of the research should have some chance of scaling to harder problems and larger networks. If the techniques themselves do not scale, they should at least reveal some relevant insight that does.</li>
+      <li><b>Scalability.</b> The takeaways of the research should have some chance of scaling to harder problems and larger networks. If the techniques themselves do not scale, they should at least reveal some relevant insight that might.</li>
       <li><b>Trustworthiness.</b> Explanations should be faithful to the model. Even if they do not tell the full story, they should at least not be biased in some fatal way (such as by using a misaligned approval-based objective, or by depending on another model that badly distorts information).</li>
       <li><b>Exhaustiveness.</b> This may be turn out to be impossible at scale, but we should strive for techniques that explain every essential feature of our models. If there are theoretical limits to exhaustiveness, we should try to understand these.</li>
       <li><b>Low cost.</b> Our techniques should not be significantly more computationally expensive than training the model. We hope that we will not need to train models differently for them to be interpretable, but if we do, we should try to minimize both the computational expense and any performance cost, so that interpretable models are not disincentivized from being used in practice.</li>
