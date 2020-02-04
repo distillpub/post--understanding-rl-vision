@@ -55,11 +55,6 @@
   <d-title>
     <h1>Understanding RL vision</h1>
     <p>With a diverse environment, we can analyze, diagnose and edit deep reinforcement learning models using attribution.</p>
-    <d-figure id="header">
-      <figure>
-        <div id="interface-header-target"></div>
-      </figure>
-    </d-figure>
   </d-title>
 
   <d-article>
@@ -239,8 +234,13 @@
       We developed an interface for examining trajectories of the agent playing the game. This incorporates attribution, which highlights objects that positively or negatively influence a particular network output (either the value function, or a policy logit). Using dimensionality reduction, attribution is broken down according to the type of object detected, which we indicate using different colors. (We will explain the precise calculation involved <a href="#attribution">later</a>.)
     </p>
     <p>
-      Our interface for a typical trajectory is displayed in the <a href="#header">header</a> of this page, with the value function as the network output. It reveals the model using coins, enemies, walls and more to compute the value function.
+      Here is our interface for a typical trajectory, with the value function as the network output. It reveals the model using coins, enemies, walls and more to compute the value function.
     </p>
+    <d-figure style="grid-column: page; margin-bottom: 3em;">
+      <figure>
+        <div id="interface-header-target"></div>
+      </figure>
+    </d-figure>
     <h3 id="dissecting-failure">Dissecting failure</h3>
     <p>
       Our fully-trained model fails to complete around 1 in every 200 levels. We explored some of these failures using our interface, and found that we were usually able to understand why the failure occurred.
@@ -449,7 +449,7 @@
     </p>
     <h3 id="interpretability-and-generalization">Interpretability and generalization</h3>
     <p>
-      To test our hypothesis, we made the training distribution less diverse, by training the agent on a fixed set of 100 levels. This dramatically reduced our ability to interpret the model's features. Here we display an interface for the new model, generated in the same way as the one in the <a href="#header">header</a> of this page. The smoothly increasing value function shows that the model has memorized the number of timesteps until the end of the level, and the features it uses for this focus on irrelevant background objects.
+      To test our hypothesis, we made the training distribution less diverse, by training the agent on a fixed set of 100 levels. This dramatically reduced our ability to interpret the model's features. Here we display an interface for the new model, generated in the same way as the one <a href="#analysis">above</a>. The smoothly increasing value function shows that the model has memorized the number of timesteps until the end of the level, and the features it uses for this focus on irrelevant background objects.
     </p>
     <d-figure style="grid-column: page; margin-bottom: 3em;">
       <figure>

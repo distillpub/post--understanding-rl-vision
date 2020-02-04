@@ -60,8 +60,8 @@ const initialize_interface = function(props, extra_options, name) {
 };
 
 const adjust_options_header = function(props) {
-  props.formatting.legend_item_height = "7em";
-  props.formatting.legend_item_width = "7em";
+  props.formatting.legend_item_height = "6.5em";
+  props.formatting.legend_item_width = "6.5em";
 };
 
 import props_header from "./props_header.js";
@@ -167,7 +167,6 @@ initialize_interface(props_failure_offscreen, extra_options_failure, "failure_of
 
 import props_100_levels from "./props_100_levels.js";
 let extra_options_100_levels = Object.assign({}, extra_options_header);
-extra_options_100_levels.show_extra_help_text = false;
 extra_options_100_levels.feature_descriptions = ["???", "???", "???", "???", "???", "???", "???", "Agent, walls<br>and velocity<br>info?"];
 (function (){
   for (let feature_number = 0; feature_number < extra_options_100_levels.feature_descriptions.length; feature_number++) {
