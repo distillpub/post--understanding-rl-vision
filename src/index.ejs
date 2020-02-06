@@ -78,7 +78,7 @@
       CoinRun is a side-scrolling platformer in which the agent must dodge enemies and other traps and collect the coin at the end of the level.
     </p>
     <figure>
-      <video width="100%" controls autoplay loop>
+      <video width="100%" autoplay loop>
         <source src="videos/coinrun.mp4" type="video/mp4">
       </video>
       <figcaption style="text-align: center;">Our trained model playing CoinRun. <b>Left</b>: full resolution. <b>Right</b>: 64x64 RGB observations given to the model.</figcaption>
@@ -149,7 +149,7 @@
           <td></td>
           <td><figcaption>The agent, in mid air (left) and about to jump (right).</figcaption></td>
           <td><figcaption>Coins, which have to be collected.</figcaption></td>
-          <td><figcaption>Stationary saw obstacles, which must be dodged.</figcaption></td>
+          <td><figcaption>Stationary buzzsaw obstacles, which must be dodged.</figcaption></td>
           <td><figcaption>Enemies, which must be dodged, moving left (left) and right (right).</figcaption></td>
           <td><figcaption>Boxes, which the agent can both move past and land on top of.</figcaption></td>
           <td><figcaption>Lava at the bottom of a chasm.</figcaption></td>
@@ -255,7 +255,7 @@
       <tr>
         <td style="width: 45%; vertical-align: top;">
           <label id="interface-failure-obscured-label" style="color: black;">
-            <b><input type="radio" name="interface-failure-options" checked id="interface-failure-obscured-option"> Saw obstacle obscured by enemy</b>
+            <b><input type="radio" name="interface-failure-options" checked id="interface-failure-obscured-option"> Buzzsaw obstacle obscured by enemy</b>
           </label><br>
           <label id="interface-failure-down-label" style="color: lightgray;">
             <b><input type="radio" name="interface-failure-options" id="interface-failure-down-option"> Stepping down to avoid jumping</b>
@@ -267,7 +267,7 @@
         <td>
           <div style="min-height: 7.5em;">
             <div style="display: block;" id="interface-failure-obscured-text">
-              The agent moves too far to the right while in mid-air as a result of a saw obstacle being temporarily hidden from view by a moving enemy. The saw comes back into view, but too late to avoid a collision.
+              The agent moves too far to the right while in mid-air as a result of a buzzsaw obstacle being temporarily hidden from view by a moving enemy. The buzzsaw comes back into view, but too late to avoid a collision.
             </div>
             <div style="display: none;" id="interface-failure-down-text">
               The agent presses down in a bid to delay a jump. This causes the agent to inadvertently step down from a box and onto an enemy.
@@ -286,7 +286,7 @@
             <button id="interface-failure-previous" class="interface-failure-step-button">Prev</button><br>
             <button id="interface-failure-start" class="interface-failure-step-button">Start</button>
           </div>
-          <button id="interface-failure-play-pause-button">
+          <button id="interface-failure-play-pause-button" class="play-pause-button">
             <span id="interface-failure-play-pause-span">&#9658;</span>
           </button>
           <div style="display: inline-block;">
@@ -322,7 +322,7 @@
             <b><input type="radio" name="interface-bug-options" id="interface-bug-coin-option" checked> Coin hallucination</b>
           </label><br>
           <label id="interface-bug-saw-label" style="color: lightgray;">
-            <b><input type="radio" name="interface-bug-options" id="interface-bug-saw-option"> Saw obstacle hallucination</b>
+            <b><input type="radio" name="interface-bug-options" id="interface-bug-saw-option"> Buzzsaw obstacle hallucination</b>
           </label>
         </td>
         <td>
@@ -331,7 +331,7 @@
               At one point the value function spiked upwards from 95% to 98% for a single timestep. This was due to a curved yellow-brown shape in the background, which happened to appear next to a wall, being mistaken for a coin.
             </div>
             <div style="display: none;" id="interface-bug-saw-text">
-              At another point the value function spiked downwards from 94% to 85% for a single timestep. This was due to the agent, colored in gray-blue and crouching against a mottled background, being mistaken for a saw obstacle. An actual saw obstacle was also present in the observation, but the main effect was from the misjudged agent, as shown by the larger red circle around the agent (hover over the first legend item to isolate).
+              At another point the value function spiked downwards from 94% to 85% for a single timestep. This was due to the agent, colored in gray-blue and crouching against a mottled background, being mistaken for a buzzsaw obstacle. An actual buzzsaw obstacle was also present in the observation, but the main effect was from the misjudged agent, as shown by the larger red circle around the agent (hover over the first legend item to isolate).
             </div>
           </div>
         </td>
@@ -345,10 +345,10 @@
     </d-figure>
     <h3 id="model-editing">Model editing</h3>
     <p>
-      Our analysis so far has been mostly qualitative. To quantitatively validate our analysis, we hand-edited the model to make the agent blind to certain features: saw obstacles in one case, and left-moving enemies in another. <d-footnote>The features in our interface correspond to directions in activation space obtained by applying <a href="#dimensionality-reduction">attribution-based NMF</a> to layer 2b of our model. To blind the agent to a feature, we edited the weights to make them project out the corresponding NMF direction.<br><br>More precisely, let <d-math>\mathbf v</d-math> be the NMF direction corresponding to the feature we wish to blind the model to. This is a vector of length <d-math>c</d-math>, the number of channels in activation space. Using this we construct the <a href="https://en.wikipedia.org/wiki/Projection_(linear_algebra)">orthogonal projection</a> matrix <d-math>P:=I-\frac 1{\|\mathbf v\|^2}\mathbf v\mathbf v^{\mathsf T}</d-math>, which projects out the direction of <d-math>\mathbf v</d-math> from activation vectors. We then take the convolutional kernel of the following layer, which has shape <d-math>\text{height}\times\text{width}\times c\times d</d-math>, where <d-math>d</d-math> is the number of output channels. Broadcasting across the height and width dimensions, we left-multiply each <d-math>c\times d</d-math> matrix in the kernel by <d-math>P</d-math>. The effect of the new kernel is to project out the direction of <d-math>\mathbf v</d-math> from activations before applying the original kernel.<br><br>As it turned out, the NMF directions were close to one-hot, so this procedure was approximately equivalent to zeroing out the slice of the kernel corresponding to a particular in-channel.</d-footnote> The idea of weight editing originated in forthcoming research <d-cite key="circuits"></d-cite>, where it will be explored much more thoroughly.
+      Our analysis so far has been mostly qualitative. To quantitatively validate our analysis, we hand-edited the model to make the agent blind to certain features: buzzsaw obstacles in one case, and left-moving enemies in another. <d-footnote>The features in our interface correspond to directions in activation space obtained by applying <a href="#dimensionality-reduction">attribution-based NMF</a> to layer 2b of our model. To blind the agent to a feature, we edited the weights to make them project out the corresponding NMF direction.<br><br>More precisely, let <d-math>\mathbf v</d-math> be the NMF direction corresponding to the feature we wish to blind the model to. This is a vector of length <d-math>c</d-math>, the number of channels in activation space. Using this we construct the <a href="https://en.wikipedia.org/wiki/Projection_(linear_algebra)">orthogonal projection</a> matrix <d-math>P:=I-\frac 1{\|\mathbf v\|^2}\mathbf v\mathbf v^{\mathsf T}</d-math>, which projects out the direction of <d-math>\mathbf v</d-math> from activation vectors. We then take the convolutional kernel of the following layer, which has shape <d-math>\text{height}\times\text{width}\times c\times d</d-math>, where <d-math>d</d-math> is the number of output channels. Broadcasting across the height and width dimensions, we left-multiply each <d-math>c\times d</d-math> matrix in the kernel by <d-math>P</d-math>. The effect of the new kernel is to project out the direction of <d-math>\mathbf v</d-math> from activations before applying the original kernel.<br><br>As it turned out, the NMF directions were close to one-hot, so this procedure was approximately equivalent to zeroing out the slice of the kernel corresponding to a particular in-channel.</d-footnote> The idea of weight editing originated in forthcoming research <d-cite key="circuits"></d-cite>, where it will be explored much more thoroughly.
     </p>
     <p>
-      We evaluated each edit by measuring the percentage of levels that the new agent failed to complete, broken down by the direct cause of failure. Our results show that our edits were successful and targeted, with no statistically measurable effects on the agent's other abilities.<d-footnote>The data for this plot are as follows.<br>Percentage of levels failed due to: saw obstacle / enemy moving left / enemy moving right / multiple or other:<br>- Original model: 0.37% / 0.16% / 0.12% / 0.08%<br>- Saw obstacle blindness: 12.76% / 0.16% / 0.08% / 0.05%<br>- Enemy moving left blindness: 0.36% / 4.69% / 0.97% / 0.07%<br>Each model was tested on 10,000 levels.</d-footnote>
+      We evaluated each edit by measuring the percentage of levels that the new agent failed to complete, broken down by the direct cause of failure. Our results show that our edits were successful and targeted, with no statistically measurable effects on the agent's other abilities.<d-footnote>The data for this plot are as follows.<br>Percentage of levels failed due to: buzzsaw obstacle / enemy moving left / enemy moving right / multiple or other:<br>- Original model: 0.37% / 0.16% / 0.12% / 0.08%<br>- Buzzsaw obstacle blindness: 12.76% / 0.16% / 0.08% / 0.05%<br>- Enemy moving left blindness: 0.36% / 4.69% / 0.97% / 0.07%<br>Each model was tested on 10,000 levels.<br><br>We also tested the original model on a version of the game with invisible buzzsaws, and obtained the following results.<br>Percentage of levels failed due to: buzzsaw obstacle / enemy moving left / enemy moving right / multiple or other:<br>- Original model, invisible buzzsaws: 32.20% / 0.05% / 0.05% / 0.05%<br>So the buzzsaw-edited model is only partially blind to buzzsaws. Its ability to dodge enemies may also be very slightly degraded, though the data is not conclusive.</d-footnote>
     </p>
     <figure class="matplotlib-svg" style="text-align: center;">
       <%= require("../static/diagrams/model_editing_results.svg") %>
@@ -370,54 +370,65 @@
             <label id="model-editing-level-3-label" style="color: lightgray;">
               <b><input type="radio" name="model-editing-level-options" id="model-editing-level-3-option"> Level 3</b>
             </label>
+            <div style="margin-top: 1em;">
+              <button id="model-editing-level-1-play-pause-button" class="play-pause-button" style="display: block; margin: 0 auto;">
+                <span id="model-editing-level-1-play-pause-span">&#9658;</span>
+              </button>
+              <button id="model-editing-level-2-play-pause-button" class="play-pause-button" style="display: none; margin: 0 auto;">
+                <span id="model-editing-level-2-play-pause-span">&#9658;</span>
+              </button>
+              <button id="model-editing-level-3-play-pause-button" class="play-pause-button" style="display: none; margin: 0 auto;">
+                <span id="model-editing-level-3-play-pause-span">&#9658;</span>
+              </button>
+            </div>
           </td>
           <td>
             <div style="display: block;" id="model-editing-level-1-target-1">
-              <video controls autoplay>
+              <video id="model-editing-level-1-video-1" controls>
                 <source src="videos/model_editing/original_episode_0.mp4" type="video/mp4">
               </video>
             </div>
             <div style="display: none;" id="model-editing-level-2-target-1">
-              <video controls autoplay>
+              <video id="model-editing-level-2-video-1" controls>
                 <source src="videos/model_editing/original_episode_1.mp4" type="video/mp4">
               </video>
             </div>
             <div style="display: none;" id="model-editing-level-3-target-1">
-              <video controls autoplay>
+              <video id="model-editing-level-3-video-1" controls>
                 <source src="videos/model_editing/original_episode_2.mp4" type="video/mp4">
               </video>
             </div>
           </td>
           <td>
             <div style="display: block;" id="model-editing-level-1-target-2">
-              <video controls autoplay>
+              <video id="model-editing-level-1-video-2" controls>
                 <source src="videos/model_editing/saw_episode_0.mp4" type="video/mp4">
               </video>
             </div>
             <div style="display: none;" id="model-editing-level-2-target-2">
-              <video controls autoplay>
+              <video id="model-editing-level-2-video-2" controls>
                 <source src="videos/model_editing/saw_episode_1.mp4" type="video/mp4">
               </video>
             </div>
             <div style="display: none;" id="model-editing-level-3-target-2">
-              <video controls autoplay>
+              <video id="model-editing-level-3-video-2" controls>
                 <source src="videos/model_editing/saw_episode_2.mp4" type="video/mp4">
               </video>
             </div>
           </td>
           <td>
             <div style="display: block;" id="model-editing-level-1-target-3">
-              <video controls autoplay>
+              <video id="model-editing-level-1-video-3" controls>
                 <source src="videos/model_editing/enemy_episode_0.mp4" type="video/mp4">
               </video>
             </div>
             <div style="display: none;" id="model-editing-level-2-target-3">
-              <video controls autoplay>
+              <video id="model-editing-level-2-video-3" controls>
                 <source src="videos/model_editing/enemy_episode_1.mp4" type="video/mp4">
               </video>
             </div>
             <div style="display: none;" id="model-editing-level-3-target-3">
-              <video controls autoplay>
+              <video id="model-editing-level-3-video-3" controls>
                 <source src="videos/model_editing/enemy_episode_2.mp4" type="video/mp4">
               </video>
             </div>
@@ -426,7 +437,7 @@
         <tr>
           <td></td>
           <td><figcaption>Original model.</figcaption></td>
-          <td><figcaption>Saw obstacle blindness.</figcaption></td>
+          <td><figcaption>Buzzsaw obstacle blindness.</figcaption></td>
           <td><figcaption>Enemy moving left blindness.</figcaption></td>
         </tr>
       </table>
@@ -534,7 +545,7 @@
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_2.png"><div class="feature-vis-dataset-text">Long left-facing wall</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_3.png"><div class="feature-vis-dataset-text">Left end of platform</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_4.png"><div class="feature-vis-dataset-text">Right end of platform</div></div>
-        <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_5.png"><div class="feature-vis-dataset-text">Saw obstacle or platform</div></div>
+        <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_5.png"><div class="feature-vis-dataset-text">Buzzsaw obstacle or platform</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_6.png"><div class="feature-vis-dataset-text">Coin</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_7.png"><div class="feature-vis-dataset-text">Top/right edge of screen</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_8.png"><div class="feature-vis-dataset-text">Left end of platform</div></div>
@@ -542,7 +553,7 @@
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_10.png"><div class="feature-vis-dataset-text">Agent or enemy moving right</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_11.png"><div class="feature-vis-dataset-text">Left edge of box</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_12.png"><div class="feature-vis-dataset-text">Right end of platform</div></div>
-        <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_13.png"><div class="feature-vis-dataset-text">Saw obstacle</div></div>
+        <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_13.png"><div class="feature-vis-dataset-text">Buzzsaw obstacle</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_14.png"><div class="feature-vis-dataset-text">Top left corner of box</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_15.png"><div class="feature-vis-dataset-text">Left end of platform or bottom/right of screen?</div></div>
       </div>
@@ -663,7 +674,7 @@
               <div class="attribution-legend-inner">
                 <div class="attribution-image" style="background-image: url('images/attribution/layer_2b_feature_0.png');"></div>
               </div>
-              <div class="attribution-legend-label">Saw<br>obstacle</div>
+              <div class="attribution-legend-label">Buzzsaw<br>obstacle</div>
             </div>
           </div>
           <div id="attribution-legend-item-1" class="attribution-legend-item">
@@ -704,8 +715,8 @@
     </p>
     <ul>
       <li><b>Sparsity.</b> Attribution tends to be concentrated in a very small number of spatial positions and channels. (We are referring to post-NMF channels here, though in fact the NMF directions are often close to one-hot, so this would also be true for the original channels.) For example, in the figure above, the top 10 position&ndash;channel pairs account for more than 80% of the total absolute attribution. This might be explained by our <a href="#feature-visualization-discussion">earlier</a> hypothesis that the model identifies objects by picking out certain small configurations of pixels. Because of this sparsity, we smooth out attribution over nearby spatial positions for the main version of our interface, so that the amount of visual space taken up can be used to judge attribution strength. This trades off some spatial precision for more precision with magnitudes.</li>
-      <li><b>Unexpected sign.</b> Value function attribution usually has the sign one would expect: positive for coins, negative for enemies, and so on. However, this is sometimes not the case. For example, in the figure above, the red channel (which detects saw obstacles) has both positive and negative attribution in two neighboring spatial positions towards the left. Our best guess is that this phenomenon is a result of statistical <a href="https://en.wikipedia.org/wiki/Multicollinearity">collinearity</a>, caused by certain correlations in the procedural level generation together with the agent's behavior. These could be visual, such as correlations between nearby pixels, or more abstract, such as both coins and long walls appearing at the end of every level. As a toy example, supposing the value function ought to increase by 2% when the end of the level becomes visible, the model could either increase the value function by 1% for coins and 1% for long walls, or by 3% for coins and &minus;1% for long walls, and the effect would be similar.</li>
-      <li><b>Outlier frames.</b> When an unusual event causes the network to output extreme values, attribution can behave particularly strangely. For example, in the <a id="bug-saw-link" href="#error-diagnosis">saw obstacle hallucination</a> frame, most features have a significant amount of both positive and negative attribution. We do not have a good explanation for this, but perhaps features are interacting in more complicated ways than usual. Moreover, in these cases there is often a significant component of the attribution lying outside the space spanned by the NMF directions (which we sometimes display as an additional "residual" feature). This could be because each frame is weighted equally when computing NMF, so outlier frames have little influence over the NMF directions.</li>
+      <li><b>Unexpected sign.</b> Value function attribution usually has the sign one would expect: positive for coins, negative for enemies, and so on. However, this is sometimes not the case. For example, in the figure above, the red channel (which detects buzzsaw obstacles) has both positive and negative attribution in two neighboring spatial positions towards the left. Our best guess is that this phenomenon is a result of statistical <a href="https://en.wikipedia.org/wiki/Multicollinearity">collinearity</a>, caused by certain correlations in the procedural level generation together with the agent's behavior. These could be visual, such as correlations between nearby pixels, or more abstract, such as both coins and long walls appearing at the end of every level. As a toy example, supposing the value function ought to increase by 2% when the end of the level becomes visible, the model could either increase the value function by 1% for coins and 1% for long walls, or by 3% for coins and &minus;1% for long walls, and the effect would be similar.</li>
+      <li><b>Outlier frames.</b> When an unusual event causes the network to output extreme values, attribution can behave particularly strangely. For example, in the <a id="bug-saw-link" href="#error-diagnosis">buzzsaw obstacle hallucination</a> frame, most features have a significant amount of both positive and negative attribution. We do not have a good explanation for this, but perhaps features are interacting in more complicated ways than usual. Moreover, in these cases there is often a significant component of the attribution lying outside the space spanned by the NMF directions (which we sometimes display as an additional "residual" feature). This could be because each frame is weighted equally when computing NMF, so outlier frames have little influence over the NMF directions.</li>
     </ul>
     <p>
       These considerations suggest that some care may be required when interpreting attributions.
@@ -757,7 +768,7 @@
     </p>
     <h2 id="supplementary-material">Supplementary material</h2>
     <ul>
-      <li><b>Code.</b> The <a href="http://go/rl-clarity-library"><code>rl-clarity</code> library</a> includes code for generating an expanded version of our interface, along with tools for feature visualization, attribution and dimensionality reduction. We demonstrate these tools in a <a href="http://go/rl-clarity-notebook">Colab notebook</a>.</li>
+      <li><b>Code.</b> The <a href-to-be-updated="http://go/rl-clarity-library"><code>rl-clarity</code> library</a> includes code for generating an expanded version of our interface, along with tools for feature visualization, attribution and dimensionality reduction. We demonstrate these tools in a <a href-to-be-updated="http://go/rl-clarity-notebook">Colab notebook</a>. [Links to be updated]</li>
       <li><b>More interfaces.</b> We generated an expanded version of our interface for every convolutional layer in our model <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/demo/interface.html" target="_blank">here</a>. We also generated interfaces for a number of other models, including the models trained on different numbers of levels, the edited models, and models trained on all 16 of the Procgen Benchmark <d-cite key="procgen"></d-cite> games. These are indexed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/index.html" target="_blank">here</a>.</li>
     </ul>
 

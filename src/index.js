@@ -5,11 +5,11 @@ import * as _unused from "raw-loader!./index.ejs";
 import Interface from "./interface/interface.svelte";
 
 const feature_descriptions = [
-  "Saw<br>obstacle",
+  "Buzzsaw<br>obstacle",
   "Coin",
   "Enemy<br>moving<br>left",
   "Agent<br>or enemy<br>moving right",
-  "Saw<br>obstacle<br>or platform",
+  "Buzzsaw<br>obstacle<br>or platform",
   "Platform",
   "Velocity<br>info or left-<br>facing wall",
   "Step"
@@ -216,18 +216,18 @@ const failure_descriptions = {
     [[3, 3], "The agent jumps by releasing up, analyzing something (" + residual_bullet_html() + ") on the wall. (The \"residual\" feature can be triggered by a number of different objects, and can be viewed by hovering over the last legend item.)"],
     [[4, 6], "The agent is in mid-air, trying to control its horizontal motion. Its policy has higher entropy as its actions matter less at the start of a jump (due to the entropy bonus used in PPO)."],
     [[7, 8], "The agent moves right to be able to reach the top of the wall (" + feature_bullet_html("failure_obscured", 7) + "), though it is slightly discouraged from doing so by the prescence of the enemy moving right (" + feature_bullet_html("failure_obscured", 4) + ")."],
-    [[9, 13], "Having adjusted its horizontal motion, the agent returns to a policy with higher entropy. It is paying attention to the enemy moving right (" + feature_bullet_html("failure_obscured", 4) + "), which it is on track to avoid, but it cannot see the saw obstacle (" + feature_bullet_html("failure_obscured", 1) + ") obscured from view behind it. With some bad luck, the agent happens to move right at every timestep during this period."],
-    [[14, 14], "Finally the saw obstacle (" + feature_bullet_html("failure_obscured", 1) + ") comes into view, and the agent tries to move left to avoid it."],
-    [[15, 15], "For some reason the agent no longer seems to realize that it is on track to collide with the saw obstacle (" + feature_bullet_html("failure_obscured", 1) + "), and returns to a policy with higher entropy. With further bad luck, the agent again happens to move right."],
-    [[16, 17], "The danger of the saw obstacle (" + feature_bullet_html("failure_obscured", 1) + ") becomes clear to the agent again. The agent tries to move left to avoid it, and also prepares to immediately jump upon landing. Pulling off the jump actually matters more to its chances of survival, since it is already moving right."],
-    [[18, 18], "The agent makes a futile attempt to avoid the saw obstacle (" + feature_bullet_html("failure_obscured", 1) + ") by releasing up to jump, but it is too late, and the episode is terminated."]
+    [[9, 13], "Having adjusted its horizontal motion, the agent returns to a policy with higher entropy. It is paying attention to the enemy moving right (" + feature_bullet_html("failure_obscured", 4) + "), which it is on track to avoid, but it cannot see the buzzsaw obstacle (" + feature_bullet_html("failure_obscured", 1) + ") obscured from view behind it. With some bad luck, the agent happens to move right at every timestep during this period."],
+    [[14, 14], "Finally the buzzsaw obstacle (" + feature_bullet_html("failure_obscured", 1) + ") comes into view, and the agent tries to move left to avoid it."],
+    [[15, 15], "For some reason the agent no longer seems to realize that it is on track to collide with the buzzsaw obstacle (" + feature_bullet_html("failure_obscured", 1) + "), and returns to a policy with higher entropy. With further bad luck, the agent again happens to move right."],
+    [[16, 17], "The danger of the buzzsaw obstacle (" + feature_bullet_html("failure_obscured", 1) + ") becomes clear to the agent again. The agent tries to move left to avoid it, and also prepares to immediately jump upon landing. Pulling off the jump actually matters more to its chances of survival, since it is already moving right."],
+    [[18, 18], "The agent makes a futile attempt to avoid the buzzsaw obstacle (" + feature_bullet_html("failure_obscured", 1) + ") by releasing up to jump, but it is too late, and the episode is terminated."]
   ],
   "down": [
     [[1, 1], "The agent prepares to jump, seeing the wall (" + feature_bullet_html("failure_obscured", 7) + ") immediately in front of it."],
     [[2, 3], "The agent's policy is dominated by the 3 upward directions (which delay the jump) and down (which cancels it). Any other action would trigger the jump. So the agent is trying to delay the jump, partly because of the enemy moving left (" + feature_bullet_html("failure_obscured", 3) + "), which both positively influences these actions and negatively influences others."],
     [[4, 4], "The agent's policy is still dominated by the 3 updward directions and down, and at this point the agent happens to move down. Unfortunately, the agent does not seem to have taken into account that this will cause it to step down from the box it is standing on and onto an enemy."],
     [[5, 5], "The agent is now happier to jump by releasing up, based on the position of the enemy moving left (" + feature_bullet_html("failure_obscured", 3) + "), seeming not to realize that the jump has already been cancelled."],
-    [[6, 7], "The agent returns to a policy dominated by the 3 upward directions and down, seemingly influenced by the wall (" + feature_bullet_html("failure_obscured", 7) + ") in front of it and, for some reason, the saw obstacle (" + feature_bullet_html("failure_obscured", 1) + feature_bullet_html("failure_obscured", 5) + ") behind it. The agent's apparent confusion may be because it is already doomed, no matter which actions it takes."]
+    [[6, 7], "The agent returns to a policy dominated by the 3 upward directions and down, seemingly influenced by the wall (" + feature_bullet_html("failure_obscured", 7) + ") in front of it and, for some reason, the buzzsaw obstacle (" + feature_bullet_html("failure_obscured", 1) + feature_bullet_html("failure_obscured", 5) + ") behind it. The agent's apparent confusion may be because it is already doomed, no matter which actions it takes."]
   ],
   "offscreen": [
     [[1, 1], "The agent moves right across the platform (" + feature_bullet_html("failure_obscured", 5) + " " + feature_bullet_html("failure_obscured", 6) + ") it is on."],
@@ -356,7 +356,7 @@ const update_interface_bug_failure_option = function(bug_or_failure, choice) {
 let failure_playing = false;
 const update_failure_playing = function(new_failure_playing) {
   failure_playing = new_failure_playing;
-  document.getElementById("interface-failure-play-pause-span").innerHTML = failure_playing ? "&#10074;&#10074;" : "&#9658";
+  document.getElementById("interface-failure-play-pause-span").innerHTML = failure_playing ? "&#10074;&#10074;" : "&#9658;";
 };
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -413,6 +413,19 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
+let model_editing_videos_playing = {};
+let model_editing_some_video_playing = function(level_number) {
+  for (let video_number = 1; video_number < 4; video_number++) {
+    if (model_editing_videos_playing[level_number][video_number]) {
+      return true;
+    }
+  }
+  return false;
+};
+let update_model_editing_play_pause_button = function(level_number) {
+  document.getElementById("model-editing-level-" + level_number.toString() + "-play-pause-span").innerHTML = model_editing_some_video_playing(level_number) ? "&#10074;&#10074;" : "&#9658;";
+};
+
 document.addEventListener("DOMContentLoaded", function() {
   for (let level_number_option = 1; level_number_option < 4; level_number_option++) {
     let radio_button = document.getElementById("model-editing-level-" + level_number_option.toString() + "-option");
@@ -421,11 +434,14 @@ document.addEventListener("DOMContentLoaded", function() {
         if (radio_button.checked) {
           for (let level_number_target = 1; level_number_target < 4; level_number_target++) {
             let label = document.getElementById("model-editing-level-" + level_number_target.toString() + "-label");
+            let play_pause_button = document.getElementById("model-editing-level-" + level_number_target.toString() + "-play-pause-button");
             if (level_number_target === level_number_option) {
               label.style.color = "black";
+              play_pause_button.style.display = "block";
             }
             else {
               label.style.color = "lightgray";
+              play_pause_button.style.display = "none";
             }
             for (let target_number = 1; target_number < 4; target_number++) {
               let target = document.getElementById("model-editing-level-" + level_number_target.toString() + "-target-" + target_number.toString());
@@ -440,6 +456,38 @@ document.addEventListener("DOMContentLoaded", function() {
         }
       };
     })(level_number_option, radio_button));
+  }
+  for (let level_number = 1; level_number < 4; level_number++) {
+    model_editing_videos_playing[level_number] = {};
+    for (let video_number = 1; video_number < 4; video_number++) {
+      let video = document.getElementById("model-editing-level-" + level_number.toString() + "-video-" + video_number.toString());
+      video.play();
+      let update_video_playing = (function(level_number, video_number, video) {
+        return function() {
+          model_editing_videos_playing[level_number][video_number] = !video.paused;
+          update_model_editing_play_pause_button(level_number);
+        };
+      }(level_number, video_number, video));
+      update_video_playing();
+      video.addEventListener("play", update_video_playing);
+      video.addEventListener("pause", update_video_playing);
+      video.addEventListener("ended", update_video_playing);
+    }
+    document.getElementById("model-editing-level-" + level_number.toString() + "-play-pause-button").addEventListener("click", (function(level_number) {
+      return function() {
+        let some_video_playing = model_editing_some_video_playing(level_number);
+        for (let video_number = 1; video_number < 4; video_number++) {
+          let video = document.getElementById("model-editing-level-" + level_number.toString() + "-video-" + video_number.toString());
+          if (some_video_playing) {
+            video.pause();
+          }
+          else {
+            video.play();
+          }
+        }
+        update_model_editing_play_pause_button(level_number);
+      };
+    })(level_number));
   }
 });
 

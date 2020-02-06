@@ -95,7 +95,7 @@ button {
   border-radius: 0.25em;
 }
 
-#interface-failure-play-pause-button {
+.play-pause-button {
   height: 1.3em;
   width: 1.3em;
   font-size: 3em;
