@@ -201,6 +201,11 @@ button {
   margin: 1px;
   border: 1px solid gray;
   border-radius: 50%;
+  cursor: pointer;
+}
+
+#hero .hero-annotation-image:hover {
+  opacity: 0.9;
 }
 
 #attribution-demo td, #hero td {
@@ -218,7 +223,7 @@ button {
   padding: 2px 16px 2px 0px;
 }
 
-#attribution-demo .attribution-outer, #hero .attribution-outer {
+#attribution-demo .attribution-outer, #hero .hero-outer {
   position: relative;
   border: 1px solid gray;
   height: 0px;
@@ -226,14 +231,14 @@ button {
   width: 100%;
 }
 
-#attribution-demo .attribution-inner, #hero .attribution-inner {
+#attribution-demo .attribution-inner, #hero .hero-inner {
   position: absolute;
   height: 0px;
   padding-bottom: 100%;
   width: 100%;
 }
 
-#attribution-demo .attribution-image, #hero .attribution-image {
+#attribution-demo .attribution-image, #hero .hero-image {
   height: 0px;
   padding-bottom: 100%;
   width: 100%;

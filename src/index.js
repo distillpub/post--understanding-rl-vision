@@ -168,8 +168,19 @@ extra_options_100_levels.feature_descriptions = ["???", "???", "???", "???", "??
 })();
 initialize_interface(props_100_levels, extra_options_100_levels, "100_levels");
 
+const preload_images = function(urls) {
+  for (let url of urls) {
+    let img = new Image();
+    img.src = url;
+  }
+};
+
 document.addEventListener("DOMContentLoaded", function() {
   for (let feature_number = 0; feature_number < 4; feature_number++) {
+    preload_images([
+      "images/attribution/attribution_pos_" + feature_number.toString() + ".png",
+      "images/attribution/attribution_neg_" + feature_number.toString() + ".png"
+    ]);
     document.getElementById("attribution-legend-item-" + feature_number.toString()).addEventListener("mouseover", (function(feature_number) {
       return function() {
         document.getElementById("attribution-overlay-pos").style.backgroundImage="url('images/attribution/attribution_pos_" + feature_number.toString() + ".png')";
@@ -179,6 +190,28 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("attribution-legend-item-" + feature_number.toString()).addEventListener("mouseout", function() {
       document.getElementById("attribution-overlay-pos").style.backgroundImage="url('images/attribution/attribution_pos.png')";
       document.getElementById("attribution-overlay-neg").style.backgroundImage="url('images/attribution/attribution_neg.png')";
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  for (let feature_number = 0; feature_number < 3; feature_number++) {
+    preload_images([
+      "images/hero/attribution_pos_" + feature_number.toString() + ".png",
+      "images/hero/attribution_neg_" + feature_number.toString() + ".png",
+      "images/hero/observation_" + feature_number.toString() + ".png"
+    ]);
+    document.getElementById("hero-annotation-" + feature_number.toString()).addEventListener("mouseover", (function(feature_number) {
+      return function() {
+        document.getElementById("hero-overlay-pos").style.backgroundImage="url('images/hero/attribution_pos_" + feature_number.toString() + ".png')";
+        document.getElementById("hero-overlay-neg").style.backgroundImage="url('images/hero/attribution_neg_" + feature_number.toString() + ".png')";
+        document.getElementById("hero-observation").style.backgroundImage="url('images/hero/observation_" + feature_number.toString() + ".png')";
+      };
+    })(feature_number));
+    document.getElementById("hero-annotation-" + feature_number.toString()).addEventListener("mouseout", function() {
+      document.getElementById("hero-overlay-pos").style.backgroundImage="url('images/hero/attribution_pos.png')";
+      document.getElementById("hero-overlay-neg").style.backgroundImage="url('images/hero/attribution_neg.png')";
+      document.getElementById("hero-observation").style.backgroundImage="url('images/hero/observation.png')";
     });
   }
 });
