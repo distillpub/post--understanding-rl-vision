@@ -55,61 +55,59 @@
   <d-title>
     <h1>Understanding RL vision</h1>
     <p>With a diverse environment, we can analyze, diagnose and edit deep reinforcement learning models using attribution.</p>
-    <figure style="grid-column: page; margin-top: 1em; margin-bottom: 0.5em;">
-      <div id="hero" style="display: table; margin: 0 auto;">
-        <table style="margin-bottom: 1.5em;">
-          <tr>
-            <th>
-              Negative attribution <span style="font-weight: normal;">(bad news)</span>
-              <br>
-              <span class="hero-help">Color overlay shows objects predictive of failure</span>
-            </th>
-            <th>
-              Observation
-              <br>
-              <span class="hero-help">Pixels from the video game</span>
-            </th>
-            <th>
-              Positive attribution <span style="font-weight: normal;">(good news)</span>
-              <br>
-              <span class="hero-help">Color overlay shows objects predictive of success</span>
-            </th>
-          </tr>
-          <tr>
-            <td>
-              <div class="attribution-outer">
-                <div class="attribution-inner" style="z-index: 0;">
-                  <div class="attribution-image" style="background-image: url('images/hero/observation_grayscale.png');"></div>
-                </div>
-                <div class="attribution-inner" style="z-index: 1;">
-                  <div class="attribution-image" style="background-image: url('images/hero/attribution_neg.png');"></div>
-                </div>
+    <figure id="hero" style="margin-top: 1em; margin-bottom: 0.5em; width: 100%;">
+      <table style="margin-bottom: 1.5em; width: 100%;">
+        <tr>
+          <th>
+            Negative attribution <span style="font-weight: normal;">(bad news)</span>
+            <br>
+            <span class="hero-help">Color overlay shows objects predictive of failure</span>
+          </th>
+          <th>
+            Observation
+            <br>
+            <span class="hero-help">Pixels from the video game</span>
+          </th>
+          <th>
+            Positive attribution <span style="font-weight: normal;">(good news)</span>
+            <br>
+            <span class="hero-help">Color overlay shows objects predictive of success</span>
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <div class="attribution-outer">
+              <div class="attribution-inner" style="z-index: 0;">
+                <div class="attribution-image" style="background-image: url('images/hero/observation_grayscale.png');"></div>
               </div>
-            </td>
-            <td>
-              <div class="attribution-outer">
-                <div class="attribution-inner" style="z-index: 0;">
-                  <div class="attribution-image" style="background-image: url('images/hero/observation.png');"></div>
-                </div>
+              <div class="attribution-inner" style="z-index: 1;">
+                <div class="attribution-image" style="background-image: url('images/hero/attribution_neg.png');"></div>
               </div>
-            </td>
-            <td>
-              <div class="attribution-outer">
-                <div class="attribution-inner" style="z-index: 0;">
-                  <div class="attribution-image" style="background-image: url('images/hero/observation_grayscale.png');"></div>
-                </div>
-                <div class="attribution-inner" style="z-index: 1;">
-                  <div class="attribution-image" style="background-image: url('images/hero/attribution_pos.png');"></div>
-                </div>
+            </div>
+          </td>
+          <td>
+            <div class="attribution-outer">
+              <div class="attribution-inner" style="z-index: 0;">
+                <div class="attribution-image" style="background-image: url('images/hero/observation.png');"></div>
               </div>
-            </td>
-          </tr>
-        </table>
-        <div id="hero-annotations">
-          <div><img src="images/hero/saw.png" class="hero-annotation-image"><br>Buzzsaw</div>
-          <div><img src="images/hero/enemy.png" class="hero-annotation-image"><br>Enemy</div>
-          <div><img src="images/hero/coin.png" class="hero-annotation-image"><br>Coin</div>
-        </div>
+            </div>
+          </td>
+          <td>
+            <div class="attribution-outer">
+              <div class="attribution-inner" style="z-index: 0;">
+                <div class="attribution-image" style="background-image: url('images/hero/observation_grayscale.png');"></div>
+              </div>
+              <div class="attribution-inner" style="z-index: 1;">
+                <div class="attribution-image" style="background-image: url('images/hero/attribution_pos.png');"></div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div id="hero-annotations">
+        <div><img src="images/hero/saw.png" class="hero-annotation-image"><br>Buzzsaw</div>
+        <div><img src="images/hero/enemy.png" class="hero-annotation-image"><br>Enemy</div>
+        <div><img src="images/hero/coin.png" class="hero-annotation-image"><br>Coin</div>
       </div>
     </figure>
   </d-title>
@@ -689,8 +687,8 @@
       Moreover, applying NMF to attributions enables us to visualize the attributions themselves, by assigning a different color to each of the resulting channels <d-cite key="buildingblocks"></d-cite>. These visualizations can be overlaid over the observation <d-cite key="gradcam"></d-cite> and combined with dataset example-based feature visualization <d-cite key="buildingblocks"></d-cite> to create a basic version of our interface, allowing us to see the effect of the main features at different spatial positions.
     </p>
     <figure style="grid-column: page;">
-      <div id="attribution-demo" style="display: table; margin: 0 auto;">
-        <table style="margin-bottom: 1em;">
+      <div id="attribution-demo" style="display: table; margin: 0 auto; width: 100%;">
+        <table style="margin-bottom: 1em; width: 100%;">
           <tr><th>Negative attribution <span style="font-weight: normal;">(bad news)</span></th><th>Observation</th><th>Positive attribution <span style="font-weight: normal;">(good news)</span></th></tr>
           <tr>
             <td>

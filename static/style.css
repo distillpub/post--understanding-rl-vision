@@ -44,6 +44,10 @@ body d-article {
   overflow: visible;
 }
 
+d-title h1, d-title p, d-title figure {
+  grid-column: page;
+}
+
 b {
   font-weight: bold;
 }
