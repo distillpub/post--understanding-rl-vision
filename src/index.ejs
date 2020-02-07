@@ -55,6 +55,63 @@
   <d-title>
     <h1>Understanding RL vision</h1>
     <p>With a diverse environment, we can analyze, diagnose and edit deep reinforcement learning models using attribution.</p>
+    <figure style="grid-column: page; margin-top: 1em; margin-bottom: 0.5em;">
+      <div id="hero" style="display: table; margin: 0 auto;">
+        <table style="margin-bottom: 1.5em;">
+          <tr>
+            <th>
+              Negative attribution <span style="font-weight: normal;">(bad news)</span>
+              <br>
+              <span class="hero-help">Color overlay shows objects predictive of failure</span>
+            </th>
+            <th>
+              Observation
+              <br>
+              <span class="hero-help">Pixels from the video game</span>
+            </th>
+            <th>
+              Positive attribution <span style="font-weight: normal;">(good news)</span>
+              <br>
+              <span class="hero-help">Color overlay shows objects predictive of success</span>
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <div class="attribution-outer">
+                <div class="attribution-inner" style="z-index: 0;">
+                  <div class="attribution-image" style="background-image: url('images/hero/observation_grayscale.png');"></div>
+                </div>
+                <div class="attribution-inner" style="z-index: 1;">
+                  <div class="attribution-image" style="background-image: url('images/hero/attribution_neg.png');"></div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="attribution-outer">
+                <div class="attribution-inner" style="z-index: 0;">
+                  <div class="attribution-image" style="background-image: url('images/hero/observation.png');"></div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="attribution-outer">
+                <div class="attribution-inner" style="z-index: 0;">
+                  <div class="attribution-image" style="background-image: url('images/hero/observation_grayscale.png');"></div>
+                </div>
+                <div class="attribution-inner" style="z-index: 1;">
+                  <div class="attribution-image" style="background-image: url('images/hero/attribution_pos.png');"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <div id="hero-annotations">
+          <div><img src="images/hero/saw.png" class="hero-annotation-image"><br>Buzzsaw</div>
+          <div><img src="images/hero/enemy.png" class="hero-annotation-image"><br>Enemy</div>
+          <div><img src="images/hero/coin.png" class="hero-annotation-image"><br>Coin</div>
+        </div>
+      </div>
+    </figure>
   </d-title>
 
   <d-article>
@@ -322,7 +379,7 @@
             <b><input type="radio" name="interface-bug-options" id="interface-bug-coin-option" checked> Coin hallucination</b>
           </label><br>
           <label id="interface-bug-saw-label" style="color: lightgray;">
-            <b><input type="radio" name="interface-bug-options" id="interface-bug-saw-option"> Buzzsaw obstacle hallucination</b>
+            <b><input type="radio" name="interface-bug-options" id="interface-bug-saw-option"> Buzzsaw hallucination</b>
           </label>
         </td>
         <td>
@@ -331,7 +388,7 @@
               At one point the value function spiked upwards from 95% to 98% for a single timestep. This was due to a curved yellow-brown shape in the background, which happened to appear next to a wall, being mistaken for a coin.
             </div>
             <div style="display: none;" id="interface-bug-saw-text">
-              At another point the value function spiked downwards from 94% to 85% for a single timestep. This was due to the agent, colored in gray-blue and crouching against a mottled background, being mistaken for a buzzsaw obstacle. An actual buzzsaw obstacle was also present in the observation, but the main effect was from the misjudged agent, as shown by the larger red circle around the agent (hover over the first legend item to isolate).
+              At another point the value function spiked downwards from 94% to 85% for a single timestep. This was due to the agent, colored in gray-blue and crouching against a mottled background, being mistaken for a buzzsaw. An actual buzzsaw was also present in the observation, but the main effect was from the misjudged agent, as shown by the larger red circle around the agent (hover over the first legend item to isolate).
             </div>
           </div>
         </td>
@@ -634,8 +691,18 @@
     <figure style="grid-column: page;">
       <div id="attribution-demo" style="display: table; margin: 0 auto;">
         <table style="margin-bottom: 1em;">
-          <tr><th>Observation</th><th>Positive attribution <span style="font-weight: normal;">(good news)</span></th><th>Negative attribution <span style="font-weight: normal;">(bad news)</span></th></tr>
+          <tr><th>Negative attribution <span style="font-weight: normal;">(bad news)</span></th><th>Observation</th><th>Positive attribution <span style="font-weight: normal;">(good news)</span></th></tr>
           <tr>
+            <td>
+              <div class="attribution-outer">
+                <div class="attribution-inner" style="z-index: 0;">
+                  <div class="attribution-image" style="background-image: url('images/attribution/observation_grayscale.png');"></div>
+                </div>
+                <div class="attribution-inner" style="z-index: 1;">
+                  <div id="attribution-overlay-neg" class="attribution-image" style="background-image: url('images/attribution/attribution_neg.png');"></div>
+                </div>
+              </div>
+            </td>
             <td>
               <div class="attribution-outer">
                 <div class="attribution-inner" style="z-index: 0;">
@@ -650,16 +717,6 @@
                 </div>
                 <div class="attribution-inner" style="z-index: 1;">
                   <div id="attribution-overlay-pos" class="attribution-image" style="background-image: url('images/attribution/attribution_pos.png');"></div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="attribution-outer">
-                <div class="attribution-inner" style="z-index: 0;">
-                  <div class="attribution-image" style="background-image: url('images/attribution/observation_grayscale.png');"></div>
-                </div>
-                <div class="attribution-inner" style="z-index: 1;">
-                  <div id="attribution-overlay-neg" class="attribution-image" style="background-image: url('images/attribution/attribution_neg.png');"></div>
                 </div>
               </div>
             </td>
@@ -716,7 +773,7 @@
     <ul>
       <li><b>Sparsity.</b> Attribution tends to be concentrated in a very small number of spatial positions and channels. (We are referring to post-NMF channels here, though in fact the NMF directions are often close to one-hot, so this would also be true for the original channels.) For example, in the figure above, the top 10 position&ndash;channel pairs account for more than 80% of the total absolute attribution. This might be explained by our <a href="#feature-visualization-discussion">earlier</a> hypothesis that the model identifies objects by picking out certain small configurations of pixels. Because of this sparsity, we smooth out attribution over nearby spatial positions for the main version of our interface, so that the amount of visual space taken up can be used to judge attribution strength. This trades off some spatial precision for more precision with magnitudes.</li>
       <li><b>Unexpected sign.</b> Value function attribution usually has the sign one would expect: positive for coins, negative for enemies, and so on. However, this is sometimes not the case. For example, in the figure above, the red channel (which detects buzzsaw obstacles) has both positive and negative attribution in two neighboring spatial positions towards the left. Our best guess is that this phenomenon is a result of statistical <a href="https://en.wikipedia.org/wiki/Multicollinearity">collinearity</a>, caused by certain correlations in the procedural level generation together with the agent's behavior. These could be visual, such as correlations between nearby pixels, or more abstract, such as both coins and long walls appearing at the end of every level. As a toy example, supposing the value function ought to increase by 2% when the end of the level becomes visible, the model could either increase the value function by 1% for coins and 1% for long walls, or by 3% for coins and &minus;1% for long walls, and the effect would be similar.</li>
-      <li><b>Outlier frames.</b> When an unusual event causes the network to output extreme values, attribution can behave particularly strangely. For example, in the <a id="bug-saw-link" href="#error-diagnosis">buzzsaw obstacle hallucination</a> frame, most features have a significant amount of both positive and negative attribution. We do not have a good explanation for this, but perhaps features are interacting in more complicated ways than usual. Moreover, in these cases there is often a significant component of the attribution lying outside the space spanned by the NMF directions (which we sometimes display as an additional "residual" feature). This could be because each frame is weighted equally when computing NMF, so outlier frames have little influence over the NMF directions.</li>
+      <li><b>Outlier frames.</b> When an unusual event causes the network to output extreme values, attribution can behave particularly strangely. For example, in the <a id="bug-saw-link" href="#error-diagnosis">buzzsaw hallucination</a> frame, most features have a significant amount of both positive and negative attribution. We do not have a good explanation for this, but perhaps features are interacting in more complicated ways than usual. Moreover, in these cases there is often a significant component of the attribution lying outside the space spanned by the NMF directions (which we sometimes display as an additional "residual" feature). This could be because each frame is weighted equally when computing NMF, so outlier frames have little influence over the NMF directions.</li>
     </ul>
     <p>
       These considerations suggest that some care may be required when interpreting attributions.

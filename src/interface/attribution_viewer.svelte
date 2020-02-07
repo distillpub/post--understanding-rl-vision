@@ -114,14 +114,19 @@
   let attribution_abs = false;
   const new_attribution_options = function(attribution_show_trajectory, attribution_abs, attribution_residual, attribution_single_channel) {
     let channel = attribution_single_channel === null ? (attribution_residual ? "all" : "prin") : attribution_single_channel;
-    return [{direction: "non", channel: channel, show_trajectory: true}].concat(
-      attribution_abs ? [
+    if (attribution_abs) {
+      return [
+        {direction: "non", channel: channel, show_trajectory: true},
         {direction: "abs", channel: channel, show_trajectory: attribution_show_trajectory}
-      ] : [
-        {direction: "pos", channel: channel, show_trajectory: attribution_show_trajectory},
-        {direction: "neg", channel: channel, show_trajectory: attribution_show_trajectory}
-      ]
-    );
+      ];
+    }
+    else {
+      return [
+        {direction: "neg", channel: channel, show_trajectory: attribution_show_trajectory},
+        {direction: "non", channel: channel, show_trajectory: true},
+        {direction: "pos", channel: channel, show_trajectory: attribution_show_trajectory}
+      ];
+    }
   };
   let add_attribution_kind = function() {
     attribution_kinds = append_last_non_null(attribution_kinds, initial_attribution_kinds[0]);
@@ -285,6 +290,20 @@
     {#if attribution_kind !== null}
       <tr>
         <th style="{show_extra_help_text ? 'line-height: 1.1em;' : 'border-bottom: 1px solid gray;'}">
+          {#if !attribution_abs}
+            <span>
+              Negative attribution
+              {#if show_news_text && attribution_kind.type === "v"}
+                <span style="font-weight: normal;">(bad news)</span>
+              {/if}
+              {#if show_extra_help_text && attribution_kind.type === "v"}
+                <br>
+                <span class="help">Color overlay shows objects predictive of failure</span>
+              {/if}
+            </span>
+          {/if}
+        </th>
+        <th style="{show_extra_help_text ? 'line-height: 1.1em;' : 'border-bottom: 1px solid gray;'}">
           Observation
           {#if show_extra_help_text}
             <br>
@@ -302,20 +321,6 @@
               {#if show_extra_help_text && attribution_kind.type === "v"}
                 <br>
                 <span class="help">Color overlay shows objects predictive of success</span>
-              {/if}
-            </span>
-          {/if}
-        </th>
-        <th style="{show_extra_help_text ? 'line-height: 1.1em;' : 'border-bottom: 1px solid gray;'}">
-          {#if !attribution_abs}
-            <span>
-              Negative attribution
-              {#if show_news_text && attribution_kind.type === "v"}
-                <span style="font-weight: normal;">(bad news)</span>
-              {/if}
-              {#if show_extra_help_text && attribution_kind.type === "v"}
-                <br>
-                <span class="help">Color overlay shows objects predictive of failure</span>
               {/if}
             </span>
           {/if}

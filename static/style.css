@@ -171,21 +171,67 @@ button {
   border: 1px solid gray;
 }
 
-#attribution-demo .attribution-outer {
-  position: relative;
-  height: 16em;
-  width: 16em;
-  border: 1px solid gray;
+#hero th {
+  line-height: 1.1em;
 }
 
-#attribution-demo .attribution-inner {
-  position: absolute;
-  height: 100%;
+#hero .hero-help {
+  font-weight: normal;
+  font-size: 0.75em;
+  color: gray;
+}
+
+#hero #hero-annotations {
+  text-align: center;
+}
+
+#hero #hero-annotations > div {
+  display: inline-block;
+  width: 25%;
+  line-height: 1.1em;
+}
+
+#hero .hero-annotation-image {
+  height: auto;
+  width: auto;
+  margin: 1px;
+  border: 1px solid gray;
+  border-radius: 50%;
+}
+
+#attribution-demo td, #hero td {
+  width: 33.33%;
+}
+
+#attribution-demo td {
+  min-width: 16em;
+  max-width: 18em;
+}
+
+#hero td {
+  min-width: 16em;
+  max-width: 20em;
+  padding: 2px 16px 2px 0px;
+}
+
+#attribution-demo .attribution-outer, #hero .attribution-outer {
+  position: relative;
+  border: 1px solid gray;
+  height: 0px;
+  padding-bottom: 100%;
   width: 100%;
 }
 
-#attribution-demo .attribution-image {
-  height: 100%;
+#attribution-demo .attribution-inner, #hero .attribution-inner {
+  position: absolute;
+  height: 0px;
+  padding-bottom: 100%;
+  width: 100%;
+}
+
+#attribution-demo .attribution-image, #hero .attribution-image {
+  height: 0px;
+  padding-bottom: 100%;
   width: 100%;
   background-size: 100% 100%;
   image-rendering: pixelated;

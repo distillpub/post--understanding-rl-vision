@@ -40,6 +40,8 @@ const adjust_options = function(props) {
   props.formatting.policy_display_height = "1.8em";
   props.formatting.navigator_width = "36em";
   props.formatting.scrubber_width = "36em";
+  props.formatting.legend_item_height = "5.5em";
+  props.formatting.legend_item_width = "5.5em";
 };
 
 let interfaces = {};
@@ -59,23 +61,18 @@ const initialize_interface = function(props, extra_options, name) {
   });
 };
 
-const adjust_options_header = function(props) {
-  props.formatting.legend_item_height = "6.5em";
-  props.formatting.legend_item_width = "6.5em";
-};
-
 import props_header from "./props_header.js";
 let extra_options_header = {
   init_focus: false,
-  init_position: 0,
-  init_playing: true,
+  init_position: 332,
+  init_playing: false,
   show_navigator: true,
   show_trajectory_display: false,
   show_scrubbers: true,
   show_attribution_selector_init: false,
   show_attribution_toggles: false,
   show_attribution_chart: false,
-  show_residual_legend_item: false,
+  show_residual_legend_item: true,
   show_news_text: true,
   show_extra_help_text: true,
   simple_navigator: true,
@@ -88,7 +85,6 @@ let extra_options_header = {
   chart_fixed_lower_value: null,
   feature_descriptions
 };
-adjust_options_header(props_header);
 initialize_interface(props_header, extra_options_header, "header");
 
 let extra_options_bug = {
@@ -115,18 +111,16 @@ let extra_options_bug = {
   feature_descriptions
 };
 
-const adjust_options_bug_failure = function(props) {
+const adjust_options_bug = function(props) {
   props.formatting.scrubber_visible_duration = 9;
-  props.formatting.legend_item_height = "5.5em";
-  props.formatting.legend_item_width = "5.5em";
 };
 
 import props_bug_coin from "./props_bug_coin.js";
-adjust_options_bug_failure(props_bug_coin);
+adjust_options_bug(props_bug_coin);
 initialize_interface(props_bug_coin, extra_options_bug, "bug_coin");
 
 import props_bug_saw from "./props_bug_saw.js";
-adjust_options_bug_failure(props_bug_saw);
+adjust_options_bug(props_bug_saw);
 initialize_interface(props_bug_saw, extra_options_bug, "bug_saw");
 
 let extra_options_failure = {
@@ -154,15 +148,12 @@ let extra_options_failure = {
 };
 
 import props_failure_obscured from "./props_failure_obscured.js";
-adjust_options_bug_failure(props_failure_obscured);
 initialize_interface(props_failure_obscured, extra_options_failure, "failure_obscured");
 
 import props_failure_down from "./props_failure_down.js";
-adjust_options_bug_failure(props_failure_down);
 initialize_interface(props_failure_down, extra_options_failure, "failure_down");
 
 import props_failure_offscreen from "./props_failure_offscreen.js";
-adjust_options_bug_failure(props_failure_offscreen);
 initialize_interface(props_failure_offscreen, extra_options_failure, "failure_offscreen");
 
 import props_100_levels from "./props_100_levels.js";
@@ -175,7 +166,6 @@ extra_options_100_levels.feature_descriptions = ["???", "???", "???", "???", "??
     }
   }
 })();
-adjust_options_header(props_header);
 initialize_interface(props_100_levels, extra_options_100_levels, "100_levels");
 
 document.addEventListener("DOMContentLoaded", function() {
