@@ -40,6 +40,20 @@ d-figure > figure {
   left: -48px;
 }
 
+.grayscale-light {
+  filter: gray;
+  -webkit-filter: grayscale(1) contrast(0.2) brightness(1.6);
+  filter: grayscale(1) contrast(0.2) brightness(1.6);
+}
+
+.striped {
+  background: repeating-linear-gradient(135deg, lightgray 0px, whitesmoke 10px, lightgray 20px);
+}
+
+body d-title {
+  overflow-x: auto;
+}
+
 body d-article {
   overflow: visible;
 }
@@ -175,24 +189,29 @@ button {
   border: 1px solid gray;
 }
 
-#hero th {
-  line-height: 1.1em;
-}
-
-#hero .hero-help {
-  font-weight: normal;
-  font-size: 0.75em;
-  color: gray;
+#hero th, #hero td {
+  vertical-align: top;
 }
 
 #hero #hero-annotations {
-  text-align: center;
+  position: relative;
+  margin-top: 0.5em;
+  font-size: 0.8em;
+  color: gray;
 }
 
 #hero #hero-annotations > div {
-  display: inline-block;
-  width: 25%;
+  position: absolute;
+  text-align: center;
   line-height: 1.1em;
+}
+
+#hero .hero-annotation-dot {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  border-radius: 20%;
+  vertical-align: top;
 }
 
 #hero .hero-annotation-image {
@@ -208,7 +227,28 @@ button {
   opacity: 0.9;
 }
 
-#attribution-demo td, #hero td {
+#hero .hero-annotation-line-vertical-outer {
+  position: absolute;
+  width: 6px;
+  background-color: white;
+}
+
+#hero .hero-annotation-line-vertical-inner {
+  position: absolute;
+  z-index: 2;
+  left: 2px;
+  width: 2px;
+  background-color: black;
+}
+
+#hero .hero-annotation-line-horizontal {
+  position: absolute;
+  top: 34px;
+  height: 2px;
+  background-color: black;
+}
+
+#attribution-demo td {
   width: 33.33%;
 }
 
