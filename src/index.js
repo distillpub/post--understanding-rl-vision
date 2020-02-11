@@ -158,6 +158,7 @@ initialize_interface(props_failure_offscreen, extra_options_failure, "failure_of
 
 import props_100_levels from "./props_100_levels.js";
 let extra_options_100_levels = Object.assign({}, extra_options_header);
+extra_options_100_levels.init_position = 31;
 extra_options_100_levels.feature_descriptions = ["???", "???", "???", "???", "???", "???", "???", "Agent, walls<br>and velocity<br>info?"];
 (function (){
   for (let feature_number = 0; feature_number < extra_options_100_levels.feature_descriptions.length; feature_number++) {
