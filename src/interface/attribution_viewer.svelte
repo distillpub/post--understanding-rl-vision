@@ -17,7 +17,7 @@
   export let residual_totals_jsons = null;
   export let totals_metadata = null;
   export let json_namespace_prefix = "";
-  export let json_preloaded = {};
+  export let json_preloaded = { };
   export let state;
   export let attribution_kinds = [];
   export let initial_attribution_kinds = [];
@@ -114,14 +114,12 @@
   let attribution_abs = false;
   const new_attribution_options = function(attribution_show_trajectory, attribution_abs, attribution_residual, attribution_single_channel) {
     let channel = attribution_single_channel === null ? (attribution_residual ? "all" : "prin") : attribution_single_channel;
-    return [{direction: "non", channel: channel, show_trajectory: true}].concat(
-      attribution_abs ? [
-        {direction: "abs", channel: channel, show_trajectory: attribution_show_trajectory}
-      ] : [
-        {direction: "pos", channel: channel, show_trajectory: attribution_show_trajectory},
-        {direction: "neg", channel: channel, show_trajectory: attribution_show_trajectory}
-      ]
-    );
+    return [{direction: "non", channel: channel, show_trajectory: true}].concat(attribution_abs ? [
+      {direction: "abs", channel: channel, show_trajectory: attribution_show_trajectory}
+    ] : [
+      {direction: "pos", channel: channel, show_trajectory: attribution_show_trajectory},
+      {direction: "neg", channel: channel, show_trajectory: attribution_show_trajectory}
+    ]);
   };
   let add_attribution_kind = function() {
     attribution_kinds = append_last_non_null(attribution_kinds, initial_attribution_kinds[0]);
@@ -288,7 +286,7 @@
           Observation
           {#if show_extra_help_text}
             <br>
-            <span class="help">Pixels from the video game</span>
+            <span class="help">Video game pixels seen by the model</span>
           {/if}
         </th>
         <th style="{show_extra_help_text ? 'line-height: 1.1em;' : 'border-bottom: 1px solid gray;'}">

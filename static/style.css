@@ -40,8 +40,32 @@ d-figure > figure {
   left: -48px;
 }
 
+.grayscale-light {
+  filter: gray;
+  -webkit-filter: grayscale(1) contrast(0.2) brightness(1.6);
+  filter: grayscale(1) contrast(0.2) brightness(1.6);
+}
+
+.grayscale-dark {
+  filter: gray;
+  -webkit-filter: grayscale(1) brightness(0.75);
+  filter: grayscale(1) brightness(0.75);
+}
+
+.striped {
+  background: repeating-linear-gradient(135deg, lightgray 0px, whitesmoke 10px, lightgray 20px);
+}
+
+body d-title {
+  overflow-x: auto;
+}
+
 body d-article {
   overflow: visible;
+}
+
+d-title h1, d-title p, d-title figure {
+  grid-column: page;
 }
 
 b {
@@ -95,7 +119,7 @@ button {
   border-radius: 0.25em;
 }
 
-#interface-failure-play-pause-button {
+.play-pause-button {
   height: 1.3em;
   width: 1.3em;
   font-size: 3em;
@@ -171,21 +195,107 @@ button {
   border: 1px solid gray;
 }
 
-#attribution-demo .attribution-outer {
-  position: relative;
-  height: 16em;
-  width: 16em;
-  border: 1px solid gray;
+#hero th, #hero td {
+  vertical-align: top;
 }
 
-#attribution-demo .attribution-inner {
+#hero #hero-annotations {
+  position: relative;
+  margin-top: 0.5em;
+  font-size: 0.8em;
+  color: gray;
+}
+
+#hero #hero-annotations > div {
   position: absolute;
-  height: 100%;
+  text-align: center;
+  line-height: 1.1em;
+  width: 100px;
+}
+
+#hero .hero-annotation-dot {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  border-radius: 20%;
+  vertical-align: top;
+}
+
+#hero .hero-annotation-image {
+  height: auto;
+  width: auto;
+  margin: 1px;
+  border: 1px solid gray;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#hero .hero-annotation-line-vertical-outer {
+  position: absolute;
+  top: -142px;
+  left: 47px;
+  width: 6px;
+  height: 137px;
+  background-color: white;
+}
+
+#hero .hero-annotation-line-vertical-inner {
+  position: absolute;
+  z-index: 2;
+  left: 2px;
+  height: 143px;
+  width: 2px;
+  background-color: black;
+}
+
+#hero .hero-annotation-line-horizontal-outer {
+  position: absolute;
+  top: -144px;
+  height: 6px;
+  background-color: white;
+}
+
+#hero .hero-annotation-line-horizontal-inner {
+  position: absolute;
+  z-index: 2;
+  top: 2px;
+  height: 2px;
+  background-color: black;
+}
+
+#attribution-demo td {
+  width: 33.33%;
+}
+
+#attribution-demo td {
+  min-width: 256px;
+  max-width: 288px;
+}
+
+#hero td {
+  min-width: 256px;
+  max-width: 320px;
+  padding: 2px 16px 2px 0px;
+}
+
+#attribution-demo .attribution-outer, #hero .hero-outer {
+  position: relative;
+  border: 1px solid gray;
+  height: 0px;
+  padding-bottom: 100%;
   width: 100%;
 }
 
-#attribution-demo .attribution-image {
-  height: 100%;
+#attribution-demo .attribution-inner, #hero .hero-inner {
+  position: absolute;
+  height: 0px;
+  padding-bottom: 100%;
+  width: 100%;
+}
+
+#attribution-demo .attribution-image, #hero .hero-image {
+  height: 0px;
+  padding-bottom: 100%;
   width: 100%;
   background-size: 100% 100%;
   image-rendering: pixelated;
