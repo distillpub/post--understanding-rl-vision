@@ -58,7 +58,7 @@
     <figure id="hero" style="margin-top: 1em; margin-bottom: 0.5em; width: 100%;">
       <table style="margin-bottom: 1.5em; width: 100%;">
         <tr>
-          <th>Observation <span style="font-weight: normal;">(pixels seen by the model)</span></th>
+          <th>Observation <span style="font-weight: normal;">(video game still)</span></th>
           <th>Positive attribution <span style="font-weight: normal;">(good news)</span></th>
           <th>Negative attribution <span style="font-weight: normal;">(bad news)</span></th>
         </tr>
@@ -94,35 +94,47 @@
         <tr>
           <td colspan="2" style="height: 100%;">
             <div id="hero-annotations">
-              <div style="width: 40%; text-align: left; line-height: 1.5em;">
-                Overlay shows value function attribution, reduced to three channels (shown in different colors) using NMF. This highlights objects predictive of success (positive) and failure (negative) according to the model.
+              <div style="width: 47%; text-align: left; line-height: 1.5em;">
+                Attribution from a hidden layer to the value function, showing what features of the observation (left) are used to predict success (middle) and failure (right). Applying dimensionality reduction (NMF) yields features that detect various in-game objects.
               </div>
-              <div style="top: 0px; left: 47.5%;">
+              <div style="top: 0px; left: 49%;">
                 <img id="hero-annotation-1" src="images/hero/coin.png" class="hero-annotation-image">
                 <br>
                 <div class="hero-annotation-dot" style="background-color: #ffe400;"></div> Coin
-                <div class="hero-annotation-line hero-annotation-line-vertical-outer" style="display: block; top: -102px; left: -31px; height: 110px;">
-                  <div class="hero-annotation-line-vertical-inner" style="height: 138px;"></div>
+                <div id="hero-annotation-lines-1" style="display: block;">
+                  <div class="hero-annotation-line-vertical-outer">
+                    <div class="hero-annotation-line-vertical-inner"></div>
+                  </div>
+                  <div class="hero-annotation-line-horizontal-outer" style="left: -23px; width: 76px;">
+                    <div class="hero-annotation-line-horizontal-inner" style="width: 74px;"></div>
+                  </div>
                 </div>
-                <div class="hero-annotation-line hero-annotation-line-horizontal" style="left: -29px; width: 33px;"></div>
               </div>
-              <div style="top: 0px; left: 68.25%;">
-                <img id="hero-annotation-0" src="images/hero/saw.png" class="hero-annotation-image">
-                <br>
-                <div class="hero-annotation-dot" style="background-color: #ff0000;"></div> Buzzsaw
-                <div class="hero-annotation-line hero-annotation-line-vertical-outer" style="display: block; top: -64px; left: -16px; height: 72px;">
-                  <div class="hero-annotation-line-vertical-inner" style="height: 100px;"></div>
-                </div>
-                <div class="hero-annotation-line hero-annotation-line-horizontal" style="left: -14px; width: 18px;"></div>
-              </div>
-              <div style="top: 0px; left: 89%;">
+              <div style="top: 0px; left: 67.75%;">
                 <img id="hero-annotation-2" src="images/hero/enemy.png" class="hero-annotation-image">
                 <br>
                 <div class="hero-annotation-dot" style="background-color: #a1ff00;"></div> Enemy
-                <div class="hero-annotation-line hero-annotation-line-vertical-outer" style="display: block; top: -114px; height: 122px; left: -52px;">
-                  <div class="hero-annotation-line-vertical-inner" style="height: 150px;"></div>
+                <div id="hero-annotation-lines-2" style="display: block;">
+                  <div class="hero-annotation-line-vertical-outer">
+                    <div class="hero-annotation-line-vertical-inner"></div>
+                  </div>
+                  <div class="hero-annotation-line-horizontal-outer" style="left: 47px; width: 27px;">
+                    <div class="hero-annotation-line-horizontal-inner" style="left: 2px; width: 25px;"></div>
+                  </div>
                 </div>
-                <div class="hero-annotation-line hero-annotation-line-horizontal" style="left: -50px; width: 54px;"></div>
+              </div>
+              <div style="top: 0px; left: 86.5%;">
+                <img id="hero-annotation-0" src="images/hero/saw.png" class="hero-annotation-image">
+                <br>
+                <div class="hero-annotation-dot" style="background-color: #ff0000;"></div> Buzzsaw
+                <div id="hero-annotation-lines-0" style="display: block;">
+                  <div class="hero-annotation-line-vertical-outer">
+                    <div class="hero-annotation-line-vertical-inner"></div>
+                  </div>
+                  <div class="hero-annotation-line-horizontal-outer" style="left: 5px; width: 48px;">
+                    <div class="hero-annotation-line-horizontal-inner" style="width: 46px;"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </td>
@@ -713,7 +725,7 @@
             <td>
               <div class="attribution-outer">
                 <div class="attribution-inner" style="z-index: 0;">
-                  <div class="attribution-image grayscale-light" style="background-image: url('images/attribution/observation.png');"></div>
+                  <div class="attribution-image grayscale-dark" style="background-image: url('images/attribution/observation.png');"></div>
                 </div>
                 <div class="attribution-inner" style="z-index: 1;">
                   <div id="attribution-overlay-neg" class="attribution-image" style="background-image: url('images/attribution/attribution_neg.png');"></div>
@@ -730,7 +742,7 @@
             <td>
               <div class="attribution-outer">
                 <div class="attribution-inner" style="z-index: 0;">
-                  <div class="attribution-image grayscale-light" style="background-image: url('images/attribution/observation.png');"></div>
+                  <div class="attribution-image grayscale-dark" style="background-image: url('images/attribution/observation.png');"></div>
                 </div>
                 <div class="attribution-inner" style="z-index: 1;">
                   <div id="attribution-overlay-pos" class="attribution-image" style="background-image: url('images/attribution/attribution_pos.png');"></div>

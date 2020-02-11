@@ -46,6 +46,12 @@ d-figure > figure {
   filter: grayscale(1) contrast(0.2) brightness(1.6);
 }
 
+.grayscale-dark {
+  filter: gray;
+  -webkit-filter: grayscale(1) brightness(0.75);
+  filter: grayscale(1) brightness(0.75);
+}
+
 .striped {
   background: repeating-linear-gradient(135deg, lightgray 0px, whitesmoke 10px, lightgray 20px);
 }
@@ -204,6 +210,7 @@ button {
   position: absolute;
   text-align: center;
   line-height: 1.1em;
+  width: 100px;
 }
 
 #hero .hero-annotation-dot {
@@ -223,13 +230,12 @@ button {
   cursor: pointer;
 }
 
-#hero .hero-annotation-image:hover {
-  opacity: 0.9;
-}
-
 #hero .hero-annotation-line-vertical-outer {
   position: absolute;
+  top: -142px;
+  left: 47px;
   width: 6px;
+  height: 137px;
   background-color: white;
 }
 
@@ -237,13 +243,22 @@ button {
   position: absolute;
   z-index: 2;
   left: 2px;
+  height: 143px;
   width: 2px;
   background-color: black;
 }
 
-#hero .hero-annotation-line-horizontal {
+#hero .hero-annotation-line-horizontal-outer {
   position: absolute;
-  top: 34px;
+  top: -144px;
+  height: 6px;
+  background-color: white;
+}
+
+#hero .hero-annotation-line-horizontal-inner {
+  position: absolute;
+  z-index: 2;
+  top: 2px;
   height: 2px;
   background-color: black;
 }
@@ -253,13 +268,13 @@ button {
 }
 
 #attribution-demo td {
-  min-width: 16em;
-  max-width: 18em;
+  min-width: 256px;
+  max-width: 288px;
 }
 
 #hero td {
-  min-width: 16em;
-  max-width: 20em;
+  min-width: 256px;
+  max-width: 320px;
   padding: 2px 16px 2px 0px;
 }
 

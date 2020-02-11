@@ -194,6 +194,12 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
+const restyle_class = function(className, attribute, value) {
+  for (let tag of document.getElementsByClassName(className)) {
+    tag.style[attribute] = value;
+  }
+};
+
 document.addEventListener("DOMContentLoaded", function() {
   for (let feature_number = 0; feature_number < 3; feature_number++) {
     preload_images([
@@ -201,14 +207,17 @@ document.addEventListener("DOMContentLoaded", function() {
       "images/hero/attribution_neg_" + feature_number.toString() + ".png",
       "images/hero/observation_" + feature_number.toString() + ".png"
     ]);
-    let lines = document.getElementsByClassName("hero-annotation-line");
     document.getElementById("hero-annotation-" + feature_number.toString()).addEventListener("mouseover", (function(feature_number) {
       return function() {
         document.getElementById("hero-overlay-pos").style.backgroundImage="url('images/hero/attribution_pos_" + feature_number.toString() + ".png')";
         document.getElementById("hero-overlay-neg").style.backgroundImage="url('images/hero/attribution_neg_" + feature_number.toString() + ".png')";
         document.getElementById("hero-observation").style.backgroundImage="url('images/hero/observation_" + feature_number.toString() + ".png')";
-        for (let line of lines) {
-          line.style.display = "none";
+        for (let other_feature_number = 0; other_feature_number < 3; other_feature_number++) {
+          if (other_feature_number !== feature_number) {
+            document.getElementById("hero-annotation-" + other_feature_number.toString()).style.WebkitFilter = "grayscale(1) brightness(0.75)";
+            document.getElementById("hero-annotation-" + other_feature_number.toString()).style.filter = "grayscale(1) brightness(0.75)";
+            document.getElementById("hero-annotation-lines-" + other_feature_number.toString()).style.display = "none";
+          }
         }
       };
     })(feature_number));
@@ -216,11 +225,21 @@ document.addEventListener("DOMContentLoaded", function() {
       document.getElementById("hero-overlay-pos").style.backgroundImage="url('images/hero/attribution_pos.png')";
       document.getElementById("hero-overlay-neg").style.backgroundImage="url('images/hero/attribution_neg.png')";
       document.getElementById("hero-observation").style.backgroundImage="url('images/hero/observation.png')";
-      for (let line of lines) {
-        line.style.display = "block";
+      for (let other_feature_number = 0; other_feature_number < 3; other_feature_number++) {
+        document.getElementById("hero-annotation-" + other_feature_number.toString()).style.WebkitFilter = "none";
+        document.getElementById("hero-annotation-" + other_feature_number.toString()).style.filter = "none";
+        document.getElementById("hero-annotation-lines-" + other_feature_number.toString()).style.display = "block";
       }
     });
   }
+  window.setInterval(function() {
+    let attribution_height = Math.max(document.getElementById("hero-overlay-pos").scrollHeight, document.getElementById("hero-overlay-neg").scrollHeight);
+    let originally_zero = attribution_height * 0.42 - 128.5;
+    restyle_class("hero-annotation-line-vertical-outer", "top", (- (originally_zero + 142)) + "px");
+    restyle_class("hero-annotation-line-vertical-outer", "height", (originally_zero + 137) + "px");
+    restyle_class("hero-annotation-line-vertical-inner", "height", (originally_zero + 143) + "px");
+    restyle_class("hero-annotation-line-horizontal-outer", "top", (- (originally_zero + 144)) + "px");
+  }, 500);
 });
 
 const interface_bug_failure_options = {
