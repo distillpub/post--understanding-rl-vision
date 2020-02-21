@@ -12,6 +12,7 @@
   export let background_color = "black";
   export let visible_duration = 1;
   export let scrubber = visible_duration > 1;
+  export let scrubber_indicator_width = 2;
 
   $: opacities = (function() {
     let opacities = [];
@@ -79,7 +80,12 @@
   </div>
   {#if scrubber}
     <div class="container" style="z-index: 1;">
-      <Scrubber bind:state={state} visible_duration={visible_duration} max_duration={max_duration}/>
+      <Scrubber
+        bind:state={state}
+        visible_duration={visible_duration}
+        max_duration={max_duration}
+        indicator_width={scrubber_indicator_width}
+      />
     </div>
   {/if}
 </div>

@@ -2,6 +2,7 @@
   export let state;
   export let visible_duration;
   export let max_duration;
+  export let indicator_width = 2;
 
   const clip_position = function(position) {
     return Math.max(0, Math.min(max_duration - 1, position));
@@ -36,7 +37,6 @@
 
  .indicator {
    height: 100%;
-   width: 2px;
    margin: 0 auto;
    border-width: 0px 6px;
    border-color: black;
@@ -59,5 +59,5 @@
            height: 100%;
            width: 100%;"
   ></div>
-  <div class="indicator"></div>
+  <div class="indicator" style="width: {indicator_width}px;"></div>
 </div>

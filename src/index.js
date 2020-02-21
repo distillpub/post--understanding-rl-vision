@@ -78,6 +78,8 @@ let extra_options_header = {
   simple_navigator: true,
   navigation_above: false,
   action_permutation,
+  scrubber_indicator_width: 2,
+  graph_label_right_margin: 8,
   graph_stroke_width: 0.75,
   chart_quantile_to_overflow: 0.95,
   chart_max_overflow: 5,
@@ -103,7 +105,9 @@ let extra_options_bug = {
   simple_navigator: false,
   navigation_above: true,
   action_permutation,
-  graph_stroke_width: 0.025,
+  scrubber_indicator_width: 10,
+  graph_label_right_margin: 100,
+  graph_stroke_width: 0.1,
   chart_quantile_to_overflow: 0.95,
   chart_max_overflow: 0.95,
   chart_fixed_upper_value: null,
@@ -112,7 +116,7 @@ let extra_options_bug = {
 };
 
 const adjust_options_bug = function(props) {
-  props.formatting.scrubber_visible_duration = 9;
+  props.formatting.scrubber_visible_duration = 36;
 };
 
 import props_bug_coin from "./props_bug_coin.js";
@@ -139,6 +143,8 @@ let extra_options_failure = {
   simple_navigator: false,
   navigation_above: true,
   action_permutation,
+  scrubber_indicator_width: 2,
+  graph_label_right_margin: 8,
   graph_stroke_width: 0.5,
   chart_quantile_to_overflow: 0.8,
   chart_max_overflow: 8,

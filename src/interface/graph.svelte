@@ -13,6 +13,8 @@
   export let label_precision = 3;
   export let stroke_width = 0.5;
   export let show_extra_help_text;
+  export let scrubber_indicator_width = 2;
+  export let label_right_margin = 8;
 
   let graph_div;
   $: vertical_scale = (function () {
@@ -133,7 +135,7 @@
             class="label"
             style="position: absolute;
                    bottom: {((series.length - index - 0.5) / series.length) * 100}%;
-                   right: calc(50% + 8px);
+                   right: calc(50% + {label_right_margin}px);
                    margin-bottom: -0.75em;
                    padding: 0.25em;"
           >
@@ -145,7 +147,12 @@
   </div>
   <div class="container" style="z-index: 2;">
     {#if scrubber}
-      <Scrubber bind:state={state} visible_duration={visible_duration} max_duration={max_duration}/>
+      <Scrubber
+        bind:state={state}
+        visible_duration={visible_duration}
+        max_duration={max_duration}
+        indicator_width={scrubber_indicator_width}
+      />
     {/if}
   </div>
 </div>

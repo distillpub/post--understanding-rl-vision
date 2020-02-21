@@ -86,6 +86,8 @@
     simple_navigator: false,
     navigation_above: true,
     action_permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    scrubber_indicator_width: 2,
+    graph_label_right_margin: 8,
     graph_stroke_width: 0.5,
     chart_quantile_to_overflow: 0.9,
     chart_max_overflow: 5,
@@ -331,7 +333,7 @@
                   box-shadow: inset 0 0 0.5em gray;">
 
         <div style="height: {css_multiply(formatting.scrubber_height, 0.2)};
-                    width: 2px;
+                    width: {extra_options.scrubber_indicator_width}px;
                     margin: 0 auto;
                     border-width: 0px 6px;
                     border-color: black;
@@ -347,6 +349,7 @@
           height={formatting.scrubber_height}
           width={formatting.scrubber_width}
           visible_duration={formatting.scrubber_visible_duration}
+          scrubber_indicator_width={extra_options.scrubber_indicator_width}
         />
 
         {#each graphs as graph}
@@ -361,16 +364,18 @@
             visible_duration={formatting.scrubber_visible_duration}
             stroke_width={extra_options.graph_stroke_width}
             show_extra_help_text={extra_options.show_extra_help_text}
+            scrubber_indicator_width={extra_options.scrubber_indicator_width}
+            label_right_margin={extra_options.graph_label_right_margin}
           />
         {/each}
 
-        <div class="indicator" style="height: {css_multiply(formatting.scrubber_height, 0.05)}; width: 2px;"></div>
+        <div class="indicator" style="height: {css_multiply(formatting.scrubber_height, 0.05)}; width: {extra_options.scrubber_indicator_width}px;"></div>
 
-        <div class="indicator" style="height: {css_multiply(formatting.scrubber_height, 0.05)}; width: 4px;"></div>
+        <div class="indicator" style="height: {css_multiply(formatting.scrubber_height, 0.05)}; width: {extra_options.scrubber_indicator_width + 2}px;"></div>
 
-        <div class="indicator" style="height: {css_multiply(formatting.scrubber_height, 0.05)}; width: 8px;"></div>
+        <div class="indicator" style="height: {css_multiply(formatting.scrubber_height, 0.05)}; width: {extra_options.scrubber_indicator_width + 6}px;"></div>
 
-        <div class="indicator" style="height: {css_multiply(formatting.scrubber_height, 0.05)}; width: 14px;"></div>
+        <div class="indicator" style="height: {css_multiply(formatting.scrubber_height, 0.05)}; width: {extra_options.scrubber_indicator_width + 12}px;"></div>
 
       </div>
 
@@ -391,9 +396,9 @@
                   top: 0%;
                   left: 50%;
                   margin-top: -2px;
-                  margin-left: -13px;
+                  margin-left: -{(extra_options.scrubber_indicator_width / 2) + 12}px;
                   height: 4px;
-                  width: 25px;
+                  width: {extra_options.scrubber_indicator_width + 23}px;
                   background-color: white;"
       ></div>
     {/if}
@@ -519,7 +524,7 @@
         >
 
           <div style="height: {css_multiply(formatting.scrubber_height, 0.2)};
-                      width: 2px;
+                      width: {extra_options.scrubber_indicator_width}px;
                       margin: 0 auto;
                       border-width: 0px 6px;
                       border-color: black;
@@ -535,6 +540,7 @@
             height={formatting.scrubber_height}
             width={formatting.scrubber_width}
             visible_duration={formatting.scrubber_visible_duration}
+            scrubber_indicator_width={extra_options.scrubber_indicator_width}
           />
 
           {#each graphs as graph}
@@ -549,11 +555,13 @@
               visible_duration={formatting.scrubber_visible_duration}
               stroke_width={extra_options.graph_stroke_width}
               show_extra_help_text={extra_options.show_extra_help_text}
+              scrubber_indicator_width={extra_options.scrubber_indicator_width}
+              label_right_margin={extra_options.graph_label_right_margin}
             />
           {/each}
 
           <div style="height: {css_multiply(formatting.scrubber_height, 0.2)};
-                      width: 2px;
+                      width: {extra_options.scrubber_indicator_width}px;
                       margin: 0 auto;
                       border-width: 0px 6px;
                       border-color: black;
