@@ -38,7 +38,6 @@
  .image {
    position: relative;
    background-size: 100% 100%;
-   image-rendering: pixelated;
  }
 
  .label {
@@ -79,7 +78,7 @@
       {#if image !== null}
         <div class="container striped" style="z-index: 0;">
           <div
-            class="image opaque-hover"
+            class="image pixelated opaque-hover"
             style="background-image: url('{image_dir + image}');
                    height: 100%;
                    width: {colors.length * 100}%;

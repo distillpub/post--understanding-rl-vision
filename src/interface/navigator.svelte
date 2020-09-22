@@ -106,7 +106,7 @@
         <span>{#if state.velocity_direction === 1}<span>&#10074;&#10074;</span>{:else}<span>&#9658;</span>{/if}</span>
       </button>
       <br>
-      <span style="font-size: 0.7em; color: gray;">Speed:&emsp;<input bind:value={speed} type="number" min="{-max_speed}" max="{max_speed}">&ensp;FPS</span>
+      <span style="font-size: 0.7em; color: gray;">Speed:&emsp;<input bind:value={speed} type="number" min="{-max_speed}" max="{max_speed}" size="4">&ensp;FPS</span>
     </div>
     <div class="container" style="top: 1.5em; right: 0%; text-align: right; z-index: 1;">
       <button

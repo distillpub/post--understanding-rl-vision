@@ -1,5 +1,4 @@
 <!doctype html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,14 +22,26 @@
           "affiliationURL": "https://openai.com"
         },
         {
-          "author": "Chris Olah",
-          "authorURL": "https://colah.github.io/",
+          "author": "Shan Carter",
+          "authorURL": "http://shancarter.com/",
+          "affiliation": "Observable",
+          "affiliationURL": "http://observablehq.com/"
+        },
+        {
+          "author": "Nick Cammarata",
+          "authorURL": "http://nickcammarata.com/",
           "affiliation": "OpenAI",
           "affiliationURL": "https://openai.com"
         },
         {
-          "author": "Author list not yet finalized.",
-          "authorURL": "https://openai.com",
+          "author": "Gabriel Goh",
+          "authorURL": "http://gabgoh.github.io/",
+          "affiliation": "OpenAI",
+          "affiliationURL": "https://openai.com"
+        },
+        {
+          "author": "Chris Olah",
+          "authorURL": "https://colah.github.io/",
           "affiliation": "OpenAI",
           "affiliationURL": "https://openai.com"
         }
@@ -54,7 +65,7 @@
 
   <d-title>
     <h1>Understanding RL vision</h1>
-    <p>With a diverse environment, we can analyze, diagnose and edit deep reinforcement learning models using attribution.</p>
+    <p>With diverse environments, we can analyze, diagnose and edit deep reinforcement learning models using attribution.</p>
     <figure id="hero" style="margin-top: 1em; margin-bottom: 0.5em; width: 100%;">
       <table style="margin-bottom: 1.5em; width: 100%;">
         <tr>
@@ -70,7 +81,7 @@
               </div>
             </div>
           </td>
-          <td style="height: 0%; width: 30%;">
+          <td style="height: 0px; width: 30%;">
             <div class="hero-outer">
               <div class="hero-inner" style="z-index: 0;">
                 <div class="hero-image grayscale-light" style="background-image: url('images/hero/observation.png');"></div>
@@ -80,7 +91,7 @@
               </div>
             </div>
           </td>
-          <td style="height: 0%; width: 30%;">
+          <td style="height: 0px; width: 30%;">
             <div class="hero-outer">
               <div class="hero-inner" style="z-index: 0;">
                 <div class="hero-image grayscale-light" style="background-image: url('images/hero/observation.png');"></div>
@@ -92,8 +103,8 @@
           </td>
         </tr>
         <tr>
-          <td colspan="2" style="height: 100%;">
-            <div id="hero-annotations">
+          <td colspan="2">
+            <div id="hero-annotations" style="height: 100%; min-height: 7.5em;">
               <div style="width: 47%; text-align: left; line-height: 1.5em;">
                 Attribution from a hidden layer to the value function, showing what features of the observation (left) are used to predict success (middle) and failure (right). Applying dimensionality reduction (NMF) yields features that detect various in-game objects.
               </div>
@@ -164,7 +175,7 @@
       CoinRun is a side-scrolling platformer in which the agent must dodge enemies and other traps and collect the coin at the end of the level.
     </p>
     <figure>
-      <video width="100%" autoplay loop>
+      <video width="100%" autoplay loop controls>
         <source src="videos/coinrun.mp4" type="video/mp4">
       </video>
       <figcaption style="text-align: center;">Our trained model playing CoinRun. <b>Left</b>: full resolution. <b>Right</b>: 64x64 RGB observations given to the model.</figcaption>
@@ -236,7 +247,7 @@
           <td><figcaption>The agent, in mid air (left) and about to jump (right).</figcaption></td>
           <td><figcaption>Coins, which have to be collected.</figcaption></td>
           <td><figcaption>Stationary buzzsaw obstacles, which must be dodged.</figcaption></td>
-          <td><figcaption>Enemies, which must be dodged, moving left (left) and right (right).</figcaption></td>
+          <td><figcaption>Enemies, which must be dodged, moving left and moving right.</figcaption></td>
           <td><figcaption>Boxes, which the agent can both move past and land on top of.</figcaption></td>
           <td><figcaption>Lava at the bottom of a chasm.</figcaption></td>
           <td><figcaption>The velocity info painted into the top left of each observation, indicating the agent's horizontal and vertical velocities.<d-footnote class="velocity-info-footnote">The left square indicates the agent's horizontal velocity (black for left, white for right), and the right square indicates the agent's vertical velocity (black for down, white for up). In this example, the agent is moving forward and about to land.</d-footnote></figcaption></td>
@@ -317,7 +328,7 @@
     </p>
     <h2 id="analysis">Model analysis</h2>
     <p>
-      We developed an interface for examining trajectories of the agent playing the game. This incorporates attribution from a hidden layer, which serves to highlight objects that positively or negatively influence a particular network output (either the value function, or a policy logit). By applying dimensionality reduction, attribution is sliced according to the type of object detected, which we indicate using different colors. (We will explain the precise calculation involved <a href="#attribution">later</a>.)
+      We developed an interface for examining trajectories of the agent playing the game. This incorporates attribution from a hidden layer, which serves to highlight objects that positively or negatively influence a particular network output (either the value function, or a policy logit). By applying dimensionality reduction, attribution is decomposed according to the type of object detected, which we indicate using different colors. (We will explain the precise calculation involved <a href="#attribution">later</a>.)
     </p>
     <p>
       Here is our interface for a typical trajectory, with the value function as the network output. It reveals the model using obstacles, coins, enemies and more to compute the value function.
@@ -431,7 +442,7 @@
     </d-figure>
     <h3 id="model-editing">Model editing</h3>
     <p>
-      Our analysis so far has been mostly qualitative. To quantitatively validate our analysis, we hand-edited the model to make the agent blind to certain features identified by our interface: buzzsaw obstacles in one case, and left-moving enemies in another. <d-footnote>The features in our interface correspond to directions in activation space obtained by applying <a href="#dimensionality-reduction">attribution-based NMF</a> to layer 2b of our model. To blind the agent to a feature, we edited the weights to make them project out the corresponding NMF direction.<br><br>More precisely, let <d-math>\mathbf v</d-math> be the NMF direction corresponding to the feature we wish to blind the model to. This is a vector of length <d-math>c</d-math>, the number of channels in activation space. Using this we construct the <a href="https://en.wikipedia.org/wiki/Projection_(linear_algebra)">orthogonal projection</a> matrix <d-math>P:=I-\frac 1{\|\mathbf v\|^2}\mathbf v\mathbf v^{\mathsf T}</d-math>, which projects out the direction of <d-math>\mathbf v</d-math> from activation vectors. We then take the convolutional kernel of the following layer, which has shape <d-math>\text{height}\times\text{width}\times c\times d</d-math>, where <d-math>d</d-math> is the number of output channels. Broadcasting across the height and width dimensions, we left-multiply each <d-math>c\times d</d-math> matrix in the kernel by <d-math>P</d-math>. The effect of the new kernel is to project out the direction of <d-math>\mathbf v</d-math> from activations before applying the original kernel.<br><br>As it turned out, the NMF directions were close to one-hot, so this procedure was approximately equivalent to zeroing out the slice of the kernel corresponding to a particular in-channel.</d-footnote> The idea of weight editing originated in forthcoming research <d-cite key="circuits"></d-cite>, where it will be explored much more thoroughly.
+      Our analysis so far has been mostly qualitative. To quantitatively validate our analysis, we hand-edited the model to make the agent blind to certain features identified by our interface: buzzsaw obstacles in one case, and left-moving enemies in another. We describe how we did this in an <a href="#model-editing-method">appendix</a>. The idea of weight editing originated in forthcoming research <d-cite key="circuits"></d-cite>, where it will be explored much more thoroughly.
     </p>
     <p>
       We evaluated each edit by measuring the percentage of levels that the new agent failed to complete, broken down by the direct cause of failure. Our results show that our edits were successful and targeted, with no statistically measurable effects on the agent's other abilities.<d-footnote>The data for this plot are as follows.<br>Percentage of levels failed due to: buzzsaw obstacle / enemy moving left / enemy moving right / multiple or other:<br>- Original model: 0.37% / 0.16% / 0.12% / 0.08%<br>- Buzzsaw obstacle blindness: 12.76% / 0.16% / 0.08% / 0.05%<br>- Enemy moving left blindness: 0.36% / 4.69% / 0.97% / 0.07%<br>Each model was tested on 10,000 levels.<br><br>We also tested the original model on a version of the game with invisible buzzsaws, and obtained the following results.<br>Percentage of levels failed due to: buzzsaw obstacle / enemy moving left / enemy moving right / multiple or other:<br>- Original model, invisible buzzsaws: 32.20% / 0.05% / 0.05% / 0.05%<br>So the buzzsaw-edited model is only partially blind to buzzsaws. Its ability to dodge enemies may also be very slightly degraded, though the data is not conclusive.</d-footnote>
@@ -542,7 +553,7 @@
       Our explanation for this hypothesis is as follows. For the forward implication ("only if"), we only expect features to be interpretable if they are general enough, and when the training distribution is not diverse enough, models have no incentive to develop features that generalize instead of overfitting. For the reverse implication ("if"), while diversity on its own is not enough to guarantee the development of interpretable features (they must also be relevant to the task), diversity tends to be a key bottleneck in typical training processes.
     </p>
     <p>
-      In CoinRun, procedural generation is used to incentivize the model to learn skills that generalize to unseen levels <d-cite key="procgen,gvgai,obstacletower"></d-cite>. However, only the <span style="font-style: italic;">layout</span> of each level is randomized, and correspondingly, we were only able to find interpretable features the level of abstraction of objects. At a lower level, there are only a handful of visual patterns in the game, and the low-level features of our model seem to consist mostly of memorized color configurations used for picking these out. Similarly, the game's high-level dynamics follow a few simple rules, and accordingly the high-level features of our model seem to involve mixtures of combinations of objects that are hard to decipher. (An interface for all convolutional layers can be viewed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/demo/interface.html">here</a>.)
+      In CoinRun, procedural generation is used to incentivize the model to learn skills that generalize to unseen levels <d-cite key="procgen,gvgai,obstacletower"></d-cite>. However, only the <span style="font-style: italic;">layout</span> of each level is randomized, and correspondingly, we were only able to find interpretable features at the level of abstraction of objects. At a lower level, there are only a handful of visual patterns in the game, and the low-level features of our model seem to consist mostly of memorized color configurations used for picking these out. Similarly, the game's high-level dynamics follow a few simple rules, and accordingly the high-level features of our model seem to involve mixtures of combinations of objects that are hard to decipher. (An interface for all convolutional layers can be viewed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/demo/interface.html">here</a>.)
     </p>
     <h3 id="interpretability-and-generalization">Interpretability and generalization</h3>
     <p>
@@ -698,7 +709,7 @@
         </figure>
       </div>
       <p>
-        To account for this, we instead choose a path <d-math>\mathcal P</d-math> in activation space from some starting point <d-math>\mathbf a_0</d-math> to the ending point <d-math>\mathbf a_1:=\mathbf A\left(\mathbf x\right)</d-math>. We then compute the integrated gradient of <d-math>F</d-math> along <d-math>\mathcal P</d-math>, which is defined as the path integral <d-math block="">\int_{\mathcal P}\nabla_{\mathbf a}F\left(\mathbf a\right)\odot\mathrm d\mathbf a.</d-math> Note the use of the pointwise product rather than the usual dot product here, which makes the integral vector-valued. By the <a href="https://en.wikipedia.org/wiki/Gradient_theorem">fundamental theorem of calculus for line integrals</a>, when the components of this integral are summed, the result depends only on the endpoints <d-math>\mathbf a_0</d-math> and <d-math>\mathbf a_1</d-math>, equaling <d-math>F\left(\mathbf a_1\right)-F\left(\mathbf a_0\right)</d-math>. Thus the components of the integral provide a true decomposition of this difference, "attributing" it across the activations.
+        To account for this, we instead choose a path <d-math>\mathcal P</d-math> in activation space from some starting point <d-math>\mathbf a_0</d-math> to the ending point <d-math>\mathbf a_1:=\mathbf A\left(\mathbf x\right)</d-math>. We then compute the integrated gradient of <d-math>F</d-math> along <d-math>\mathcal P</d-math>, which is defined as the path integral <d-math block="">\int_{\mathcal P}\nabla_{\mathbf a}F\left(\mathbf a\right)\odot\mathrm d\mathbf a.</d-math> Note the use of the pointwise product rather than the usual dot product here, which makes the integral vector-valued. By the <a href="https://en.wikipedia.org/wiki/Gradient_theorem">fundamental theorem of calculus for line integrals</a>, when the components of the vector produced by this integral are summed, the result depends only on the endpoints <d-math>\mathbf a_0</d-math> and <d-math>\mathbf a_1</d-math>, equaling <d-math>F\left(\mathbf a_1\right)-F\left(\mathbf a_0\right)</d-math>. Thus the components of this vector provide a true decomposition of this difference, "attributing" it across the activations.
       </p>
     </div>
     <p style="margin-bottom: 0;">
@@ -861,6 +872,16 @@
   </d-article>
 
   <d-appendix id="appendix">
+    <h3 id="model-editing-method">Appendix: Model editing method</h3>
+    <p>
+      The features in our interface correspond to directions in activation space obtained by applying <a href="#dimensionality-reduction">attribution-based NMF</a> to layer 2b of our model. To blind the agent to a feature, we edited the weights to make them project out the corresponding NMF direction.
+    </p>
+    <p>
+      More precisely, let <d-math>\mathbf v</d-math> be the NMF direction corresponding to the feature we wish to blind the model to. This is a vector of length <d-math>c</d-math>, the number of channels in activation space. Using this we construct the <a href="https://en.wikipedia.org/wiki/Projection_(linear_algebra)">orthogonal projection</a> matrix <d-math>P:=I-\frac 1{\|\mathbf v\|^2}\mathbf v\mathbf v^{\mathsf T}</d-math>, which projects out the direction of <d-math>\mathbf v</d-math> from activation vectors. We then take the convolutional kernel of the following layer, which has shape <d-math>\text{height}\times\text{width}\times c\times d</d-math>, where <d-math>d</d-math> is the number of output channels. Broadcasting across the height and width dimensions, we left-multiply each <d-math>c\times d</d-math> matrix in the kernel by <d-math>P</d-math>. The effect of the new kernel is to project out the direction of <d-math>\mathbf v</d-math> from activations before applying the original kernel.
+    </p>
+    <p>
+      As it turned out, the NMF directions were close to one-hot, so this procedure was approximately equivalent to zeroing out the slice of the kernel corresponding to a particular in-channel.
+    </p>
     <h3>Acknowledgments</h3>
     <p>
       We are deeply grateful to...
@@ -868,7 +889,19 @@
 
     <h3>Author Contributions</h3>
     <p>
-      <b>Research:</b> ...
+      <b>Jacob Hilton</b> led the project and was involved with every aspect of it.
+    </p>
+    <p>
+      <b>Shan Carter</b> (while working at OpenAI) advised on interface design throughout the project, and worked on many of the diagrams in the article.
+    </p>
+    <p>
+      <b>Nick Cammarata</b> developed the model editing technique and suggested applying it to CoinRun models.
+    </p>
+    <p>
+      <b>Gabriel Goh</b> provided evaluations of feature interpretability for the section <a href="#interpretability-and-generalization">Interpretability and generalization</a>.
+    </p>
+    <p>
+      <b>Chris Olah</b> guided the direction of the project, performing initial exploratory research on the models, coming up with many of the research ideas, and helping to construct the article's narrative.
     </p>
 
     <d-footnote-list></d-footnote-list>

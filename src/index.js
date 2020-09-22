@@ -442,7 +442,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
   update_failure_position(0, false, false);
-  update_failure_playing(true);
+  //update_failure_playing(true);
   window.setInterval(function() {
     if (failure_playing) {
       update_failure_position(1, false, true);

@@ -90,7 +90,6 @@ button {
 
 #coinrun-objects img {
   width: auto;
-  image-rendering: pixelated;
   border: 1px solid gray;
 }
 
@@ -153,7 +152,6 @@ button {
 #feature-vis-traditional img {
   display: inline-block;
   width: 128px;
-  image-rendering: pixelated;
   border: 1px solid gray;
 }
 
@@ -172,7 +170,6 @@ button {
 #feature-vis-dataset img {
   display: block;
   width: 128px;
-  image-rendering: pixelated;
   border: 1px solid gray;
 }
 
@@ -191,7 +188,6 @@ button {
 }
 
 #feature-vis-spatial img {
-  image-rendering: pixelated;
   border: 1px solid gray;
 }
 
@@ -298,7 +294,6 @@ button {
   padding-bottom: 100%;
   width: 100%;
   background-size: 100% 100%;
-  image-rendering: pixelated;
 }
 
 #attribution-demo .attribution-legend-item {
@@ -351,4 +346,15 @@ button {
   font-style: italic;
   z-index: 1;
   text-align: left;
+}
+
+#coinrun-objects img, #feature-vis-traditional img, #feature-vis-dataset img, #feature-vis-spatial img, #attribution-demo .attribution-image, #hero .hero-image {
+   image-rendering: optimizeSpeed;
+   image-rendering: -moz-crisp-edges;
+   image-rendering: -o-crisp-edges;
+   image-rendering: -webkit-optimize-contrast;
+   image-rendering: optimize-contrast;
+   image-rendering: crisp-edges;
+   image-rendering: pixelated;
+   -ms-interpolation-mode: nearest-neighbor;
 }

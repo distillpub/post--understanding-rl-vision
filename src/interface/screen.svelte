@@ -48,7 +48,6 @@
  .image {
    position: relative;
    background-size: 100% 100%;
-   image-rendering: pixelated;
  }
 </style>
 
@@ -56,7 +55,7 @@
   <div class="container" style="z-index: 0;">
     <div class="container" style="z-index: 0;">
       <div
-        class="image"
+        class="image pixelated"
         style="background-color: {background_color};
                height: 100%;
                width: {(durations[0] / visible_duration) * 100}%;
@@ -66,7 +65,7 @@
     {#each images as image, index}
       <div class="container" style="z-index: {(index + 1).toString()};">
         <div
-          class={"image" + (grayscales[index] ? " grayscale": "")}
+          class={"image pixelated" + (grayscales[index] ? " grayscale": "")}
           style="opacity: {opacities[index].toString()};
                  background-image: url('{image_dir + image}');
                  height: 100%;

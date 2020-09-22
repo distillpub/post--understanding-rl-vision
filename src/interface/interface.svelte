@@ -246,10 +246,9 @@
  }
 
  :global(.opaque-hover:hover) {
-   -webkit-filter: url(#opaque);
-   filter: url(#opaque);
+   filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'opaque\'><feComponentTransfer><feFuncA type=\'table\' tableValues=\'1 1\'/></feComponentTransfer></filter></svg>#opaque");
  }
-
+ 
  :global(.striped) {
    /* background-image: -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.25, lightgray), color-stop(.25, transparent), to(transparent)),
       -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.25, lightgray), color-stop(.25, transparent), to(transparent)),
@@ -288,7 +287,18 @@
  :global(.underrule) {
    border-bottom: 1px solid gray;
  }
- 
+
+ :global(.pixelated){
+   image-rendering: optimizeSpeed;
+   image-rendering: -moz-crisp-edges;
+   image-rendering: -o-crisp-edges;
+   image-rendering: -webkit-optimize-contrast;
+   image-rendering: optimize-contrast;
+   image-rendering: crisp-edges;
+   image-rendering: pixelated;
+   -ms-interpolation-mode: nearest-neighbor;
+ }
+
  .indicator {
    margin: 0 auto;
    border-width: 0px 6px;
@@ -299,14 +309,6 @@
 </style>
 
 <svelte:window on:load={() => {if (extra_options.init_focus) {navigator_div.focus();}}}/>
-
-<svg height="0" width="0" style="display: none;">
-  <filter id="opaque">
-    <feComponentTransfer>
-      <feFuncA type="table" tableValues="1 1"/>
-    </feComponentTransfer>
-  </filter>
-</svg>
 
 <div> <!-- on:click={() => navigator_div.focus()}> -->
 
