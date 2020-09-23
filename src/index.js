@@ -384,7 +384,7 @@ const update_failure_position = function(delta, absolute, loop){
   for (let description_div of failure_description_divs) {
     description_div.style.visibility = (description_div.id === "interface-failure-description-" + option + "-" + new_position.toString() ? "visible" : "hidden");
   }
-  fix_failure_description_height();
+  //fix_failure_description_height();
   document.getElementById("interface-failure-previous").disabled = new_position === 0;
   document.getElementById("interface-failure-previous").style.cursor = new_position === 0 ? "auto" : "pointer";
   document.getElementById("interface-failure-next").disabled = new_position === (duration - 1);
@@ -430,10 +430,10 @@ document.addEventListener("DOMContentLoaded", function() {
         if (bug_or_failure === "failure") {
           append_all_failure_descriptions(option);
         }
-        fix_failure_description_height();
       }
     }
   }
+  fix_failure_description_height();
   document.getElementById("bug-saw-link").addEventListener("click", function(){
     document.getElementById("interface-bug-saw-option").checked = true;
     update_interface_bug_failure_option("bug", "saw");
@@ -441,6 +441,9 @@ document.addEventListener("DOMContentLoaded", function() {
       "video_state": {"position": 2, "velocity_direction": 0},
     });
   });
+  document.getElementById("interface-failure-obscured-option").checked = true;
+  document.getElementById("interface-bug-coin-option").checked = true;
+  document.getElementById("model-editing-level-1-option").checked = true;
   update_failure_position(0, false, false);
   //update_failure_playing(true);
   window.setInterval(function() {

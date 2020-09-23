@@ -101,7 +101,7 @@
     <div class="container" style="left: 0%; right: 0%; text-align: center; z-index: 0;">
       <button
         on:click={() => {state.velocity_direction = state.velocity_direction === 1 ? 0 : 1; last_direction = state.velocity_direction;}}
-        style="height: 1.3em; width: 1.3em; font-size: 3em;"
+        style="height: 1.3em; width: 1.3em; font-size: 3em; line-height: 0em;"
       >
         <span>{#if state.velocity_direction === 1}<span>&#10074;&#10074;</span>{:else}<span>&#9658;</span>{/if}</span>
       </button>

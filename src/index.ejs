@@ -40,6 +40,12 @@
           "affiliationURL": "https://openai.com"
         },
         {
+          "author": "Christopher Hesse",
+          "authorURL": "http://christopherhesse.com/",
+          "affiliation": "OpenAI",
+          "affiliationURL": "https://openai.com"
+        },
+        {
           "author": "Chris Olah",
           "authorURL": "https://colah.github.io/",
           "affiliation": "OpenAI",
@@ -81,7 +87,7 @@
               </div>
             </div>
           </td>
-          <td style="height: 0px; width: 30%;">
+          <td style="height: 1px; width: 30%;">
             <div class="hero-outer">
               <div class="hero-inner" style="z-index: 0;">
                 <div class="hero-image grayscale-light" style="background-image: url('images/hero/observation.png');"></div>
@@ -91,7 +97,7 @@
               </div>
             </div>
           </td>
-          <td style="height: 0px; width: 30%;">
+          <td style="height: 1px; width: 30%;">
             <div class="hero-outer">
               <div class="hero-inner" style="z-index: 0;">
                 <div class="hero-image grayscale-light" style="background-image: url('images/hero/observation.png');"></div>
@@ -104,7 +110,7 @@
         </tr>
         <tr>
           <td colspan="2">
-            <div id="hero-annotations" style="height: 100%; min-height: 7.5em;">
+            <div id="hero-annotations" style="height: 100%;">
               <div style="width: 47%; text-align: left; line-height: 1.5em;">
                 Attribution from a hidden layer to the value function, showing what features of the observation (left) are used to predict success (middle) and failure (right). Applying dimensionality reduction (NMF) yields features that detect various in-game objects.
               </div>
@@ -156,26 +162,46 @@
 
   <d-article>
 
-    <p id="introduction">
-      In this article, we apply interpretability techniques to a reinforcement learning (RL) model trained to play the video game CoinRun <d-cite key="coinrunpaper"></d-cite>. Using attribution <d-cite key="attribution1,attribution2,attribution3,gradcam,attribution4,attribution5,attribution6,integratedgradients"></d-cite> combined with dimensionality reduction <d-cite key="buildingblocks"></d-cite>, we build an interface for exploring the objects detected by the model, and how they influence its value function and policy. We leverage this interface in several ways.
-    </p>
-    <ul>
-      <li><b><a href="#dissecting-failure">Dissecting failure</a>.</b> We perform a step-by-step analysis of the agent's behavior in cases where it failed to achieve the maximum reward, allowing us to understand what went wrong, and why. For example, one case of failure was caused by an obstacle being temporarily obscured from view.</li>
-      <li><b><a href="#hallucinations">Hallucinations</a>.</b> We find situations when the model "hallucinated" a feature not present in the observation, thereby explaining inaccuracies in the model's value function.</li>
-      <li><b><a href="#model-editing">Model editing</a>.</b> We hand-edit the weights of the model to blind the agent to certain hazards, without otherwise changing the agent's behavior. We verify the effects of these edits by checking which hazards cause the new agents to fail. Such editing is only made possible by our previous analysis, and thus provides a quantitative validation of this analysis.</li>
-    </ul>
-    <p>
-      Our results depend on levels in CoinRun being procedurally-generated, leading us to formulate a <span style="font-style: italic;"><a href="#diversity-hypothesis">diversity hypothesis</a></span> for interpretability. If it is correct, then we can expect RL models to become more interpretable as the environments they are trained on become more diverse. We provide evidence for our hypothesis by measuring the relationship between interpretability and generalization.
-    </p>
-    <p>
-      Finally, we provide a thorough <a href="#feature-visualization">investigation</a> of several interpretability techniques in the context of RL vision, and pose a number of <a href="#questions">questions</a> for further research.
-    </p>
+    <d-contents>
+      <nav class="l-text figcaption">
+        <h3>Contents</h3>
+        <div><a href="#introduction">Introduction</a></div>
+        <div><a href="#coinrun">Our CoinRun model</a></div>
+        <div><a href="#analysis">Model analysis</a></div>
+        <ul>
+          <li><a href="#dissecting-failure">Dissecting failure</a></li>
+          <li><a href="#hallucinations">Hallucinations</a></li>
+          <li><a href="#model-editing">Model editing</a></li>
+        </ul>
+        <div><a href="#diversity-hypothesis">The diversity hypothesis</a></div>
+        <div><a href="#feature-visualization">Feature visualization</a></div>
+        <div><a href="#attribution">Attribution</a></div>
+        <div><a href="#questions">Questions for further research</a></div>
+      </nav>
+    </d-contents>
+
+    <div>
+      <p id="introduction">
+        In this article, we apply interpretability techniques to a reinforcement learning (RL) model trained to play the video game CoinRun <d-cite key="coinrunpaper"></d-cite>. Using attribution <d-cite key="attribution1,attribution2,attribution3,gradcam,attribution4,attribution5,attribution6,integratedgradients"></d-cite> combined with dimensionality reduction <d-cite key="buildingblocks"></d-cite>, we build an interface for exploring the objects detected by the model, and how they influence its value function and policy. We leverage this interface in several ways.
+      </p>
+      <ul>
+        <li><b><a href="#dissecting-failure">Dissecting failure</a>.</b> We perform a step-by-step analysis of the agent's behavior in cases where it failed to achieve the maximum reward, allowing us to understand what went wrong, and why. For example, one case of failure was caused by an obstacle being temporarily obscured from view.</li>
+        <li><b><a href="#hallucinations">Hallucinations</a>.</b> We find situations when the model "hallucinated" a feature not present in the observation, thereby explaining inaccuracies in the model's value function.</li>
+        <li><b><a href="#model-editing">Model editing</a>.</b> We hand-edit the weights of the model to blind the agent to certain hazards, without otherwise changing the agent's behavior. We verify the effects of these edits by checking which hazards cause the new agents to fail. Such editing is only made possible by our previous analysis, and thus provides a quantitative validation of this analysis.</li>
+      </ul>
+      <p>
+        Our results depend on levels in CoinRun being procedurally-generated, leading us to formulate a <span style="font-style: italic;"><a href="#diversity-hypothesis">diversity hypothesis</a></span> for interpretability. If it is correct, then we can expect RL models to become more interpretable as the environments they are trained on become more diverse. We provide evidence for our hypothesis by measuring the relationship between interpretability and generalization.
+      </p>
+      <p>
+        Finally, we provide a thorough <a href="#feature-visualization">investigation</a> of several interpretability techniques in the context of RL vision, and pose a number of <a href="#questions">questions</a> for further research.
+      </p>
+    </div>
     <h2 id="coinrun">Our CoinRun model</h2>
     <p>
       CoinRun is a side-scrolling platformer in which the agent must dodge enemies and other traps and collect the coin at the end of the level.
     </p>
     <figure>
-      <video width="100%" autoplay loop controls>
+      <video width="100%" autoplay loop controls muted>
         <source src="videos/coinrun.mp4" type="video/mp4">
       </video>
       <figcaption style="text-align: center;">Our trained model playing CoinRun. <b>Left</b>: full resolution. <b>Right</b>: 64x64 RGB observations given to the model.</figcaption>
@@ -350,7 +376,7 @@
     </p>
     <table style="margin-top: 1em; margin-bottom: 1em;">
       <tr>
-        <td style="width: 45%; vertical-align: top;">
+        <td style="width: 50%; vertical-align: top;">
           <label id="interface-failure-obscured-label" style="color: black;">
             <b><input type="radio" name="interface-failure-options" checked id="interface-failure-obscured-option"> Buzzsaw obstacle obscured by enemy</b>
           </label><br>
@@ -361,7 +387,7 @@
             <b><input type="radio" name="interface-failure-options" id="interface-failure-offscreen-option"> Landing platform moving off-screen</b>
           </label>
         </td>
-        <td>
+        <td style="vertical-align: top;">
           <div style="min-height: 7.5em;">
             <div style="display: block;" id="interface-failure-obscured-text">
               The agent moves too far to the right while in mid-air as a result of a buzzsaw obstacle being temporarily hidden from view by a moving enemy. The buzzsaw comes back into view, but too late to avoid a collision.
@@ -422,7 +448,7 @@
             <b><input type="radio" name="interface-bug-options" id="interface-bug-saw-option"> Buzzsaw hallucination</b>
           </label>
         </td>
-        <td>
+        <td style="vertical-align: top;">
           <div>
             <div style="display: block;" id="interface-bug-coin-text">
               At one point the value function spiked upwards from 95% to 98% for a single timestep. This was due to a curved yellow-brown shape in the background, which happened to appear next to a wall, being mistaken for a coin.
@@ -442,7 +468,7 @@
     </d-figure>
     <h3 id="model-editing">Model editing</h3>
     <p>
-      Our analysis so far has been mostly qualitative. To quantitatively validate our analysis, we hand-edited the model to make the agent blind to certain features identified by our interface: buzzsaw obstacles in one case, and left-moving enemies in another. We describe how we did this in an <a href="#model-editing-method">appendix</a>. The idea of weight editing originated in forthcoming research <d-cite key="circuits"></d-cite>, where it will be explored much more thoroughly.
+      Our analysis so far has been mostly qualitative. To quantitatively validate our analysis, we hand-edited the model to make the agent blind to certain features identified by our interface: buzzsaw obstacles in one case, and left-moving enemies in another. Our method for this can be thought of as a primitive form of <a href="https://distill.pub/2020/circuits/">circuit</a>-editing <d-cite key="circuits"></d-cite>, and we explain it in detail in <a href="#model-editing-method">Appendix A</a>.
     </p>
     <p>
       We evaluated each edit by measuring the percentage of levels that the new agent failed to complete, broken down by the direct cause of failure. Our results show that our edits were successful and targeted, with no statistically measurable effects on the agent's other abilities.<d-footnote>The data for this plot are as follows.<br>Percentage of levels failed due to: buzzsaw obstacle / enemy moving left / enemy moving right / multiple or other:<br>- Original model: 0.37% / 0.16% / 0.12% / 0.08%<br>- Buzzsaw obstacle blindness: 12.76% / 0.16% / 0.08% / 0.05%<br>- Enemy moving left blindness: 0.36% / 4.69% / 0.97% / 0.07%<br>Each model was tested on 10,000 levels.<br><br>We also tested the original model on a version of the game with invisible buzzsaws, and obtained the following results.<br>Percentage of levels failed due to: buzzsaw obstacle / enemy moving left / enemy moving right / multiple or other:<br>- Original model, invisible buzzsaws: 32.20% / 0.05% / 0.05% / 0.05%<br>So the buzzsaw-edited model is only partially blind to buzzsaws. Its ability to dodge enemies may also be very slightly degraded, though the data is not conclusive.</d-footnote>
@@ -481,51 +507,51 @@
           </td>
           <td>
             <div style="display: block;" id="model-editing-level-1-target-1">
-              <video id="model-editing-level-1-video-1" controls>
+              <video id="model-editing-level-1-video-1" controls muted>
                 <source src="videos/model_editing/original_episode_0.mp4" type="video/mp4">
               </video>
             </div>
             <div style="display: none;" id="model-editing-level-2-target-1">
-              <video id="model-editing-level-2-video-1" controls>
+              <video id="model-editing-level-2-video-1" controls muted>
                 <source src="videos/model_editing/original_episode_1.mp4" type="video/mp4">
               </video>
             </div>
             <div style="display: none;" id="model-editing-level-3-target-1">
-              <video id="model-editing-level-3-video-1" controls>
+              <video id="model-editing-level-3-video-1" controls muted>
                 <source src="videos/model_editing/original_episode_2.mp4" type="video/mp4">
               </video>
             </div>
           </td>
           <td>
             <div style="display: block;" id="model-editing-level-1-target-2">
-              <video id="model-editing-level-1-video-2" controls>
+              <video id="model-editing-level-1-video-2" controls muted>
                 <source src="videos/model_editing/saw_episode_0.mp4" type="video/mp4">
               </video>
             </div>
             <div style="display: none;" id="model-editing-level-2-target-2">
-              <video id="model-editing-level-2-video-2" controls>
+              <video id="model-editing-level-2-video-2" controls muted>
                 <source src="videos/model_editing/saw_episode_1.mp4" type="video/mp4">
               </video>
             </div>
             <div style="display: none;" id="model-editing-level-3-target-2">
-              <video id="model-editing-level-3-video-2" controls>
+              <video id="model-editing-level-3-video-2" controls muted>
                 <source src="videos/model_editing/saw_episode_2.mp4" type="video/mp4">
               </video>
             </div>
           </td>
           <td>
             <div style="display: block;" id="model-editing-level-1-target-3">
-              <video id="model-editing-level-1-video-3" controls>
+              <video id="model-editing-level-1-video-3" controls muted>
                 <source src="videos/model_editing/enemy_episode_0.mp4" type="video/mp4">
               </video>
             </div>
             <div style="display: none;" id="model-editing-level-2-target-3">
-              <video id="model-editing-level-2-video-3" controls>
+              <video id="model-editing-level-2-video-3" controls muted>
                 <source src="videos/model_editing/enemy_episode_1.mp4" type="video/mp4">
               </video>
             </div>
             <div style="display: none;" id="model-editing-level-3-target-3">
-              <video id="model-editing-level-3-video-3" controls>
+              <video id="model-editing-level-3-video-3" controls muted>
                 <source src="videos/model_editing/enemy_episode_2.mp4" type="video/mp4">
               </video>
             </div>
@@ -633,7 +659,7 @@
     </p>
     <h3 id="dataset-examples">Dataset example-based feature visualization</h3>
     <p>
-      As an alternative to gradient-based feature visualization, we use dataset examples. This idea has a long history, and can be thought of as a heavily-regularized form of feature visualization <d-cite key="featurevis,featurevisadversarial"></d-cite>. In more detail, we sample a few thousand infrequent observations from the agent playing the game, and pass them through the model. We then apply a dimensionality reduction method known as non-negative matrix factorization (NMF) to the activation channels <d-cite key="buildingblocks"></d-cite>.<d-footnote>More precisely, we find a non-negative approximate low-rank factorization of the matrix obtained by flattening the spatial dimensions of the activations into the batch dimension. This matrix has one row per observation <i>per spatial position</i> and one column per channel: thus the dimensionality reduction does not use spatial information.</d-footnote> For each of the resulting channels (which correspond to weighted combinations of the original channels), we choose the observations and spatial positions with the strongest activation (with a limited number of examples per position, for diversity), and display a patch from the observation at that position.
+      As an alternative to gradient-based feature visualization, we use dataset examples. This idea has a long history, and can be thought of as a heavily-regularized form of feature visualization <d-cite key="featurevis,featurevisadversarial"></d-cite>. In more detail, we sample a few thousand observations infrequently from the agent playing the game, and pass them through the model. We then apply a dimensionality reduction method known as non-negative matrix factorization (NMF) to the activation channels <d-cite key="buildingblocks"></d-cite>.<d-footnote>More precisely, we find a non-negative approximate low-rank factorization of the matrix obtained by flattening the spatial dimensions of the activations into the batch dimension. This matrix has one row per observation <i>per spatial position</i> and one column per channel: thus the dimensionality reduction does not use spatial information.</d-footnote> For each of the resulting channels (which correspond to weighted combinations of the original channels), we choose the observations and spatial positions with the strongest activation (with a limited number of examples per position, for diversity), and display a patch from the observation at that position.
     </p>
     <figure>
       <div id="feature-vis-dataset">
@@ -671,59 +697,11 @@
     </figure>
     <h2 id="attribution">Attribution</h2>
     <p>
-      Attribution <d-cite key="attribution1,attribution2,attribution3,gradcam,attribution4,attribution5,attribution6,integratedgradients"></d-cite> answers questions about the relationships between neurons. It is most commonly used to see how the input to a network affects a particular output <d-cite key="perturbationsaliency"></d-cite>, but it can also applied to the activations of hidden layers <d-cite key="buildingblocks"></d-cite>. Although there are many approaches to attribution we could have used, we chose the popular method of integrated gradients <d-cite key="integratedgradients"></d-cite>. In this section, we explain the application of integrated gradients to a hidden layer, which allows us see how the activations affect the value function (the model's estimate of the time-discounted probability that the agent will successfully complete the level).
-    </p>
-    <div>
-      <div style="float: right;">
-        <figure style="width: 300px; margin: 0.5em 0.5em 1em 1em;">
-          <svg height="160px" width="300px">
-            <defs>
-              <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-                <path d="M0,0 L0,6 L9,3 z" fill="#000000" />
-              </marker>
-            </defs>
-            <line x1="100" y1="30" x2="210" y2="30" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
-            <line x1="80" y1="50" x2="110" y2="100" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
-            <line x1="190" y1="100" x2="220" y2="50" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
-            <text x="50" y="20" text-anchor="middle">observation</text>
-            <text x="50" y="40" text-anchor="middle">space</text>
-            <text x="230" y="35" text-anchor="middle" class="katex"><tspan class="mathbb">R</tspan></text>
-            <text x="150" y="120" text-anchor="middle">activation</text>
-            <text x="150" y="140" text-anchor="middle">space</text>
-            <text x="155" y="20" text-anchor="middle" class="katex"><tspan class="mathit">V</tspan></text>
-            <text x="80" y="90" text-anchor="middle" class="katex"><tspan class="mathbf">A</tspan></text>
-            <text x="220" y="90" text-anchor="middle" class="katex"><tspan class="mathit">F</tspan></text>
-          </svg>
-          <figcaption>The <a href="https://en.wikipedia.org/wiki/Commutative_diagram">diagram</a> defining <d-math>F</d-math>, whose gradient we take.</figcaption>
-        </figure>
-      </div>
-      <p>
-        Let <d-math>V:\mathbb R^{64\times 64\times 3}\to\mathbb R</d-math> be the value function computed by our network, which accepts a 64x64 RGB observation. Given any layer in the network, we may write <d-math>V</d-math> as <d-math>V\left(\mathbf x\right)=F\left(\mathbf A\left(\mathbf x\right)\right)</d-math>, where <d-math>\mathbf A</d-math> computes the layer's activations. Given an observation <d-math>\mathbf x</d-math>, a simple method of attribution is to compute <d-math>\nabla_{\mathbf a}F\left(\mathbf a\right)\odot\mathbf a</d-math>, where <d-math>\mathbf a=\mathbf A\left(\mathbf x\right)</d-math> and <d-math>\odot</d-math> denotes the pointwise product. This tells us the sensitivity of the value function to each activation, multiplied by the strength of that activation. However, it does not account for the fact that the sensitivity of the value function may change as the activation is increased from zero.
-      </p>
-    </div>
-    <div>
-      <div style="float: right;">
-        <figure style="width: 300px; margin: 0.5em 0.5em 1em 1em;">
-          <img src="images/integrated_gradient.png">
-          <figcaption>Viewing <d-math>F</d-math> as the height of a surface, the integrated gradient of <d-math>F</d-math> measures the elevation gained while traveling in each direction, and sums to the total elevation gain <d-cite key="attributionpaths"></d-cite>.</figcaption>
-        </figure>
-      </div>
-      <p>
-        To account for this, we instead choose a path <d-math>\mathcal P</d-math> in activation space from some starting point <d-math>\mathbf a_0</d-math> to the ending point <d-math>\mathbf a_1:=\mathbf A\left(\mathbf x\right)</d-math>. We then compute the integrated gradient of <d-math>F</d-math> along <d-math>\mathcal P</d-math>, which is defined as the path integral <d-math block="">\int_{\mathcal P}\nabla_{\mathbf a}F\left(\mathbf a\right)\odot\mathrm d\mathbf a.</d-math> Note the use of the pointwise product rather than the usual dot product here, which makes the integral vector-valued. By the <a href="https://en.wikipedia.org/wiki/Gradient_theorem">fundamental theorem of calculus for line integrals</a>, when the components of the vector produced by this integral are summed, the result depends only on the endpoints <d-math>\mathbf a_0</d-math> and <d-math>\mathbf a_1</d-math>, equaling <d-math>F\left(\mathbf a_1\right)-F\left(\mathbf a_0\right)</d-math>. Thus the components of this vector provide a true decomposition of this difference, "attributing" it across the activations.
-      </p>
-    </div>
-    <p style="margin-bottom: 0;">
-      For our purposes, we take <d-math>\mathcal P</d-math> to be the straight line from <d-math>\mathbf 0</d-math> to <d-math>\mathbf A\left(\mathbf x\right)</d-math>.<d-footnote>In theory, we could choose any point in activation space as the starting point of our path, but in practice, <d-math>\mathbf 0</d-math> tends to be a good baseline against which to compare other activations, with <d-math>F\left(\mathbf 0\right)</d-math> being on the same order as the average value function. Sundararajan, Taly and Yan <d-cite key="integratedgradients"></d-cite> discuss the choice of this baseline in more depth.</d-footnote> In other words, given an observation <d-math>\mathbf x</d-math>, we define the value function attribution as<d-footnote>In practice, we numerically approximate the integral by evaluating the integrand at <d-math>\alpha=0.1,0.2,\ldots,1</d-math>.</d-footnote>
-    </p>
-    <d-math block="" style="margin: 0 auto;">
-      \int_0^1\nabla_{\mathbf a}F\left(\alpha\mathbf A\left(\mathbf x\right)\right)\mathrm d\alpha\odot\mathbf A\left(\mathbf x\right).
-    </d-math>
-    <p>
-      This has the same dimensions as <d-math>\mathbf A\left(\mathbf x\right)</d-math>, and its components sum to <d-math>V\left(\mathbf x\right)-F\left(\mathbf 0\right)</d-math>. So for a convolutional layer, this method allows us to attribute the value function (in excess of the baseline <d-math>F\left(\mathbf 0\right)</d-math>) across the horizontal, vertical and channel dimensions of activation space. Positive value function attribution can be thought of as "good news", components that cause the agent to think it is more likely to collect the coin at the end of the level. Similarly, negative value function attribution can be thought of as "bad news".
+      Attribution <d-cite key="attribution1,attribution2,attribution3,gradcam,attribution4,attribution5,attribution6,integratedgradients"></d-cite> answers questions about the relationships between neurons. It is most commonly used to see how the input to a network affects a particular output <d-cite key="perturbationsaliency"></d-cite>, but it can also applied to the activations of hidden layers <d-cite key="buildingblocks"></d-cite>. Although there are many approaches to attribution we could have used, we chose the popular method of integrated gradients <d-cite key="integratedgradients"></d-cite>. We explain in <a href="#integrated-gradients-for-a-hidden-layer">Appendix B</a> how we applied this method a hidden layer, and how positive value function attribution can be thought of as "good news" and negative value function attribution can as "bad news".
     </p>
     <h3 id="dimensionality-reduction">Dimensionality reduction for attribution</h3>
     <p>
-      We showed <a href="#dataset-examples">above</a> that a dimensionality reduction method known as non-negative matrix factorization (NMF) could be applied to the channels of activations to produce meaningful directions in activation space <d-cite key="buildingblocks"></d-cite>. We have in fact found that it is even more effective to apply NMF not to activations, but to <span style="font-style: italic;">value function attributions</span><d-footnote>As before, we obtain the NMF directions by sampling a few thousand infrequent observations from the agent playing the game, computing the attributions, flattening the spatial dimensions into the batch dimension, and applying NMF.</d-footnote> (working around the fact that NMF can only be applied to non-negative matrices<d-footnote>Our workaround is to separate out the positive and negative parts of the attributions and concatenate them along the batch dimension. We could also have concatenated them along the channel dimension.</d-footnote>). Both methods tend to produce NMF directions that are close to one-hot, and so can be thought of as picking out the most relevant channels. However, when reducing to a small number of dimensions, using attributions usually picks out more salient features, because attribution takes into account not just <span style="font-style: italic;">what neurons respond to</span> but also <span style="font-style: italic;">whether their response matters</span>.
+      We showed <a href="#dataset-examples">above</a> that a dimensionality reduction method known as non-negative matrix factorization (NMF) could be applied to the channels of activations to produce meaningful directions in activation space <d-cite key="buildingblocks"></d-cite>. We have in fact found that it is even more effective to apply NMF not to activations, but to <span style="font-style: italic;">value function attributions</span><d-footnote>As before, we obtain the NMF directions by sampling a few thousand observations infrequently from the agent playing the game, computing the attributions, flattening the spatial dimensions into the batch dimension, and applying NMF.</d-footnote> (working around the fact that NMF can only be applied to non-negative matrices<d-footnote>Our workaround is to separate out the positive and negative parts of the attributions and concatenate them along the batch dimension. We could also have concatenated them along the channel dimension.</d-footnote>). Both methods tend to produce NMF directions that are close to one-hot, and so can be thought of as picking out the most relevant channels. However, when reducing to a small number of dimensions, using attributions usually picks out more salient features, because attribution takes into account not just <span style="font-style: italic;">what neurons respond to</span> but also <span style="font-style: italic;">whether their response matters</span>.
     </p>
     <p>
       Moreover, applying NMF to attributions enables us to visualize the attributions themselves, by assigning a different color to each of the resulting channels <d-cite key="buildingblocks"></d-cite>. These visualizations can be overlaid over the observation <d-cite key="gradcam"></d-cite> and combined with dataset example-based feature visualization <d-cite key="buildingblocks"></d-cite> to create a basic version of our interface, allowing us to see the effect of the main features at different spatial positions.
@@ -731,18 +709,8 @@
     <figure style="grid-column: page;">
       <div id="attribution-demo" style="display: table; margin: 0 auto; width: 100%;">
         <table style="margin-bottom: 1em; width: 100%;">
-          <tr><th>Negative attribution <span style="font-weight: normal;">(bad news)</span></th><th>Observation</th><th>Positive attribution <span style="font-weight: normal;">(good news)</span></th></tr>
+          <tr><th>Observation</th><th>Positive attribution <span style="font-weight: normal;">(good news)</span></th><th>Negative attribution <span style="font-weight: normal;">(bad news)</span></th></tr>
           <tr>
-            <td>
-              <div class="attribution-outer">
-                <div class="attribution-inner" style="z-index: 0;">
-                  <div class="attribution-image grayscale-dark" style="background-image: url('images/attribution/observation.png');"></div>
-                </div>
-                <div class="attribution-inner" style="z-index: 1;">
-                  <div id="attribution-overlay-neg" class="attribution-image" style="background-image: url('images/attribution/attribution_neg.png');"></div>
-                </div>
-              </div>
-            </td>
             <td>
               <div class="attribution-outer">
                 <div class="attribution-inner" style="z-index: 0;">
@@ -757,6 +725,16 @@
                 </div>
                 <div class="attribution-inner" style="z-index: 1;">
                   <div id="attribution-overlay-pos" class="attribution-image" style="background-image: url('images/attribution/attribution_pos.png');"></div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="attribution-outer">
+                <div class="attribution-inner" style="z-index: 0;">
+                  <div class="attribution-image grayscale-dark" style="background-image: url('images/attribution/observation.png');"></div>
+                </div>
+                <div class="attribution-inner" style="z-index: 1;">
+                  <div id="attribution-overlay-neg" class="attribution-image" style="background-image: url('images/attribution/attribution_neg.png');"></div>
                 </div>
               </div>
             </td>
@@ -872,19 +850,74 @@
   </d-article>
 
   <d-appendix id="appendix">
-    <h3 id="model-editing-method">Appendix: Model editing method</h3>
+    <h3 id="model-editing-method">Appendix A: Model editing method</h3>
     <p>
-      The features in our interface correspond to directions in activation space obtained by applying <a href="#dimensionality-reduction">attribution-based NMF</a> to layer 2b of our model. To blind the agent to a feature, we edited the weights to make them project out the corresponding NMF direction.
+      Here we explain our method for <a href="#model-editing">editing the model</a> to make the agent blind to certain features.
+    </p>
+    <p>
+      The features in our interface correspond to directions in activation space obtained by applying <a href="#dimensionality-reduction">attribution-based NMF</a> to layer 2b of our model. To blind the agent to a feature, we edit the weights to make them project out the corresponding NMF direction.
     </p>
     <p>
       More precisely, let <d-math>\mathbf v</d-math> be the NMF direction corresponding to the feature we wish to blind the model to. This is a vector of length <d-math>c</d-math>, the number of channels in activation space. Using this we construct the <a href="https://en.wikipedia.org/wiki/Projection_(linear_algebra)">orthogonal projection</a> matrix <d-math>P:=I-\frac 1{\|\mathbf v\|^2}\mathbf v\mathbf v^{\mathsf T}</d-math>, which projects out the direction of <d-math>\mathbf v</d-math> from activation vectors. We then take the convolutional kernel of the following layer, which has shape <d-math>\text{height}\times\text{width}\times c\times d</d-math>, where <d-math>d</d-math> is the number of output channels. Broadcasting across the height and width dimensions, we left-multiply each <d-math>c\times d</d-math> matrix in the kernel by <d-math>P</d-math>. The effect of the new kernel is to project out the direction of <d-math>\mathbf v</d-math> from activations before applying the original kernel.
     </p>
     <p>
-      As it turned out, the NMF directions were close to one-hot, so this procedure was approximately equivalent to zeroing out the slice of the kernel corresponding to a particular in-channel.
+      As it turned out, the NMF directions were close to one-hot, so this procedure is approximately equivalent to zeroing out the slice of the kernel corresponding to a particular in-channel.
     </p>
+    <h3 id="integrated-gradients-for-a-hidden-layer">Appendix B: Integrated gradients for a hidden layer</h3>
+    <p>
+      Here we explain the application the integrated gradients <d-cite key="integratedgradients"></d-cite> to a hidden layer for the purpose of <a href="#attribution">attribution</a>. This method can be applied to any of the nework's outputs, but we focus here on the value function. Recall that this is the model's estimate of the time-discounted probability that the agent will successfully complete the level.
+    </p>
+    <div>
+      <div style="float: right;">
+        <figure style="width: 300px; margin: 0.5em 0.5em 1em 1em;">
+          <svg height="160px" width="300px">
+            <defs>
+              <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L0,6 L9,3 z" fill="#000000" />
+              </marker>
+            </defs>
+            <line x1="100" y1="30" x2="210" y2="30" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
+            <line x1="80" y1="50" x2="110" y2="100" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
+            <line x1="190" y1="100" x2="220" y2="50" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
+            <text x="50" y="20" text-anchor="middle">observation</text>
+            <text x="50" y="40" text-anchor="middle">space</text>
+            <text x="230" y="35" text-anchor="middle" class="katex"><tspan class="mathbb">R</tspan></text>
+            <text x="150" y="120" text-anchor="middle">activation</text>
+            <text x="150" y="140" text-anchor="middle">space</text>
+            <text x="155" y="20" text-anchor="middle" class="katex"><tspan class="mathit">V</tspan></text>
+            <text x="80" y="90" text-anchor="middle" class="katex"><tspan class="mathbf">A</tspan></text>
+            <text x="220" y="90" text-anchor="middle" class="katex"><tspan class="mathit">F</tspan></text>
+          </svg>
+          <figcaption>The <a href="https://en.wikipedia.org/wiki/Commutative_diagram">diagram</a> defining <d-math>F</d-math>, whose gradient we take.</figcaption>
+        </figure>
+      </div>
+      <p>
+        Let <d-math>V:\mathbb R^{64\times 64\times 3}\to\mathbb R</d-math> be the value function computed by our network, which accepts a 64x64 RGB observation. Given any layer in the network, we may write <d-math>V</d-math> as <d-math>V\left(\mathbf x\right)=F\left(\mathbf A\left(\mathbf x\right)\right)</d-math>, where <d-math>\mathbf A</d-math> computes the layer's activations. Given an observation <d-math>\mathbf x</d-math>, a simple method of attribution is to compute <d-math>\nabla_{\mathbf a}F\left(\mathbf a\right)\odot\mathbf a</d-math>, where <d-math>\mathbf a=\mathbf A\left(\mathbf x\right)</d-math> and <d-math>\odot</d-math> denotes the pointwise product. This tells us the sensitivity of the value function to each activation, multiplied by the strength of that activation. However, it does not account for the fact that the sensitivity of the value function may change as the activation is increased from zero.
+      </p>
+    </div>
+    <div>
+      <div style="float: right;">
+        <figure style="width: 300px; margin: 0.5em 0.5em 1em 1em;">
+          <img src="images/integrated_gradient.png">
+          <figcaption>Viewing <d-math>F</d-math> as the height of a surface, the integrated gradient of <d-math>F</d-math> measures the elevation gained while traveling in each direction, and sums to the total elevation gain <d-cite key="attributionpaths"></d-cite>.</figcaption>
+        </figure>
+      </div>
+      <p>
+        To account for this, we instead choose a path <d-math>\mathcal P</d-math> in activation space from some starting point <d-math>\mathbf a_0</d-math> to the ending point <d-math>\mathbf a_1:=\mathbf A\left(\mathbf x\right)</d-math>. We then compute the integrated gradient of <d-math>F</d-math> along <d-math>\mathcal P</d-math>, which is defined as the path integral <d-math block="">\int_{\mathcal P}\nabla_{\mathbf a}F\left(\mathbf a\right)\odot\mathrm d\mathbf a.</d-math> Note the use of the pointwise product rather than the usual dot product here, which makes the integral vector-valued. By the <a href="https://en.wikipedia.org/wiki/Gradient_theorem">fundamental theorem of calculus for line integrals</a>, when the components of the vector produced by this integral are summed, the result depends only on the endpoints <d-math>\mathbf a_0</d-math> and <d-math>\mathbf a_1</d-math>, equaling <d-math>F\left(\mathbf a_1\right)-F\left(\mathbf a_0\right)</d-math>. Thus the components of this vector provide a true decomposition of this difference, "attributing" it across the activations.
+      </p>
+      <p style="margin-bottom: 0;">
+        For our purposes, we take <d-math>\mathcal P</d-math> to be the straight line from <d-math>\mathbf 0</d-math> to <d-math>\mathbf A\left(\mathbf x\right)</d-math>.<d-footnote>In theory, we could choose any point in activation space as the starting point of our path, but in practice, <d-math>\mathbf 0</d-math> tends to be a good baseline against which to compare other activations, with <d-math>F\left(\mathbf 0\right)</d-math> being on the same order as the average value function. Sundararajan, Taly and Yan <d-cite key="integratedgradients"></d-cite> discuss the choice of this baseline in more depth.</d-footnote> In other words, given an observation <d-math>\mathbf x</d-math>, we define the value function attribution as<d-footnote>In practice, we numerically approximate the integral by evaluating the integrand at <d-math>\alpha=0.1,0.2,\ldots,1</d-math>.</d-footnote>
+      </p>
+      <d-math block="" style="margin: 0 auto;">
+        \int_0^1\nabla_{\mathbf a}F\left(\alpha\mathbf A\left(\mathbf x\right)\right)\mathrm d\alpha\odot\mathbf A\left(\mathbf x\right).
+      </d-math>
+      <p>
+        This has the same dimensions as <d-math>\mathbf A\left(\mathbf x\right)</d-math>, and its components sum to <d-math>V\left(\mathbf x\right)-F\left(\mathbf 0\right)</d-math>. So for a convolutional layer, this method allows us to attribute the value function (in excess of the baseline <d-math>F\left(\mathbf 0\right)</d-math>) across the horizontal, vertical and channel dimensions of activation space. Positive value function attribution can be thought of as "good news", components that cause the agent to think it is more likely to collect the coin at the end of the level. Similarly, negative value function attribution can be thought of as "bad news".
+      </p>
+    </div>
     <h3>Acknowledgments</h3>
     <p>
-      We are deeply grateful to...
+      We would like to thank our reviewers Jonathan Uesato, Joel Lehman and one anonymous reviewer for their detailed and thoughtful feedback. We would also like to thank Karl Cobbe, Daniel Filan, Sam Greydanus, Jacob Jackson, Konstantinos Mitsopoulos, Mira Murati, Ludwig Schubert, John Schulman, Ilya Sutskever, Michael Littman, Jorge Orbay, Nevan Wichers and Liang Zhang for research discussions, feedback, follow-up work, help and support that have greatly benefited this project.
     </p>
 
     <h3>Author Contributions</h3>
@@ -899,6 +932,9 @@
     </p>
     <p>
       <b>Gabriel Goh</b> provided evaluations of feature interpretability for the section <a href="#interpretability-and-generalization">Interpretability and generalization</a>.
+    </p>
+    <p>
+      <b>Christopher Hesse</b> worked on the <a href-to-be-updated="http://go/rl-clarity-library"><code>rl-clarity</code> library</a>.
     </p>
     <p>
       <b>Chris Olah</b> guided the direction of the project, performing initial exploratory research on the models, coming up with many of the research ideas, and helping to construct the article's narrative.
