@@ -91,7 +91,10 @@
 
 <div style="display: inline-block; text-align: left; width: 100%; margin-bottom: 1em;">
   {#if values_to_display !== null}
-    <div class="underrule" style="margin: 0em 0em 0.5em 0em; text-align: left; font-weight: bold;">Attribution channel totals</div>
+    <div class="underrule" style="margin: 0em 0em 0.5em 0em; text-align: left; font-weight: bold;">
+      Attribution totals
+      <span style="font-weight: normal;">(colors summed over spatial positions)</span>
+    </div>
     <div style="position: relative; height: {height}; width: {width}; padding: 0px 1px;">
       <div style="position: absolute;
                   top: 0%;

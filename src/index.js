@@ -279,7 +279,7 @@ const failure_descriptions = {
     [[18, 18], "The agent makes a futile attempt to avoid the buzzsaw obstacle (" + feature_bullet_html("failure_obscured", 1) + ") by releasing up to jump, but it is too late, and the episode is terminated."]
   ],
   "down": [
-    [[1, 1], "The agent prepares to jump, seeing the wall (" + feature_bullet_html("failure_obscured", 7) + ") immediately in front of it."],
+    [[1, 1], "The agent prepares to jump, seeing the wall (" + feature_bullet_html("failure_obscured", 7) + ") immediately in front of it. The agent cannot jump when it is in mid-air, but jumping is only triggered when up is released, and it is allowed to start pressing up before landing."],
     [[2, 3], "The agent's policy is dominated by the 3 upward directions (which delay the jump) and down (which cancels it). Any other action would trigger the jump. So the agent is trying to delay the jump, partly because of the enemy moving left (" + feature_bullet_html("failure_obscured", 3) + "), which both positively influences these actions and negatively influences others."],
     [[4, 4], "The agent's policy is still dominated by the 3 updward directions and down, and at this point the agent happens to move down. Unfortunately, the agent does not seem to have taken into account that this will cause it to step down from the box it is standing on and onto an enemy."],
     [[5, 5], "The agent is now happier to jump by releasing up, based on the position of the enemy moving left (" + feature_bullet_html("failure_obscured", 3) + "), seeming not to realize that the jump has already been cancelled."],
@@ -287,7 +287,7 @@ const failure_descriptions = {
   ],
   "offscreen": [
     [[1, 1], "The agent moves right across the platform (" + feature_bullet_html("failure_obscured", 5) + " " + feature_bullet_html("failure_obscured", 6) + ") it is on."],
-    [[2, 2], "The agent prepares to jump, seeing the wall (" + feature_bullet_html("failure_obscured", 7) + ") across the other side of the chasm ahead of it."],
+    [[2, 2], "The agent prepares to jump, seeing the wall (" + feature_bullet_html("failure_obscured", 7) + ") across the other side of the chasm ahead of it. Even though it is not yet at the edge of the platform it is currently on, it is timing its jump so as to land on the nearest platform up ahead, perhaps because it can see that there are no obstacles or enemies there."],
     [[3, 3], "The agent jumps by releasing up."],
     [[4, 6], "The agent is in mid-air, trying to control its horizontal motion. Its policy has higher entropy as its actions matter less at the start of a jump (due to the entropy bonus used in PPO). Unfortunately, it happens to move left at every timestep during this period."],
     [[7, 8], "The agent notices that its horizontal velocity (" + feature_bullet_html("failure_obscured", 1) + " " + feature_bullet_html("failure_obscured", 2) + " " + feature_bullet_html("failure_obscured", 8) + ") has been reduced, and tries to move right to compensate. (Several features read from the velocity info as a secondary purpose.) With some bad luck, it moves up but not right on its first move."],

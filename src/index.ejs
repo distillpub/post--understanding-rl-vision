@@ -22,16 +22,16 @@
           "affiliationURL": "https://openai.com"
         },
         {
-          "author": "Shan Carter",
-          "authorURL": "http://shancarter.com/",
-          "affiliation": "Observable",
-          "affiliationURL": "http://observablehq.com/"
-        },
-        {
           "author": "Nick Cammarata",
           "authorURL": "http://nickcammarata.com/",
           "affiliation": "OpenAI",
           "affiliationURL": "https://openai.com"
+        },
+        {
+          "author": "Shan Carter",
+          "authorURL": "http://shancarter.com/",
+          "affiliation": "Observable",
+          "affiliationURL": "http://observablehq.com/"
         },
         {
           "author": "Gabriel Goh",
@@ -48,6 +48,12 @@
         {
           "author": "Chris Olah",
           "authorURL": "https://colah.github.io/",
+          "affiliation": "OpenAI",
+          "affiliationURL": "https://openai.com"
+        },
+        {
+          "author": "Author list not yet finalized.",
+          "authorURL": "https://openai.com",
           "affiliation": "OpenAI",
           "affiliationURL": "https://openai.com"
         }
@@ -186,7 +192,7 @@
       </p>
       <ul>
         <li><b><a href="#dissecting-failure">Dissecting failure</a>.</b> We perform a step-by-step analysis of the agent's behavior in cases where it failed to achieve the maximum reward, allowing us to understand what went wrong, and why. For example, one case of failure was caused by an obstacle being temporarily obscured from view.</li>
-        <li><b><a href="#hallucinations">Hallucinations</a>.</b> We find situations when the model "hallucinated" a feature not present in the observation, thereby explaining inaccuracies in the model's value function.</li>
+        <li><b><a href="#hallucinations">Hallucinations</a>.</b> We find situations when the model "hallucinated" a feature not present in the observation, thereby explaining inaccuracies in the model's value function. These were brief enough that they did not affect the agent's behavior.</li>
         <li><b><a href="#model-editing">Model editing</a>.</b> We hand-edit the weights of the model to blind the agent to certain hazards, without otherwise changing the agent's behavior. We verify the effects of these edits by checking which hazards cause the new agents to fail. Such editing is only made possible by our previous analysis, and thus provides a quantitative validation of this analysis.</li>
       </ul>
       <p>
@@ -207,7 +213,7 @@
       <figcaption style="text-align: center;">Our trained model playing CoinRun. <b>Left</b>: full resolution. <b>Right</b>: 64x64 RGB observations given to the model.</figcaption>
     </figure>
     <p>
-      CoinRun is procedurally-generated, meaning that each new level encountered by the agent is randomly generated from scratch. This incentivizes the model to learn how to spot the different kinds of objects in the game, since it is not enough to simply memorize a small number of specific trajectories <d-cite key="procgen"></d-cite>.<d-footnote>We use the original version of CoinRun <d-cite key="coinrunpaper"></d-cite>, not the version from Procgen Benchmark <d-cite key="procgen"></d-cite>, which is slightly different.</d-footnote>
+      CoinRun is procedurally-generated, meaning that each new level encountered by the agent is randomly generated from scratch. This incentivizes the model to learn how to spot the different kinds of objects in the game, since it cannot get away with simply memorizing a small number of specific trajectories <d-cite key="procgen"></d-cite>.<d-footnote>We use the original version of CoinRun <d-cite key="coinrunpaper"></d-cite>, not the version from Procgen Benchmark <d-cite key="procgen"></d-cite>, which is slightly different. To play CoinRun, please follow the instructions <a href="https://github.com/openai/coinrun">here</a>.</d-footnote>
     </p>
     <p>
       Here are some examples of the objects used, along with walls and floors, to generate CoinRun levels.
@@ -270,13 +276,13 @@
         </tr>
         <tr class="coinrun-objects-row-text">
           <td></td>
-          <td><figcaption>The agent, in mid air (left) and about to jump (right).</figcaption></td>
+          <td><figcaption>The agent, in mid air (left) and about to jump (right). The agent also appears in beige, blue and green.</figcaption></td>
           <td><figcaption>Coins, which have to be collected.</figcaption></td>
           <td><figcaption>Stationary buzzsaw obstacles, which must be dodged.</figcaption></td>
-          <td><figcaption>Enemies, which must be dodged, moving left and moving right.</figcaption></td>
+          <td><figcaption>Enemies, which must be dodged, moving left and right. There are several alternative sprites, all with white trails.</figcaption></td>
           <td><figcaption>Boxes, which the agent can both move past and land on top of.</figcaption></td>
           <td><figcaption>Lava at the bottom of a chasm.</figcaption></td>
-          <td><figcaption>The velocity info painted into the top left of each observation, indicating the agent's horizontal and vertical velocities.<d-footnote class="velocity-info-footnote">The left square indicates the agent's horizontal velocity (black for left, white for right), and the right square indicates the agent's vertical velocity (black for down, white for up). In this example, the agent is moving forward and about to land.</d-footnote></figcaption></td>
+          <td><figcaption>The velocity info painted into the top left of each observation, indicating the agent's horizontal and vertical velocities.<d-footnote class="velocity-info-footnote">Painting in the velocity info allows the model to infer the agent's motion from a single frame. The shade of the left square indicates the agent's horizontal velocity (black for left at full speed, white for right at full speed), and the shade of the right square indicates the agent's vertical velocity (black for down at full speed, white for up at full speed). In this example, the agent is moving forward and about to land (and is thus moving right and down).</d-footnote></figcaption></td>
         </tr>
       </table>
     </figure>
@@ -312,7 +318,7 @@
       </table>
     </figure>
     <p>
-      We trained a convolutional neural network<d-footnote>Our architecture consists of the following layers in the order given, together with ReLU activations for all except the final layer.<br>- 7x7 convolutional layer with 16 channels (layer 1a)<br>- 2x2 L2 pooling layer<br>- 5x5 convolutional layer with 32 channels (layer 2a)<br>- 5x5 convolutional layer with 32 channels (layer 2b)<br>- 2x2 L2 pooling layer<br>- 5x5 convolutional layer with 32 channels (layer 3a)<br>- 2x2 L2 pooling layer<br>- 5x5 convolutional layer with 32 channels (layer 4a)<br>- 2x2 L2 pooling layer<br>- 256-unit dense layer<br>- 512-unit dense layer<br>- 10-unit dense layer (1 unit for the value function, 9 units for the policy logits)<br><br>We designed this architecture by starting with the architecture from IMPALA <d-cite key="impala"></d-cite>, and making the following modifications in an attempt to aid interpretability without noticeably sacrificing performance.<br>- We used fewer convolutional layers and more dense layers, to allow for more non-visual processing.<br>- We removed the residual connections, so that the flow of information passes through every layer.<br>- We made the pool size equal to the pool stride, to avoid gradient gridding.<br>- We used L2 pooling instead of max pooling, for more continuous gradients.<br><br>The choice that seemed to make the most difference was using 5 rather than 12 convolutional layers, resulting in the object-identifying features (which were the most interpretable, as discussed <a href="#diversity-hypothesis">below</a>) being concentrated in a single layer (layer 2b), rather than being spread over multiple layers and mixed in with less interpretable features.</d-footnote> on CoinRun for around 2 billion timesteps, using PPO <d-cite key="ppo"></d-cite>, an actor-critic algorithm.<d-footnote>We used the standard PPO hyperparameters for CoinRun <d-cite key="coinrunpaper"></d-cite>, except that we used twice as many copies of the environment per worker and twice and many workers. The effect of these changes was to increase the effective batch size, which seemed to be necessary to reach the same performance with our smaller architecture.</d-footnote> We used a non-recurrent network, to avoid any need to visualize multiple frames at once. Thus the model takes in a single RGB observation, which has been downsampled to 64x64, and outputs a value function (an estimate of the total future time-discounted reward) and a policy (a probability distribution over the actions, from which the next action is sampled).
+      We trained a convolutional neural network on CoinRun for around 2 billion timesteps, using PPO <d-cite key="ppo"></d-cite>, an actor-critic algorithm.<d-footnote>We used the standard PPO hyperparameters for CoinRun <d-cite key="coinrunpaper"></d-cite>, except that we used twice as many copies of the environment per worker and twice and many workers. The effect of these changes was to increase the effective batch size, which seemed to be necessary to reach the same performance with our smaller architecture.</d-footnote> The architecture of our network is described in <a href="#architecture">Appendix C</a>. We used a non-recurrent network, to avoid any need to visualize multiple frames at once. Thus our model observes a single downsampled 64x64 image, and outputs a value function (an estimate of the total future time-discounted reward) and a policy (a probability distribution over the actions, from which the next action is sampled).
     </p>
     <figure style="text-align: center;">
       <svg height="160px" width="448px">
@@ -354,7 +360,7 @@
     </p>
     <h2 id="analysis">Model analysis</h2>
     <p>
-      We developed an interface for examining trajectories of the agent playing the game. This incorporates attribution from a hidden layer, which serves to highlight objects that positively or negatively influence a particular network output (either the value function, or a policy logit). By applying dimensionality reduction, attribution is decomposed according to the type of object detected, which we indicate using different colors. (We will explain the precise calculation involved <a href="#attribution">later</a>.)
+      We developed an interface for examining trajectories of the agent playing the game. This incorporates attribution from a hidden layer that recognizes objects, which serves to highlight objects that positively or negatively influence a particular network output. By applying dimensionality reduction, we obtain attribution vectors whose components correspond to different types of object, which we indicate using different colors.
     </p>
     <p>
       Here is our interface for a typical trajectory, with the value function as the network output. It reveals the model using obstacles, coins, enemies and more to compute the value function.
@@ -366,7 +372,7 @@
     </d-figure>
     <h3 id="dissecting-failure">Dissecting failure</h3>
     <p>
-      Our fully-trained model fails to complete around 1 in every 200 levels. We explored some of these failures using our interface, and found that we were usually able to understand why the failure occurred.
+      Our fully-trained model fails to complete around 1 in every 200 levels. We explored a few of these failures using our interface, and found that we were usually able to understand why the failure occurred.
     </p>
     <p>
       Often, the failure boils down to the fact that the model (being non-recurrent) has no memory, and must choose its action based only on the current observation. It is also common for some unlucky sampling of actions from the agent's policy to be partly responsible.
@@ -420,7 +426,7 @@
           <span id="interface-failure-position"></span>
         </td>
         <td style="vertical-align: top;">
-          <div id="interface-failure-description" style="position: relative;"></div>
+          <div id="interface-failure-description" style="position: relative; height: 115px;"></div>
         </td>
       </tr>
     </table>
@@ -471,12 +477,15 @@
       Our analysis so far has been mostly qualitative. To quantitatively validate our analysis, we hand-edited the model to make the agent blind to certain features identified by our interface: buzzsaw obstacles in one case, and left-moving enemies in another. Our method for this can be thought of as a primitive form of <a href="https://distill.pub/2020/circuits/">circuit</a>-editing <d-cite key="circuits"></d-cite>, and we explain it in detail in <a href="#model-editing-method">Appendix A</a>.
     </p>
     <p>
-      We evaluated each edit by measuring the percentage of levels that the new agent failed to complete, broken down by the direct cause of failure. Our results show that our edits were successful and targeted, with no statistically measurable effects on the agent's other abilities.<d-footnote>The data for this plot are as follows.<br>Percentage of levels failed due to: buzzsaw obstacle / enemy moving left / enemy moving right / multiple or other:<br>- Original model: 0.37% / 0.16% / 0.12% / 0.08%<br>- Buzzsaw obstacle blindness: 12.76% / 0.16% / 0.08% / 0.05%<br>- Enemy moving left blindness: 0.36% / 4.69% / 0.97% / 0.07%<br>Each model was tested on 10,000 levels.<br><br>We also tested the original model on a version of the game with invisible buzzsaws, and obtained the following results.<br>Percentage of levels failed due to: buzzsaw obstacle / enemy moving left / enemy moving right / multiple or other:<br>- Original model, invisible buzzsaws: 32.20% / 0.05% / 0.05% / 0.05%<br>So the buzzsaw-edited model is only partially blind to buzzsaws. Its ability to dodge enemies may also be very slightly degraded, though the data is not conclusive.</d-footnote>
+      We evaluated each edit by measuring the percentage of levels that the new agent failed to complete, broken down by the direct cause of failure. Our results show that our edits were successful and targeted, with no statistically measurable effects on the agent's other abilities.<d-footnote>The data for this plot are as follows.<br>Percentage of levels failed due to: buzzsaw obstacle / enemy moving left / enemy moving right / multiple or other:<br>- Original model: 0.37% / 0.16% / 0.12% / 0.08%<br>- Buzzsaw obstacle blindness: 12.76% / 0.16% / 0.08% / 0.05%<br>- Enemy moving left blindness: 0.36% / 4.69% / 0.97% / 0.07%<br>Each model was tested on 10,000 levels.</d-footnote>
     </p>
     <figure class="matplotlib-svg" style="text-align: center;">
       <%= require("../static/diagrams/model_editing_results.svg") %>
       <figcaption>Results of testing each model on 10,000 levels. Note that moving enemies can change direction.</figcaption>
     </figure>
+    <p>
+      We did not manage to achieve complete blindness, however: the buzzsaw-edited model still performed significantly better than the original model did when we made the buzzsaws completely invisible.<d-footnote>Our results on the version of the game with invisible buzzsaws are as follows.<br>Percentage of levels failed due to: buzzsaw obstacle / enemy moving left / enemy moving right / multiple or other:<br>Original model, invisible buzzsaws: 32.20% / 0.05% / 0.05% / 0.05%<br>We tested the model on 10,000 levels.</d-footnote> This implies that the model has other ways of detecting buzzsaws than those that we were able to immediately interpret.
+    </p>
     <p>
       Here are the original and edited models playing some cherry-picked levels.
     </p>
@@ -576,7 +585,7 @@
       Interpretable features tend to arise (at a given level of abstraction) if and only if the training distribution is diverse enough (at that level of abstraction).
     </blockquote>
     <p>
-      Our explanation for this hypothesis is as follows. For the forward implication ("only if"), we only expect features to be interpretable if they are general enough, and when the training distribution is not diverse enough, models have no incentive to develop features that generalize instead of overfitting. For the reverse implication ("if"), while diversity on its own is not enough to guarantee the development of interpretable features (they must also be relevant to the task), diversity tends to be a key bottleneck in typical training processes.
+      Our explanation for this hypothesis is as follows. For the forward implication ("only if"), we only expect features to be interpretable if they are general enough, and when the training distribution is not diverse enough, models have no incentive to develop features that generalize instead of overfitting. For the reverse implication ("if"), we do not expect it to hold in a strict sense: diversity on its own is not enough to guarantee the development of interpretable features, since they must also be relevant to the task. Rather, our intention with the reverse implication is to hypothesize that it holds very often in practice, as a result of generalization being bottlenecked by diversity.
     </p>
     <p>
       In CoinRun, procedural generation is used to incentivize the model to learn skills that generalize to unseen levels <d-cite key="procgen,gvgai,obstacletower"></d-cite>. However, only the <span style="font-style: italic;">layout</span> of each level is randomized, and correspondingly, we were only able to find interpretable features at the level of abstraction of objects. At a lower level, there are only a handful of visual patterns in the game, and the low-level features of our model seem to consist mostly of memorized color configurations used for picking these out. Similarly, the game's high-level dynamics follow a few simple rules, and accordingly the high-level features of our model seem to involve mixtures of combinations of objects that are hard to decipher. (An interface for all convolutional layers can be viewed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/demo/interface.html">here</a>.)
@@ -598,7 +607,7 @@
       <figcaption>Comparison of models trained on different numbers of levels. Two models were trained for each number of levels, and two researchers independently evaluated how interpretable the features of each model were, without being shown the number of levels.<d-footnote>Our methodology had some flaws. Firstly, the researchers were not completely blind to the number of levels: for example, it is possible to infer something about the number of levels from the smoothness of graphs of the value function, since with fewer levels the model is better able to memorize the number of timesteps until the end of the level. Secondly, since evaluations are somewhat tedious, we stopped them once we thought the trend had become clear, introducing some selection bias. Therefore these results should be considered primarily illustrative.</d-footnote> Each model was tested on 10,000 train and 10,000 test levels sampled with replacement. Shaded areas in the left plot show the range of values over both models (though these are mostly too narrow to be visible). Error bars in the right plot show &plusmn;1 population standard deviation over all four model&ndash;researcher pairs.</figcaption>
     </figure>
     <p>
-      Our results illustrate how diversity may lead to interpretable features via generalization, lending support to the diversity hypothesis.
+      Our results illustrate how diversity may lead to interpretable features via generalization, lending support to the diversity hypothesis. Nevertheless, we still consider the hypothesis to be highly unproven.
     </p>
     <h2 id="feature-visualization">Feature visualization</h2>
     <p>
@@ -639,7 +648,7 @@
             </td>
           </tr>
         </table>
-        <figcaption style="display: table-caption; caption-side: bottom;">Comparison of gradient-based feature visualization for CNNs trained on ImageNet (GoogLeNet <d-cite key="googlenet"></d-cite>) and on CoinRun (architecture described <a href="#d-footnote-4-listing">below</a>). Each image was chosen to activate a neuron in the center, with the 3 images corresponding to the first 3 channels. Jittering was applied between optimization steps of up to 2 pixels for the first layer, and up to 8 pixels for the intermediate layer (mixed4a for ImageNet, 2b for CoinRun).</figcaption>
+        <figcaption style="display: table-caption; caption-side: bottom;">Comparison of gradient-based feature visualization for CNNs trained on ImageNet (GoogLeNet <d-cite key="googlenet"></d-cite>) and on CoinRun (architecture described <a href="#architecture">below</a>). Each image was chosen to activate a neuron in the center, with the 3 images corresponding to the first 3 channels. Jittering was applied between optimization steps of up to 2 pixels for the first layer, and up to 8 pixels for the intermediate layer (mixed4a for ImageNet, <a href="#architecture">2b</a> for CoinRun).</figcaption>
       </div>
     </figure>
     <p>
@@ -655,7 +664,7 @@
       As shown <a href="#dataset-examples">below</a>, we were able to use dataset examples to identify a number of channels that pick out human-interpretable features. It is therefore striking how resistant gradient-based methods were to our efforts. We believe that this is because solving CoinRun does not ultimately require much visual ability. Even with our modifications, it is possible to solve the game use simple visual shortcuts, such as picking out certain small configurations of pixels. These shortcuts work well on the narrow distribution of images on which the model is trained, but behave unpredictably in the full space of images in which gradient-based optimization takes place.
     </p>
     <p>
-      If our analysis here is valid, it provides further evidence for the <a href="#diversity-hypothesis">diversity hypothesis</a>, as an example of features that are hard to interpret in the absence of diversity. However, it seems to be a lack of diversity at a low level of abstraction that harms our ability to interpret features at all levels of abstraction, which could be an artefact of the fact that gradient-based feature visualization needs to back-propagate through earlier layers.
+      This analysis provides some insight into the <a href="#diversity-hypothesis">diversity hypothesis</a>. In support of the hypothesis, we have examples of features that are hard to interpret in the absence of diversity. But we also find ways in which the hypothesis may need to be refined. Firstly, it seems to be a lack of diversity at a low level of abstraction that harms our ability to interpret features at all levels of abstraction, which could be due to the fact that gradient-based feature visualization needs to back-propagate through earlier layers. Secondly, the the failure of our efforts to increase low-level visual diversity suggests that diversity may need to be assessed in the context of the task.
     </p>
     <h3 id="dataset-examples">Dataset example-based feature visualization</h3>
     <p>
@@ -680,7 +689,7 @@
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_14.png"><div class="feature-vis-dataset-text">Top left corner of box</div></div>
         <div class="feature-vis-dataset-item"><img src="images/feature_vis_dataset/layer_2b_feature_15.png"><div class="feature-vis-dataset-text">Left end of platform or bottom/right of screen?</div></div>
       </div>
-      <figcaption>Dataset example-based feature visualizations for 16 NMF directions of layer 2b of our CoinRun model. The grey-white checkerboard represents the edge of the screen. The labels are hand-composed.</figcaption>
+      <figcaption>Dataset example-based feature visualizations for 16 NMF directions of layer <a href="#architecture">2b</a> of our CoinRun model. The grey-white checkerboard represents the edge of the screen. The labels are hand-composed.</figcaption>
     </figure>
     <p>
       Unlike gradient-based feature visualization, this method finds some meaning to the different directions in activation space. It may still fail to provide a complete picture for each direction, however, since it only shows a limited number of dataset examples, and with limited context.
@@ -693,11 +702,11 @@
       <div id="feature-vis-spatial" class="striped">
         <img src="images/feature_vis_spatial.png">
       </div>
-      <figcaption>Spatially-aware dataset example-based feature visualizations for the coin-detecting NMF direction of layer 2b. The feature also responds strongly in the very top left square when the velocity info there is white, meaning that agent's horizontal velocity is high. Transparency (revealing the diagonally-striped background) indicates a weak response, so the left half of the visualization is mostly transparent because coins never appear in the left half of observations.</figcaption>
+      <figcaption>Spatially-aware dataset example-based feature visualizations for the coin-detecting NMF direction of layer <a href="#architecture">2b</a>. The feature also responds strongly in the very top left square when the velocity info there is white, meaning that agent's horizontal velocity is high. Transparency (revealing the diagonally-striped background) indicates a weak response, so the left half of the visualization is mostly transparent because coins never appear in the left half of observations.</figcaption>
     </figure>
     <h2 id="attribution">Attribution</h2>
     <p>
-      Attribution <d-cite key="attribution1,attribution2,attribution3,gradcam,attribution4,attribution5,attribution6,integratedgradients"></d-cite> answers questions about the relationships between neurons. It is most commonly used to see how the input to a network affects a particular output <d-cite key="perturbationsaliency"></d-cite>, but it can also applied to the activations of hidden layers <d-cite key="buildingblocks"></d-cite>. Although there are many approaches to attribution we could have used, we chose the popular method of integrated gradients <d-cite key="integratedgradients"></d-cite>. We explain in <a href="#integrated-gradients-for-a-hidden-layer">Appendix B</a> how we applied this method a hidden layer, and how positive value function attribution can be thought of as "good news" and negative value function attribution can as "bad news".
+      Attribution <d-cite key="attribution1,attribution2,attribution3,gradcam,attribution4,attribution5,attribution6,integratedgradients"></d-cite> answers questions about the relationships between neurons. It is most commonly used to see how the input to a network affects a particular output <d-cite key="perturbationsaliency"></d-cite>, but it can also applied to the activations of hidden layers <d-cite key="buildingblocks"></d-cite>. Although there are many approaches to attribution we could have used, we chose the method of integrated gradients <d-cite key="integratedgradients"></d-cite>. We explain in <a href="#integrated-gradients">Appendix B</a> how we applied this method a hidden layer, and how positive value function attribution can be thought of as "good news" and negative value function attribution can as "bad news".
     </p>
     <h3 id="dimensionality-reduction">Dimensionality reduction for attribution</h3>
     <p>
@@ -781,7 +790,7 @@
           </div>
         </div>
         <figcaption style="display: table-caption; caption-side: bottom;">
-          Value function attribution for a cherry-picked observation using layer 2b of our CoinRun model, reduced to 4 channels using attribution-based NMF. The dataset example-based feature visualizations of these directions reveal much more salient features than the visualizations of the first 4 activation-based NMF directions from the preceding section.
+          Value function attribution for a cherry-picked observation using layer <a href="#architecture">2b</a> of our CoinRun model, reduced to 4 channels using attribution-based NMF. The dataset example-based feature visualizations of these directions reveal much more salient features than the visualizations of the first 4 activation-based NMF directions from the preceding section.
         </figcaption>
       </div>
     </figure>
@@ -806,14 +815,14 @@
     </ol>
     <h3>Interpretability in the absence of diversity</h3>
     <ol>
-      <li><b>Pervasiveness of non-diverse features.</b> Do the "non-diverse features" that appear in the absence of diversity remain when diversity is present? Is there a connection between these non-diverse features and the "non-robust features" that have been posited to explain adversarial examples <d-cite key="advexfeatures,advexfeaturesdiscussion"></d-cite>?</li>
+      <li><b>Pervasiveness of non-diverse features.</b> Do "non-diverse features", by which we mean features that appear in the absence of diversity, remain when diversity is present? Is there a connection between these non-diverse features and the "non-robust features" that have been posited to explain adversarial examples <d-cite key="advexfeatures,advexfeaturesdiscussion"></d-cite>?</li>
       <li><b>Coping with non-diverse levels of abstraction.</b> Are there levels of abstraction at which even broad distributions like ImageNet remain non-diverse, and how can we best interpret models at these levels of abstraction?</li>
       <li><b>Gradient-based feature visualization.</b> Why does gradient-based feature visualization <a href="#feature-visualization">break down</a> in the absence of diversity, and can it be made to work using transformation robustness, regularization, data augmentation, adversarial training, or other techniques? What property of the optimization leads to the clouds of <a href="#extremal-colors">extremal colors</a>?</li>
-      <li><b>Trustworthiness of dataset examples and attribution.</b> How reliable and trustworthy can we make very heavily-regularized versions of feature visualization, such as those based on <a href="#dataset-examples">dataset examples</a>?<d-footnote>Heavily-regularized feature visualization may fail to separate the things causing behavior from things that merely correlate with the causes <d-cite key="featurevis"></d-cite>.</d-footnote> What explains the <a href="#attribution-discussion">strange behavior</a> of attribution, and how trustworthy is it?</li>
+      <li><b>Trustworthiness of dataset examples and attribution.</b> How reliable and trustworthy can we make very heavily-regularized versions of feature visualization, such as those based on <a href="#dataset-examples">dataset examples</a>?<d-footnote>Heavily-regularized feature visualization may fail to separate the things causing certain behavior from things that merely correlate with those causes <d-cite key="featurevis"></d-cite>.</d-footnote> What explains the <a href="#attribution-discussion">strange behavior</a> of attribution, and how trustworthy is it?</li>
     </ol>
     <h3>Interpretability in the RL framework</h3>
     <ol>
-      <li><b>Abstract features.</b> For models with interpretable abstract features, such as relationships between objects or anticipated events, will any method of generating examples be enough to understand these, or do we need an entirely new approach? For models with memory, how can we interpret their hidden states <d-cite key="capturetheflag,rubik,dota"></d-cite>?</li>
+      <li><b>Non-visual and abstract features.</b> What are the best methods for interpreting models with non-visual inputs? Even vision models may also have interpretable abstract features, such as relationships between objects or anticipated events: will any method of generating examples be enough to understand these, or do we need an entirely new approach? For models with memory, how can we interpret their hidden states <d-cite key="capturetheflag,rubik,dota"></d-cite>?</li>
       <li><b>Improving reliability.</b> How can we best identify, understand and correct rare <a href="#dissecting-failure">failures</a> and <a href="#hallucinations">other errors</a> in RL models? Can we not only degrade but also improve models by <a href="#model-editing">model editing</a>?</li>
       <li><b>Modifying training.</b> In what ways can we train RL models to make them more interpretable without a significant performance cost, such as by altering architectures or adding auxiliary predictive losses?</li>
       <li><b>Leveraging the environment.</b> How can we enrich interfaces using RL-specific data, such as trajectories of agent&ndash;environment interaction, state distributions, and advantage estimates? What are the benefits of incorporating user&ndash;environment interaction, such as for exploring counterfactuals?</li>
@@ -831,7 +840,7 @@
     </p>
     <ul>
       <li><b>Scalability.</b> The takeaways of the research should have some chance of scaling to harder problems and larger networks. If the techniques themselves do not scale, they should at least reveal some relevant insight that might.</li>
-      <li><b>Trustworthiness.</b> Explanations should be faithful to the model. Even if they do not tell the full story, they should at least not be biased in some fatal way (such as by using a misaligned approval-based objective, or by depending on another model that badly distorts information).</li>
+      <li><b>Trustworthiness.</b> Explanations should be faithful to the model. Even if they do not tell the full story, they should at least not be biased in some fatal way (such as by using an approval-based objective that leads to bad explanations that sound good, or by depending on another model that badly distorts information).</li>
       <li><b>Exhaustiveness.</b> This may be turn out to be impossible at scale, but we should strive for techniques that explain every essential feature of our models. If there are theoretical limits to exhaustiveness, we should try to understand these.</li>
       <li><b>Low cost.</b> Our techniques should not be significantly more computationally expensive than training the model. We hope that we will not need to train models differently for them to be interpretable, but if we do, we should try to minimize both the computational expense and any performance cost, so that interpretable models are not disincentivized from being used in practice.</li>
     </ul>
@@ -855,7 +864,7 @@
       Here we explain our method for <a href="#model-editing">editing the model</a> to make the agent blind to certain features.
     </p>
     <p>
-      The features in our interface correspond to directions in activation space obtained by applying <a href="#dimensionality-reduction">attribution-based NMF</a> to layer 2b of our model. To blind the agent to a feature, we edit the weights to make them project out the corresponding NMF direction.
+      The features in our interface correspond to directions in activation space obtained by applying <a href="#dimensionality-reduction">attribution-based NMF</a> to layer <a href="#architecture">2b</a> of our model. To blind the agent to a feature, we edit the weights to make them project out the corresponding NMF direction.
     </p>
     <p>
       More precisely, let <d-math>\mathbf v</d-math> be the NMF direction corresponding to the feature we wish to blind the model to. This is a vector of length <d-math>c</d-math>, the number of channels in activation space. Using this we construct the <a href="https://en.wikipedia.org/wiki/Projection_(linear_algebra)">orthogonal projection</a> matrix <d-math>P:=I-\frac 1{\|\mathbf v\|^2}\mathbf v\mathbf v^{\mathsf T}</d-math>, which projects out the direction of <d-math>\mathbf v</d-math> from activation vectors. We then take the convolutional kernel of the following layer, which has shape <d-math>\text{height}\times\text{width}\times c\times d</d-math>, where <d-math>d</d-math> is the number of output channels. Broadcasting across the height and width dimensions, we left-multiply each <d-math>c\times d</d-math> matrix in the kernel by <d-math>P</d-math>. The effect of the new kernel is to project out the direction of <d-math>\mathbf v</d-math> from activations before applying the original kernel.
@@ -863,9 +872,9 @@
     <p>
       As it turned out, the NMF directions were close to one-hot, so this procedure is approximately equivalent to zeroing out the slice of the kernel corresponding to a particular in-channel.
     </p>
-    <h3 id="integrated-gradients-for-a-hidden-layer">Appendix B: Integrated gradients for a hidden layer</h3>
+    <h3 id="integrated-gradients">Appendix B: Integrated gradients for a hidden layer</h3>
     <p>
-      Here we explain the application the integrated gradients <d-cite key="integratedgradients"></d-cite> to a hidden layer for the purpose of <a href="#attribution">attribution</a>. This method can be applied to any of the nework's outputs, but we focus here on the value function. Recall that this is the model's estimate of the time-discounted probability that the agent will successfully complete the level.
+      Here we explain the application of integrated gradients <d-cite key="integratedgradients"></d-cite> to a hidden layer for the purpose of <a href="#attribution">attribution</a>. This method can be applied to any of the nework's outputs, but we focus here on the value function. Recall that this is the model's estimate of the time-discounted probability that the agent will successfully complete the level.
     </p>
     <div>
       <div style="float: right;">
@@ -899,30 +908,60 @@
       <div style="float: right;">
         <figure style="width: 300px; margin: 0.5em 0.5em 1em 1em;">
           <img src="images/integrated_gradient.png">
-          <figcaption>Viewing <d-math>F</d-math> as the height of a surface, the integrated gradient of <d-math>F</d-math> measures the elevation gained while traveling in each direction, and sums to the total elevation gain <d-cite key="attributionpaths"></d-cite>.</figcaption>
+          <figcaption>Viewing <d-math>F</d-math> as the height of a surface, represented here using the background gradient, the integrated gradient of <d-math>F</d-math> measures the elevation gained while traveling in each direction, and sums to the total elevation gain <d-cite key="attributionpaths"></d-cite>.</figcaption>
         </figure>
       </div>
       <p>
-        To account for this, we instead choose a path <d-math>\mathcal P</d-math> in activation space from some starting point <d-math>\mathbf a_0</d-math> to the ending point <d-math>\mathbf a_1:=\mathbf A\left(\mathbf x\right)</d-math>. We then compute the integrated gradient of <d-math>F</d-math> along <d-math>\mathcal P</d-math>, which is defined as the path integral <d-math block="">\int_{\mathcal P}\nabla_{\mathbf a}F\left(\mathbf a\right)\odot\mathrm d\mathbf a.</d-math> Note the use of the pointwise product rather than the usual dot product here, which makes the integral vector-valued. By the <a href="https://en.wikipedia.org/wiki/Gradient_theorem">fundamental theorem of calculus for line integrals</a>, when the components of the vector produced by this integral are summed, the result depends only on the endpoints <d-math>\mathbf a_0</d-math> and <d-math>\mathbf a_1</d-math>, equaling <d-math>F\left(\mathbf a_1\right)-F\left(\mathbf a_0\right)</d-math>. Thus the components of this vector provide a true decomposition of this difference, "attributing" it across the activations.
+        To account for this, the integrated gradients method instead chooses a path <d-math>\mathcal P</d-math> in activation space from some starting point <d-math>\mathbf a_0</d-math> to the ending point <d-math>\mathbf a_1:=\mathbf A\left(\mathbf x\right)</d-math>. We then compute the integrated gradient of <d-math>F</d-math> along <d-math>\mathcal P</d-math>, which is defined as the path integral <d-math block="">\int_{\mathcal P}\nabla_{\mathbf a}F\left(\mathbf a\right)\odot\mathrm d\mathbf a.</d-math> Note the use of the pointwise product rather than the usual dot product here, which makes the integral vector-valued. By the <a href="https://en.wikipedia.org/wiki/Gradient_theorem">fundamental theorem of calculus for line integrals</a>, when the components of the vector produced by this integral are summed, the result depends only on the endpoints <d-math>\mathbf a_0</d-math> and <d-math>\mathbf a_1</d-math>, equaling <d-math>F\left(\mathbf a_1\right)-F\left(\mathbf a_0\right)</d-math>. Thus the components of this vector provide a true decomposition of this difference, "attributing" it across the activations.
       </p>
       <p style="margin-bottom: 0;">
         For our purposes, we take <d-math>\mathcal P</d-math> to be the straight line from <d-math>\mathbf 0</d-math> to <d-math>\mathbf A\left(\mathbf x\right)</d-math>.<d-footnote>In theory, we could choose any point in activation space as the starting point of our path, but in practice, <d-math>\mathbf 0</d-math> tends to be a good baseline against which to compare other activations, with <d-math>F\left(\mathbf 0\right)</d-math> being on the same order as the average value function. Sundararajan, Taly and Yan <d-cite key="integratedgradients"></d-cite> discuss the choice of this baseline in more depth.</d-footnote> In other words, given an observation <d-math>\mathbf x</d-math>, we define the value function attribution as<d-footnote>In practice, we numerically approximate the integral by evaluating the integrand at <d-math>\alpha=0.1,0.2,\ldots,1</d-math>.</d-footnote>
       </p>
       <d-math block="" style="margin: 0 auto;">
-        \int_0^1\nabla_{\mathbf a}F\left(\alpha\mathbf A\left(\mathbf x\right)\right)\mathrm d\alpha\odot\mathbf A\left(\mathbf x\right).
+        \int_{\alpha=0}^1\nabla_{\mathbf a}F\left(\alpha\mathbf A\left(\mathbf x\right)\right)\mathrm d\alpha\odot\mathbf A\left(\mathbf x\right).
       </d-math>
       <p>
         This has the same dimensions as <d-math>\mathbf A\left(\mathbf x\right)</d-math>, and its components sum to <d-math>V\left(\mathbf x\right)-F\left(\mathbf 0\right)</d-math>. So for a convolutional layer, this method allows us to attribute the value function (in excess of the baseline <d-math>F\left(\mathbf 0\right)</d-math>) across the horizontal, vertical and channel dimensions of activation space. Positive value function attribution can be thought of as "good news", components that cause the agent to think it is more likely to collect the coin at the end of the level. Similarly, negative value function attribution can be thought of as "bad news".
       </p>
     </div>
+    <h3 id="architecture">Appendix C: Architecture</h3>
+    <p>
+      Our architecture consists of the following layers in the order given, together with ReLU activations for all except the final layer.
+    </p>
+    <ul class="architecture-list">
+      <li>7x7 convolutional layer with 16 channels (layer 1a)</li>
+      <li>2x2 L2 pooling layer</li>
+      <li>5x5 convolutional layer with 32 channels (layer 2a)</li>
+      <li>5x5 convolutional layer with 32 channels (layer 2b)</li>
+      <li>2x2 L2 pooling layer</li>
+      <li>5x5 convolutional layer with 32 channels (layer 3a)</li>
+      <li>2x2 L2 pooling layer</li>
+      <li>5x5 convolutional layer with 32 channels (layer 4a)</li>
+      <li>2x2 L2 pooling layer</li>
+      <li>256-unit dense layer</li>
+      <li>512-unit dense layer</li>
+      <li>10-unit dense layer (1 unit for the value function, 9 units for the policy logits)</li>
+    </ul>
+    <p>
+      We designed this architecture by starting with the architecture from IMPALA <d-cite key="impala"></d-cite>, and making the following modifications in an attempt to aid interpretability without noticeably sacrificing performance.
+    </p>
+    <ul class="architecture-list">
+      <li>We used fewer convolutional layers and more dense layers, to allow for more non-visual processing.</li>
+      <li>We removed the residual connections, so that the flow of information passes through every layer.</li>
+      <li>We made the pool size equal to the pool stride, to avoid gradient gridding.</li>
+      <li>We used L2 pooling instead of max pooling, for more continuous gradients.</li>
+    </ul>
+    <p>
+      The choice that seemed to make the most difference was using 5 rather than 12 convolutional layers, resulting in the object-identifying features (which were the most interpretable, as discussed <a href="#diversity-hypothesis">above</a>) being concentrated in a single layer (layer 2b), rather than being spread over multiple layers and mixed in with less interpretable features.
+    </p>
     <h3>Acknowledgments</h3>
     <p>
-      We would like to thank our reviewers Jonathan Uesato, Joel Lehman and one anonymous reviewer for their detailed and thoughtful feedback. We would also like to thank Karl Cobbe, Daniel Filan, Sam Greydanus, Jacob Jackson, Konstantinos Mitsopoulos, Mira Murati, Ludwig Schubert, John Schulman, Ilya Sutskever, Michael Littman, Jorge Orbay, Nevan Wichers and Liang Zhang for research discussions, feedback, follow-up work, help and support that have greatly benefited this project.
+      We would like to thank our reviewers Jonathan Uesato, Joel Lehman and one anonymous reviewer for their detailed and thoughtful feedback. We would also like to thank Karl Cobbe, Daniel Filan, Sam Greydanus, Jacob Jackson, Michael Littman, Konstantinos Mitsopoulos, Mira Murati, Jorge Orbay, Alex Ray, Ludwig Schubert, John Schulman, Ilya Sutskever, Nevan Wichers, Liang Zhang and Daniel Ziegler for research discussions, feedback, follow-up work, help and support that have greatly benefited this project.
     </p>
 
     <h3>Author Contributions</h3>
     <p>
-      <b>Jacob Hilton</b> led the project and was involved with every aspect of it.
+      <b>Jacob Hilton</b> was the primary contributor.
     </p>
     <p>
       <b>Shan Carter</b> (while working at OpenAI) advised on interface design throughout the project, and worked on many of the diagrams in the article.

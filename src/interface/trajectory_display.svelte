@@ -42,10 +42,6 @@
    white-space: nowrap;
  }
 
- .label {
-   color: white;
- }
-
  th {
    padding: 0.25em;
    text-align: left;
@@ -98,16 +94,16 @@
         {/if}
       </button>
     </th>
-    <th style="text-align: right; width: 17.5%;">
+    <!-- <th style="text-align: right; width: 17.5%;">
       Next action:
     </th>
     <th>
       <span class="box" style="color: {bold_color};">
         {@html action_htmls[actions[state.position]]}
       </span>
-    </th>
+    </th> --><th style="width: 7.5%;"></th>
     <th style="text-align: right; width: 22.5%;">
-      Policy: <span style="font-size: 0.9em; font-weight: normal;">(probabilities)</span>
+      Policy: <span style="font-size: 0.9em; font-weight: normal;">(probabilities and sampled action)</span>
     </th>
     <th style="text-align: right; font-weight: normal; width: 60%; padding: 0.1em;">
       <div style="display: inline-block;
@@ -122,8 +118,10 @@
             style="left: {(policy_cum_probs_permuted[action_index] * 100).toFixed(10)}%;
                    height: 100%;
                    width: {(policy_probs_permuted[action_index] * 100).toFixed(10)}%;
-                   background-color: {action_colors[action_index]};
-                   border-width: 0px 1px;
+                   color: {action === actions[state.position] ? 'black' : 'white'};
+                   background-color: {action === actions[state.position] ? 'white': action_colors[action_index]};
+                   font-weight: {action === actions[state.position] ? 'bold': 'normal'};
+                   border-width: 1px;
                    border-style: solid;
                    border-color: gray;
                    border-radius: 0.25em;"

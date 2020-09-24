@@ -360,6 +360,14 @@ button {
    -ms-interpolation-mode: nearest-neighbor;
 }
 
+.architecture-list {
+  margin-top: 0em;
+}
+
+.architecture-list li {
+  margin-bottom: 0em;
+}
+
 /* table of contents */
 
 @media (max-width: 1000px) {
