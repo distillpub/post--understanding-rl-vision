@@ -8,7 +8,7 @@ const feature_descriptions = [
   "Buzzsaw<br>obstacle",
   "Coin",
   "Enemy<br>moving<br>left",
-  "Agent<br>or enemy<br>moving right",
+  "Agent<br>or enemy<br><span style=\"letter-spacing: -0.4px;\">moving right</span>",
   "Buzzsaw<br>obstacle<br>or platform",
   "Platform",
   "Velocity<br>info or left-<br>facing wall",

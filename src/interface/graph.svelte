@@ -70,7 +70,7 @@
  }
 
  .label {
-   background-color: white;
+   background-color: rgba(255, 255, 255, 0.9);
    font-weight: bold;
  }
 </style>
