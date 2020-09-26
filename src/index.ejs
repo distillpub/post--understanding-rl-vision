@@ -207,7 +207,7 @@
       CoinRun is a side-scrolling platformer in which the agent must dodge enemies and other traps and collect the coin at the end of the level.
     </p>
     <figure>
-      <video width="100%" autoplay loop controls muted>
+      <video style="width: 100%;" autoplay loop controls muted>
         <source src="videos/coinrun.mp4" type="video/mp4">
       </video>
       <figcaption style="text-align: center;">Our trained model playing CoinRun. <b>Left</b>: full resolution. <b>Right</b>: 64x64 RGB observations given to the model.</figcaption>
@@ -323,18 +323,18 @@
     <figure style="text-align: center;">
       <svg height="160px" width="448px">
         <defs>
-          <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+          <marker id="arrow-model" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
             <path d="M0,0 L0,6 L9,3 z" fill="#000000" />
           </marker>
         </defs>
         <image xlink:href="images/coinrun/observation.png" x="8" y="16" height="96" width="96" style="image-rendering: pixelated;"></image>
         <rect x="8" y="16" height="96" width="96" fill="none" stroke="#808080" stroke-width="1"></rect>
         <text x="56" y="135" text-anchor="middle">observation</text>
-        <line x1="104" y1="64" x2="152" y2="64" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
+        <line x1="104" y1="64" x2="152" y2="64" stroke="#000000" stroke-width="1" marker-end="url(#arrow-model)"></line>
         <text x="180" y="69" text-anchor="middle">CNN</text>
         <rect x="152" y="36" height="56" width="56" fill="none" stroke="#000000" stroke-width="1"></rect>
-        <path d="M 208 64 h 24 q 8 0, 8 -8 v -40 q 0 -8, 8 -8 h 24" fill="none" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></path>
-        <path d="M 232 64 q 8 0, 8 8 q 0 8, 8 8 h 24" fill="none" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></path>
+        <path d="M 208 64 h 24 q 8 0, 8 -8 v -40 q 0 -8, 8 -8 h 24" fill="none" stroke="#000000" stroke-width="1" marker-end="url(#arrow-model)"></path>
+        <path d="M 232 64 q 8 0, 8 8 q 0 8, 8 8 h 24" fill="none" stroke="#000000" stroke-width="1" marker-end="url(#arrow-model)"></path>
         <rect x="278" y="0" height="16" width="16" fill="none" stroke="#000000" stroke-width="1"></rect>
         <rect x="282" y="4" height="8" width="8" fill="none" stroke="#000000" stroke-width="1"></rect>
         <text x="300" y="13" text-anchor="start">value function</text>
@@ -349,7 +349,7 @@
         <rect x="282" y="112" height="8" width="8" fill="none" stroke="#000000" stroke-width="1"></rect>
         <rect x="282" y="124" height="8" width="8" fill="none" stroke="#000000" stroke-width="1"></rect>
         <text x="286" y="152" text-anchor="middle">logits</text>
-        <line x1="300" y1="80" x2="380" y2="80" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
+        <line x1="300" y1="80" x2="380" y2="80" stroke="#000000" stroke-width="1" marker-end="url(#arrow-model)"></line>
         <text x="340" y="102" text-anchor="middle">softmax</text>
         <text x="388" y="84" text-anchor="start">policy</text>
       </svg>
@@ -859,7 +859,7 @@
     </p>
     <h2 id="supplementary-material">Supplementary material</h2>
     <ul>
-      <li><b>Code.</b> The <a href-to-be-updated="http://go/rl-clarity-library"><code>rl-clarity</code> library</a> includes code for generating an expanded version of our interface, along with tools for feature visualization, attribution and dimensionality reduction. We demonstrate these tools in a <a href-to-be-updated="http://go/rl-clarity-notebook">Colab notebook</a>. [Links to be updated]</li>
+      <li><b>Code.</b> The <a href-to-be-updated="http://go/rl-clarity-library"><code>rl-clarity</code> library</a> includes code for generating an expanded version of our interface, along with tools for feature visualization, attribution and dimensionality reduction. We demonstrate these tools in a <a href-to-be-updated="http://go/rl-clarity-notebook"><img src="images/colab.svg"> notebook</a>. [Links to be updated]</li>
       <li><b>More interfaces.</b> We generated an expanded version of our interface for every convolutional layer in our model <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/demo/interface.html">here</a>. We also generated interfaces for a number of other models, including the models trained on different numbers of levels, the edited models, and models trained on all 16 of the Procgen Benchmark <d-cite key="procgen"></d-cite> games. These are indexed <a href="https://storage.googleapis.com/clarity-public/jhilton/attribution/index.html">here</a>.</li>
     </ul>
 
@@ -881,20 +881,20 @@
     </p>
     <h3 id="integrated-gradients">Appendix B: Integrated gradients for a hidden layer</h3>
     <p>
-      Here we explain the application of integrated gradients <d-cite key="integratedgradients"></d-cite> to a hidden layer for the purpose of <a href="#attribution">attribution</a>. This method can be applied to any of the nework's outputs, but we focus here on the value function. Recall that this is the model's estimate of the time-discounted probability that the agent will successfully complete the level.
+      Here we explain the application of integrated gradients <d-cite key="integratedgradients"></d-cite> to a hidden layer for the purpose of <a href="#attribution">attribution</a>. This method can be applied to any of the network's outputs, but we focus here on the value function. Recall that this is the model's estimate of the time-discounted probability that the agent will successfully complete the level.
     </p>
     <div>
       <div style="float: right;">
         <figure style="width: 300px; margin: 0.5em 0.5em 1em 1em;">
           <svg height="160px" width="300px">
             <defs>
-              <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+              <marker id="arrow-factorization" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
                 <path d="M0,0 L0,6 L9,3 z" fill="#000000" />
               </marker>
             </defs>
-            <line x1="100" y1="30" x2="210" y2="30" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
-            <line x1="80" y1="50" x2="110" y2="100" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
-            <line x1="190" y1="100" x2="220" y2="50" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"></line>
+            <line x1="100" y1="30" x2="210" y2="30" stroke="#000000" stroke-width="1" marker-end="url(#arrow-factorization)"></line>
+            <line x1="80" y1="50" x2="110" y2="100" stroke="#000000" stroke-width="1" marker-end="url(#arrow-factorization)"></line>
+            <line x1="190" y1="100" x2="220" y2="50" stroke="#000000" stroke-width="1" marker-end="url(#arrow-factorization)"></line>
             <text x="50" y="20" text-anchor="middle">observation</text>
             <text x="50" y="40" text-anchor="middle">space</text>
             <text x="230" y="35" text-anchor="middle" class="katex"><tspan class="mathbb">R</tspan></text>
@@ -963,7 +963,7 @@
     </p>
     <h3>Acknowledgments</h3>
     <p>
-      We would like to thank our reviewers Jonathan Uesato, Joel Lehman and one anonymous reviewer for their detailed and thoughtful feedback. We would also like to thank Karl Cobbe, Daniel Filan, Sam Greydanus, Jacob Jackson, Michael Littman, Konstantinos Mitsopoulos, Mira Murati, Jorge Orbay, Alex Ray, Ludwig Schubert, John Schulman, Ilya Sutskever, Nevan Wichers, Liang Zhang and Daniel Ziegler for research discussions, feedback, follow-up work, help and support that have greatly benefited this project.
+      We would like to thank our reviewers Jonathan Uesato, Joel Lehman and one anonymous reviewer for their detailed and thoughtful feedback. We would also like to thank Karl Cobbe, Daniel Filan, Sam Greydanus, Jacob Jackson, Michael Littman, Ben Millwood, Konstantinos Mitsopoulos, Mira Murati, Jorge Orbay, Alex Ray, Ludwig Schubert, John Schulman, Ilya Sutskever, Nevan Wichers, Liang Zhang and Daniel Ziegler for research discussions, feedback, follow-up work, help and support that have greatly benefited this project.
     </p>
 
     <h3>Author Contributions</h3>
@@ -974,7 +974,7 @@
       <b>Shan Carter</b> (while working at OpenAI) advised on interface design throughout the project, and worked on many of the diagrams in the article.
     </p>
     <p>
-      <b>Nick Cammarata</b> developed the model editing technique and suggested applying it to CoinRun models.
+      <b>Nick Cammarata</b> developed the model editing methodology and suggested applying it to CoinRun models.
     </p>
     <p>
       <b>Gabriel Goh</b> provided evaluations of feature interpretability for the section <a href="#interpretability-and-generalization">Interpretability and generalization</a>.
