@@ -520,7 +520,7 @@ document.addEventListener("DOMContentLoaded", function() {
     model_editing_videos_playing[level_number] = {};
     for (let video_number = 1; video_number < 4; video_number++) {
       let video = document.getElementById("model-editing-level-" + level_number.toString() + "-video-" + video_number.toString());
-      video.play();
+      //video.play(); //commented out to disable auto-play
       let update_video_playing = (function(level_number, video_number, video) {
         return function() {
           model_editing_videos_playing[level_number][video_number] = !video.paused;
