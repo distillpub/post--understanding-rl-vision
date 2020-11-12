@@ -1,6 +1,5 @@
-// Hot reloading
-import * as _unused from "raw-loader!./index.ejs";
-// TODO: disable before publishing
+// Hot reloading - disabled before publishing
+// import * as _unused from "raw-loader!./index.ejs";
 
 import Interface from "./interface/interface.svelte";
 
