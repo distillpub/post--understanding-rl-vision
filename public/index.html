@@ -859,28 +859,26 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </td>
       </tr>
     </table>
-    <table style="grid-column: page; margin: 0em 2em;">
-      <tr>
-        <td style="width: 11.5em; white-space: nowrap; vertical-align: top; text-align: center;">
-          <div style="display: inline-block;">
+    <div style="display: flex; flex-flow: row; height: 116px;">
+      <div>
+        <div style="display: flex; flex-flow: row;">
+          <div style="display: inline-block; margin-right:3px;">
             <button id="interface-failure-previous" class="interface-failure-step-button">Prev</button><br>
             <button id="interface-failure-start" class="interface-failure-step-button">Start</button>
           </div>
           <button id="interface-failure-play-pause-button" class="play-pause-button">
             <span id="interface-failure-play-pause-span">&#9658;</span>
           </button>
-          <div style="display: inline-block;">
+          <div style="display: inline-block; margin-left:3px;">
             <button id="interface-failure-next" class="interface-failure-step-button">Next</button><br>
             <button id="interface-failure-end" class="interface-failure-step-button">End</button>
           </div>
-          <br>
-          <span id="interface-failure-position"></span>
-        </td>
-        <td style="vertical-align: top;">
-          <div id="interface-failure-description" style="position: relative; height: 115px;"></div>
-        </td>
-      </tr>
-    </table>
+          <br />
+        </div>
+        <span id="interface-failure-position"></span>
+      </div>
+      <div id="interface-failure-description" style="position: relative; height: 115px;"></div>
+    </div>
     <d-figure style="grid-column: page; margin-top: 1em;">
       <figure>
         <div id="interface-failure-obscured-target" style="display: block;"></div>
