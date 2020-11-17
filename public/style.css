@@ -1,0 +1,463 @@
+.subgrid {
+  grid-column: screen; 
+  display: grid; 
+  grid-template-columns: inherit;
+  grid-template-rows: inherit;
+  grid-column-gap: inherit;
+  grid-row-gap: inherit;
+}
+
+d-figure.base-grid {
+  grid-column: screen;
+  background: hsl(0, 0%, 97%);
+  padding: 20px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+d-figure {
+  margin-bottom: 1em;
+  position: relative;
+}
+
+d-figure > figure {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.shaded-figure {
+  background-color: hsl(0, 0%, 97%);
+  border-top: 1px solid hsla(0, 0%, 0%, 0.1);
+  border-bottom: 1px solid hsla(0, 0%, 0%, 0.1);
+  padding: 30px 0;
+}
+
+.pointer {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  top: 26px;
+  left: -48px;
+}
+
+.grayscale-light {
+  filter: gray;
+  -webkit-filter: grayscale(1) contrast(0.2) brightness(1.6);
+  filter: grayscale(1) contrast(0.2) brightness(1.6);
+}
+
+.grayscale-dark {
+  filter: gray;
+  -webkit-filter: grayscale(1) brightness(0.75);
+  filter: grayscale(1) brightness(0.75);
+}
+
+.striped {
+  background: repeating-linear-gradient(135deg, lightgray 0px, whitesmoke 10px, lightgray 20px);
+}
+
+body d-title {
+  overflow-x: auto;
+}
+
+body d-article {
+  overflow: visible;
+}
+
+d-title h1, d-title p, d-title figure {
+  grid-column: page;
+}
+
+b {
+  font-weight: bold;
+}
+
+label, button {
+  cursor: pointer;
+}
+
+button {
+  border-radius: 0.25em;
+}
+
+#coinrun-objects {
+  grid-column: page;
+}
+
+#coinrun-objects .coinrun-objects-row-images td {
+  white-space: nowrap;
+}
+
+#coinrun-objects img {
+  width: auto;
+  border: 1px solid gray;
+}
+
+#coinrun-objects .coinrun-object-single {
+  width: 100%;
+}
+
+#coinrun-objects .coinrun-object-double {
+  width: 48%;
+}
+
+#coinrun-objects .coinrun-objects-row-text td {
+  position: relative;
+  height: 9em;
+}
+
+#coinrun-objects .coinrun-objects-row-text figcaption {
+  position: absolute;
+  top: 1em;
+}
+
+#coinrun-actions .coinrun-action {
+  font-weight: bold;
+  padding: 0.2em;
+  border: 1px solid gray;
+  border-radius: 0.25em;
+}
+
+.play-pause-button {
+  height: 1.3em;
+  width: 1.3em;
+  font-size: 3em;
+  line-height: 0em;
+}
+
+.interface-failure-step-button {
+  font-size: 1em;
+  margin: 0em 0.1em;
+}
+
+#interface-failure-position {
+  margin: 0em 1em;
+}
+
+.matplotlib-svg text, .matplotlib-svg tspan {
+  font-family: inherit !important;
+}
+
+#model-editing-levels label {
+  white-space: nowrap;
+}
+
+#model-editing-levels video {
+  width: 100%;
+}
+
+#feature-vis-traditional td {
+  padding: 8px;
+}
+
+#feature-vis-traditional img {
+  display: inline-block;
+  width: 128px;
+  border: 1px solid gray;
+}
+
+#feature-vis-dataset {
+  margin: 0 auto;
+  text-align: center;
+  max-width: 640px;
+}
+
+.feature-vis-dataset-item {
+  display: inline-block;
+  vertical-align: top;
+  width: 136px;
+}
+
+#feature-vis-dataset img {
+  display: block;
+  width: 128px;
+  border: 1px solid gray;
+}
+
+.feature-vis-dataset-text {
+  margin-top: 0.2em;
+  margin-bottom: 0.5em;
+  font-size: 0.75em;
+  line-height: 1.5em;
+  font-style: italic;
+}
+
+#feature-vis-spatial {
+  margin: 0.5em auto;
+  height: 512px;
+  width: 512px;
+}
+
+#feature-vis-spatial img {
+  border: 1px solid gray;
+}
+
+#hero th, #hero td {
+  vertical-align: top;
+}
+
+#hero #hero-annotations {
+  position: relative;
+  margin-top: 0.5em;
+  font-size: 0.8em;
+  color: gray;
+}
+
+#hero #hero-annotations > div {
+  position: absolute;
+  text-align: center;
+  line-height: 1.1em;
+  width: 100px;
+}
+
+#hero .hero-annotation-dot {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  border-radius: 20%;
+  vertical-align: top;
+}
+
+#hero .hero-annotation-image {
+  height: auto;
+  width: auto;
+  margin: 1px;
+  border: 1px solid gray;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#hero .hero-annotation-line-vertical-outer {
+  position: absolute;
+  top: -142px;
+  left: 47px;
+  width: 6px;
+  height: 137px;
+  background-color: white;
+}
+
+#hero .hero-annotation-line-vertical-inner {
+  position: absolute;
+  z-index: 2;
+  left: 2px;
+  height: 143px;
+  width: 2px;
+  background-color: black;
+}
+
+#hero .hero-annotation-line-horizontal-outer {
+  position: absolute;
+  top: -144px;
+  height: 6px;
+  background-color: white;
+}
+
+#hero .hero-annotation-line-horizontal-inner {
+  position: absolute;
+  z-index: 2;
+  top: 2px;
+  height: 2px;
+  background-color: black;
+}
+
+#attribution-demo td {
+  width: 33.33%;
+}
+
+#attribution-demo td {
+  min-width: 256px;
+  max-width: 288px;
+}
+
+#hero td {
+  min-width: 256px;
+  max-width: 320px;
+  padding: 2px 16px 2px 0px;
+}
+
+#attribution-demo .attribution-outer, #hero .hero-outer {
+  position: relative;
+  border: 1px solid gray;
+  height: 0px;
+  padding-bottom: 100%;
+  width: 100%;
+}
+
+#attribution-demo .attribution-inner, #hero .hero-inner {
+  position: absolute;
+  height: 0px;
+  padding-bottom: 100%;
+  width: 100%;
+}
+
+#attribution-demo .attribution-image, #hero .hero-image {
+  height: 0px;
+  padding-bottom: 100%;
+  width: 100%;
+  background-size: 100% 100%;
+}
+
+#attribution-demo .attribution-legend-item {
+  display: inline-block;
+  padding: 0.5em;
+  background: white;
+  border: 1px solid white;
+  border-radius: 0.25em;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+#attribution-demo .attribution-legend-item:hover {
+  background: whitesmoke;
+  border: 1px solid gray;
+}
+
+#attribution-demo .attribution-legend-outer {
+  position: relative;
+  height: 192px;
+  width: 128px;
+}
+
+#attribution-demo .attribution-legend-dot {
+  position: absolute;
+  top: 140.8px;
+  left: 0px;
+  height: 32px;
+  width: 32px;
+  border-radius: 20%;
+}
+
+#attribution-demo .attribution-legend-inner {
+  position: absolute;
+  height: 128px;
+  width: 128px;
+  top: 0px;
+  left: 0px;
+  border: 1px solid gray;
+}
+
+#attribution-demo .attribution-legend-label {
+  position: absolute;
+  height: 64px;
+  width: 96px;
+  top: 140.8px;
+  left: 42.67px;
+  font-size: 0.9em;
+  line-height: 1.2em;
+  font-style: italic;
+  z-index: 1;
+  text-align: left;
+}
+
+#coinrun-objects img, #feature-vis-traditional img, #feature-vis-dataset img, #feature-vis-spatial img, #attribution-demo .attribution-image, #hero .hero-image {
+   image-rendering: optimizeSpeed;
+   image-rendering: -moz-crisp-edges;
+   image-rendering: -o-crisp-edges;
+   image-rendering: -webkit-optimize-contrast;
+   image-rendering: optimize-contrast;
+   image-rendering: crisp-edges;
+   image-rendering: pixelated;
+   -ms-interpolation-mode: nearest-neighbor;
+}
+
+.architecture-list {
+  margin-top: 0em;
+}
+
+.architecture-list li {
+  margin-bottom: 0em;
+}
+
+/* table of contents */
+
+@media (max-width: 1000px) {
+  d-contents {
+    justify-self: start;
+    align-self: start;
+    grid-column-start: 2;
+    grid-column-end: 6;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media (min-width: 1000px) {
+  d-contents {
+    align-self: start;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    justify-self: end;
+    padding-right: 3em;
+    padding-left: 2em;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media (min-width: 1180px) {
+  d-contents {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    justify-self: end;
+    padding-right: 3em;
+    padding-left: 2em;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+d-contents nav h3 {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+d-contents nav a {
+  color: rgba(0, 0, 0, 0.8);
+  border-bottom: none;
+  text-decoration: none;
+}
+
+d-contents li {
+  list-style-type: none;
+}
+
+d-contents ul {
+  padding-left: 1em;
+}
+
+d-contents nav ul li {
+  margin-bottom: 0.25em;
+}
+
+d-contents nav a:hover {
+  text-decoration: underline solid rgba(0, 0, 0, 0.6);
+}
+
+d-contents nav ul {
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+
+d-contents nav > div {
+  display: block;
+  outline: none;
+  margin-bottom: 0.5em;
+}
+
+d-contents nav > div > a {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
+  text-decoration: none;
+}
