@@ -415,7 +415,7 @@ const failure_descriptions = {
       [7, 8],
       'The agent moves right to be able to reach the top of the wall (' +
         feature_bullet_html('failure_obscured', 7) +
-        '), though it is slightly discouraged from doing so by the prescence of the enemy moving right (' +
+        '), though it is slightly discouraged from doing so by the presence of the enemy moving right (' +
         feature_bullet_html('failure_obscured', 4) +
         ').',
     ],
