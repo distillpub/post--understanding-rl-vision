@@ -306,7 +306,7 @@
       </table>
     </figure>
     <p>
-      We trained a convolutional neural network on CoinRun for around 2 billion timesteps, using PPO <d-cite key="ppo"></d-cite>, an actor-critic algorithm.<d-footnote>We used the standard PPO hyperparameters for CoinRun <d-cite key="coinrunpaper"></d-cite>, except that we used twice as many copies of the environment per worker and twice and many workers. The effect of these changes was to increase the effective batch size, which seemed to be necessary to reach the same performance with our smaller architecture.</d-footnote> The architecture of our network is described in <a href="#architecture">Appendix C</a>. We used a non-recurrent network, to avoid any need to visualize multiple frames at once. Thus our model observes a single downsampled 64x64 image, and outputs a value function (an estimate of the total future time-discounted reward) and a policy (a probability distribution over the actions, from which the next action is sampled).
+      We trained a convolutional neural network on CoinRun for around 2 billion timesteps, using PPO <d-cite key="ppo"></d-cite>, an actor-critic algorithm.<d-footnote>We used the standard PPO hyperparameters for CoinRun <d-cite key="coinrunpaper"></d-cite>, except that we used twice as many copies of the environment per worker and twice as many workers. The effect of these changes was to increase the effective batch size, which seemed to be necessary to reach the same performance with our smaller architecture.</d-footnote> The architecture of our network is described in <a href="#architecture">Appendix C</a>. We used a non-recurrent network, to avoid any need to visualize multiple frames at once. Thus our model observes a single downsampled 64x64 image, and outputs a value function (an estimate of the total future time-discounted reward) and a policy (a probability distribution over the actions, from which the next action is sampled).
     </p>
     <figure style="text-align: center;">
       <svg height="160px" width="448px">
@@ -351,7 +351,7 @@
       Having trained a strong RL agent, we were curious to see what it had learned. Following <d-cite key="buildingblocks"></d-cite>, we developed an interface for examining trajectories of the agent playing the game. This incorporates attribution from a hidden layer that recognizes objects, which serves to highlight objects that positively or negatively influence a particular network output. By applying dimensionality reduction, we obtain attribution vectors whose components correspond to different types of object, which we indicate using different colors.
     </p>
     <p id="interface">
-      Here is our interface for a typical trajectory, with the value function as the network output. It reveals the model using obstacles, coins, enemies and more to compute the value function.
+      Here is our interface for a typical trajectory, with the value function as the network output. It reveals the model is using obstacles, coins, enemies and more to compute the value function.
     </p>
     <d-figure style="grid-column: page; margin-bottom: 3em;">
       <figure>
@@ -695,7 +695,7 @@
     </figure>
     <h2 id="attribution">Attribution</h2>
     <p>
-      Attribution <d-cite key="attribution1,attribution2,attribution3,gradcam,attribution4,attribution5,attribution6,integratedgradients"></d-cite> answers questions about the relationships between neurons. It is most commonly used to see how the input to a network affects a particular output &ndash; for example, in RL <d-cite key="perturbationsaliency,sarfa"></d-cite> &ndash; but it can also be applied to the activations of hidden layers <d-cite key="buildingblocks"></d-cite>. Although there are many approaches to attribution we could have used, we chose the method of integrated gradients <d-cite key="integratedgradients"></d-cite>. We explain in <a href="#integrated-gradients">Appendix B</a> how we applied this method a hidden layer, and how positive value function attribution can be thought of as "good news" and negative value function attribution can as "bad news".
+      Attribution <d-cite key="attribution1,attribution2,attribution3,gradcam,attribution4,attribution5,attribution6,integratedgradients"></d-cite> answers questions about the relationships between neurons. It is most commonly used to see how the input to a network affects a particular output &ndash; for example, in RL <d-cite key="perturbationsaliency,sarfa"></d-cite> &ndash; but it can also be applied to the activations of hidden layers <d-cite key="buildingblocks"></d-cite>. Although there are many approaches to attribution we could have used, we chose the method of integrated gradients <d-cite key="integratedgradients"></d-cite>. We explain in <a href="#integrated-gradients">Appendix B</a> how we applied this method to a hidden layer, and how positive value function attribution can be thought of as "good news" and negative value function attribution can as "bad news".
     </p>
     <h3 id="dimensionality-reduction">Dimensionality reduction for attribution</h3>
     <p>
