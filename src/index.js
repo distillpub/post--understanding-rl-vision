@@ -97,6 +97,7 @@ let extra_options_header = {
   chart_fixed_upper_value: null,
   chart_fixed_lower_value: null,
   feature_descriptions,
+  epilepsy_warning: false,  
 }
 initialize_interface(props_header, extra_options_header, 'header')
 
@@ -124,6 +125,7 @@ let extra_options_bug = {
   chart_fixed_upper_value: null,
   chart_fixed_lower_value: null,
   feature_descriptions,
+  epilepsy_warning: false,  
 }
 
 const adjust_options_bug = function (props) {
@@ -162,6 +164,7 @@ let extra_options_failure = {
   chart_fixed_upper_value: 2.5,
   chart_fixed_lower_value: -2.5,
   feature_descriptions,
+  epilepsy_warning: false,  
 }
 
 import props_failure_obscured from './props_failure_obscured.js'
@@ -194,6 +197,7 @@ extra_options_100_levels.feature_descriptions = [
   '???',
   'Agent, walls<br>and velocity<br>info?',
 ]
+extra_options_100_levels.epilepsy_warning = true
 ;(function () {
   for (
     let feature_number = 0;

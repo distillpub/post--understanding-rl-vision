@@ -93,7 +93,8 @@
     chart_max_overflow: 5,
     chart_fixed_upper_value: null,
     chart_fixed_lower_value: null,
-    feature_descriptions: colors.features.map(() => null)
+    feature_descriptions: colors.features.map(() => null),
+    epilepsy_warning: false,    
   };
 
   const action_htmls = action_combos.map(function(combo) {
@@ -502,6 +503,11 @@
       {#if extra_options.show_navigator}
         <div style="position: absolute; top: 0em; left: 0em;">
           <div style="font-weight: bold; margin-bottom: 1em;">Timeline</div>
+          {#if extra_options.epilepsy_warning}
+            <div style="position: relative;">
+              <div style="position: absolute; color: red; margin-top: -2em; font-size: 0.75em; text-decoration: underline dashed; cursor: pointer;" title="Playing this visualization displays flashing colors, which could adversely affect people with photosensitive epilepsy.">Epilepsy warning</div>
+            </div>
+          {/if}
           <Navigator
             bind:state={video_state}
             bind:speed={formatting.video_speed}
